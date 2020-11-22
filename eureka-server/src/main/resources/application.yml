@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    #只有main-server这里配置为显示配置false.
+    prefer-ip-address: false
+    #定义服务续约任务（心跳）的调用间隔，单位：秒
+    lease-renewal-interval-in-seconds: 10
+    #定义服务失效的时间，单位：秒
+    lease-expiration-duration-in-seconds: 180
+    status-page-url-path: /info
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://127.0.0.1:${server.port}/eureka/
+  server:
+    eviction-interval-timer-in-ms: 5000
+    enable-self-preservation: true
+    renewalPercentThreshold: 0.49
+
