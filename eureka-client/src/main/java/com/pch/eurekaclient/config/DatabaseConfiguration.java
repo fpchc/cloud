@@ -23,10 +23,4 @@ public class DatabaseConfiguration {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
-
-//    @ConfigurationProperties(prefix = "spring.datasource")
-//    @Bean
-//    public DruidDataSource druidDataSource(){
-//        return new DruidDataSource();
-//    }
 }

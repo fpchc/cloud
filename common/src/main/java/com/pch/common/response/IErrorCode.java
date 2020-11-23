@@ -1,4 +1,4 @@
-package com.pch.eurekaclient.response;
+package com.pch.common.response;
 
 /**
  * 封装API的错误码

@@ -1,4 +1,4 @@
-package com.pch.eurekaclient.response;
+package com.pch.common.response;
 
 /**
  * 枚举了一些常用API操作码

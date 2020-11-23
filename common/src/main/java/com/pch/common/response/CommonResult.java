@@ -1,4 +1,4 @@
-package com.pch.eurekaclient.response;
+package com.pch.common.response;
 
 import java.io.Serializable;
 
