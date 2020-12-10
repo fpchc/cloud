@@ -1,9 +1,0 @@
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
-
-spring:
-  application:
-    name: eureka-client
-  profiles:
-    include: dev
-
