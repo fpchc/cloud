@@ -2,39 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-    <artifactId>spring-cloud-study</artifactId>
-    <groupId>com.pch</groupId>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>6</source>
+          <target>6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <parent>
+    <artifactId>gateway</artifactId>
+    <groupId>com.pch.gateway</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.pch.gateway</groupId>
-  <artifactId>gateway</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<groupId>com.pch.gateway.admin</groupId>
+	<artifactId>gateway-admin</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>gateway-admin</name>
 	<description>router</description>
-
-  <modules>
-    <module>gateway-admin</module>
-  </modules>
 
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+		<spring-cloud.version>Hoxton.SR9</spring-cloud.version>
 	</properties>
 
 	<dependencies>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>com.pch</groupId>
-      <artifactId>common</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>

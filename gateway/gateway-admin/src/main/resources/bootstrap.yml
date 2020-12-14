@@ -1,3 +1,8 @@
+server:
+  port: 80
+  servlet:
+    context-path: /gateway
+
 spring:
   application:
     name: gateway
