@@ -6,7 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
-import com.pch.gateway.util.SpringContextHolder;
+import com.pch.common.util.SpringContextHolder;
 
 @SpringBootApplication
 @EnableDiscoveryClient

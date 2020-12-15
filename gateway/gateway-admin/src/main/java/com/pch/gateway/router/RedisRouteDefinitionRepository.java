@@ -3,7 +3,6 @@ package com.pch.gateway.router;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.checkerframework.checker.signature.qual.FieldDescriptorForPrimitiveOrArrayInUnnamedPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
@@ -52,7 +51,7 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
                 redisTemplate.opsForHash().delete(GATEWAY_ROUTES, id);
                 return Mono.empty();
             }
-            return Mono.defer(() -> Mono.error(new NotFoundException("route definition is not found, routeId:"+ id)));
+            return Mono.defer(() -> Mono.error(new NotFoundException("route definition is not found, routeId:" + id)));
         });
     }
 }
