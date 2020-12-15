@@ -4,10 +4,16 @@ spring:
     port: ${RABBIT_MQ_PORT:5672}
     username: ${RABBIT_MQ_USERNAME:guest}
     password: ${RABBIT_MQ_PASSWORD:guest}
-#  redis:
-#    host: ${REDIS_HOST:localhost}
-#    port: ${REDIS_PORT:6379}
-#    #password: ${REDIS_PASSWORD:}
-#    lettuce:
-#      pool:
-#        max-active: 300
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:}
+    lettuce:
+      pool:
+        max-active: 300
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

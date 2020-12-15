@@ -22,7 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
 /**
- * redis 配置类
+ * <P> redis 配置类 </P>
+ *
  * @Author: pch
  * @Date: 2020/9/17
  */

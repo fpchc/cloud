@@ -9,10 +9,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * @desc 路由全局拦截器
+ * <P> 路由全局拦截器 </P>
  *
- * @author pch
- * @date 2020/12/12 9:57
+ * @Author: pch
+ * @Date: 2020/12/12 9:57
  */
 @Component
 public class GlobalRouterFilter implements GlobalFilter, Ordered {
