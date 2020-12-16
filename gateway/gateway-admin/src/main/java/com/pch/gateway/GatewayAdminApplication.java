@@ -10,10 +10,10 @@ import com.pch.common.util.SpringContextHolder;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class GatewayApplication {
+public class GatewayAdminApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
+		SpringApplication.run(GatewayAdminApplication.class, args);
 	}
 
 	@Primary

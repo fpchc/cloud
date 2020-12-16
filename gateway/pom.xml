@@ -17,17 +17,7 @@
     <module>gateway-admin</module>
   </modules>
 
-	<properties>
-		<java.version>11</java.version>
-	</properties>
-
 	<dependencies>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
 
     <dependency>
       <groupId>com.pch</groupId>
