@@ -107,6 +107,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 
     @Override
     public void destroy() {
+        log.error("销毁");
         SpringContextHolder.clearHolder();
     }
 
