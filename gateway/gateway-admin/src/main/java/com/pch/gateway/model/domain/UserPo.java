@@ -1,12 +1,10 @@
 package com.pch.gateway.model.domain;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.pch.common.base.BasePo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p> 用户实体 </p>
@@ -16,10 +14,10 @@ import lombok.Data;
  */
 @Data
 @TableName("tb_user")
-public class UserPo implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class UserPo extends BasePo {
 
-    @TableId(type = IdType.AUTO)
-    private Integer id;
+    private static final long serialVersionUID = -1267443725645842238L;
 
     private String username;
 

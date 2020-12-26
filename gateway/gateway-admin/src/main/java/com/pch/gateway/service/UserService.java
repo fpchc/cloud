@@ -1,5 +1,6 @@
 package com.pch.gateway.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.pch.gateway.model.domain.UserPo;
 
 /**
@@ -7,8 +8,6 @@ import com.pch.gateway.model.domain.UserPo;
  * @Author: pch
  * @Date: 2020-12-20 14:11
  */
-public interface UserService {
-
-    Integer insert(UserPo userPo);
+public interface UserService extends IService<UserPo> {
 
 }
