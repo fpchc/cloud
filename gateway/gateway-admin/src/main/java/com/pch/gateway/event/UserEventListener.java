@@ -1,11 +1,13 @@
 package com.pch.gateway.event;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.pch.gateway.config.BusConfig;
 import com.pch.gateway.model.domain.UserPo;
 import com.pch.gateway.service.UserService;
 
@@ -23,17 +25,20 @@ public class UserEventListener {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @EventListener
     public void userEvent(UserEvent event) {
         log.info("当前线程名称：{}", Thread.currentThread().getName());
-        Object source = event.getSource();
-        userHandler(event.getUserDO(), event.getAction());
-        System.out.println(source);
+        String action = (String) event.getSource();
+        userHandler(event.getUserDO(), action);
     }
 
     public void userHandler(UserPo userPo, String action) {
         if (StringUtils.equalsIgnoreCase(action, "insert")) {
-            userService.saveOrUpdate(userPo);
+            boolean b = userService.saveOrUpdate(userPo);
+            rabbitTemplate.convertAndSend(BusConfig.GATEWAY_EXCHANGE, BusConfig.TOPIC_MESSAGE, b ? "success" : "failed");
         }
     }
 

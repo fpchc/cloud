@@ -12,9 +12,9 @@ import com.pch.gateway.model.domain.UserPo;
  */
 public class UserEvent extends ApplicationEvent implements Serializable {
 
-    private UserPo userPo;
+    private static final long serialVersionUID = -5707310134577625463L;
 
-    private String action;
+    private UserPo userPo;
 
     public UserPo getUserDO() {
         return userPo;
@@ -24,17 +24,8 @@ public class UserEvent extends ApplicationEvent implements Serializable {
         this.userPo = userEvent;
     }
 
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public UserEvent(Object source, UserPo userPo, String action) {
+    public UserEvent(Object source, UserPo userPo) {
         super(source);
         this.userPo = userPo;
-        this.action = action;
     }
 }

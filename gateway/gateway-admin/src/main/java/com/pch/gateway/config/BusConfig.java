@@ -16,23 +16,23 @@ import org.springframework.context.annotation.Bean;
 @Configurable
 public class BusConfig {
 
-    public static final String GATEWAY_ROUTE_QUEUE = "gateway_route_queue";
-    public static final String ROUTE_EXCHANGE = "route_exchange";
-    public static final String GATEWAY_ROUTE_KEY = "gateway_route_key";
+    public static final String GATEWAY_QUEUE = "gatewayQueue";
+    public static final String GATEWAY_EXCHANGE = "gatewayExchange";
+    public static final String TOPIC_MESSAGE = "topic.message";
 
     @Bean
-    Queue routeQueue() {
-        return new Queue(BusConfig.GATEWAY_ROUTE_QUEUE);
+    public Queue gatewayQueue() {
+        return new Queue(BusConfig.GATEWAY_QUEUE);
     }
 
     @Bean
-    TopicExchange routeTopicExchange() {
-        return new TopicExchange(BusConfig.ROUTE_EXCHANGE);
+    public TopicExchange routeTopicExchange() {
+        return new TopicExchange(BusConfig.GATEWAY_EXCHANGE);
     }
 
     @Bean
-    Binding binding(Queue routeQueue, TopicExchange routeTopicExchange) {
-        return BindingBuilder.bind(routeQueue).to(routeTopicExchange).with(BusConfig.GATEWAY_ROUTE_KEY);
+    public Binding binding(Queue gatewayQueue, TopicExchange routeTopicExchange) {
+        return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(BusConfig.TOPIC_MESSAGE);
     }
 
 }
