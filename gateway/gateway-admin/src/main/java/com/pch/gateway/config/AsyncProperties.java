@@ -19,7 +19,7 @@ public class AsyncProperties {
     /**
      * 默认异步线程池
      */
-    private BaseProperties defaultProperties;
+    private BaseProperties taskProperties;
 
     @Getter
     @Setter

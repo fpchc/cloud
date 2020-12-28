@@ -8,29 +8,9 @@ management:
       exposure:
         include: '*'
 
-knife4j:
-  enableAggregation: true
-  nacos:
-    enable: true
-    serviceUrl: http://localhost:8848/nacos/
-    routeAuth:
-      enable: true
-      username: test
-      password: 12313
-    routes:
-      - name: 路由服务
-        serviceName: gateway
-        location: /v2/api-docs?group=gateway
-        swaggerVersion: 2.0
-        servicePath: /gateway
-        routeAuth:
-          enable: true
-          username: test
-          password: 12313
-
 task:
   pool:
-    default-properties:
+    task-properties:
       # 核心线程池大小
       core-pool-size: 10
       # 最大线程数

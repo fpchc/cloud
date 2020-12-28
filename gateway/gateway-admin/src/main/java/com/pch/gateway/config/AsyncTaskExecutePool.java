@@ -29,18 +29,18 @@ public class AsyncTaskExecutePool {
         return new AsyncProperties();
     }
 
-    @Bean("default")
-    public Executor getDefaultExecutor() {
+    @Bean("taskExecutor")
+    public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        BaseProperties defaultProperties = asyncProperties.getDefaultProperties();
+        BaseProperties taskProperties = asyncProperties.getTaskProperties();
         //核心线程池大小
-        executor.setCorePoolSize(defaultProperties.getCorePoolSize());
+        executor.setCorePoolSize(taskProperties.getCorePoolSize());
         //最大线程数
-        executor.setMaxPoolSize(defaultProperties.getMaxPoolSize());
+        executor.setMaxPoolSize(taskProperties.getMaxPoolSize());
         //队列容量
-        executor.setQueueCapacity(defaultProperties.getQueueCapacity());
+        executor.setQueueCapacity(taskProperties.getQueueCapacity());
         //活跃时间
-        executor.setKeepAliveSeconds(defaultProperties.getKeepAliveSeconds());
+        executor.setKeepAliveSeconds(taskProperties.getKeepAliveSeconds());
         //线程名字前缀
         executor.setThreadNamePrefix("pch-async-");
         // setRejectedExecutionHandler：当pool已经达到max size的时候，如何处理新任务
