@@ -1,5 +1,6 @@
 package com.pch.gateway.rest;
 
+import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pch.common.response.CommonResult;
 import com.pch.gateway.event.UserEvent;
 import com.pch.gateway.model.domain.UserPo;
+import com.pch.gateway.router.RedisRouteDefinitionRepository;
 import com.pch.gateway.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 /**
  * <P>路由管理 给admin使用</P>
@@ -31,12 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 public class RouteController {
 
     private final ApplicationContext applicationContext;
-
     private final UserService userService;
+    private final RedisRouteDefinitionRepository routeDefinitionRepository;
 
     @PostMapping("/route")
-    public CommonResult<Boolean> addRoutes() {
-        return CommonResult.success();
+    public Mono<Boolean> addRoutes(RouteDefinition routeDefinition) {
+//        routeDefinitionRepository.save(routeDefinition)
+        return Mono.empty();
     }
 
     @PostMapping(value = "/userEvent")

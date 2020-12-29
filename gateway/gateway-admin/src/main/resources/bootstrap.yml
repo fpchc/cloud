@@ -1,21 +1,23 @@
 server:
   port: 8091
   servlet:
-    context-path: /gateway
+    context-path: /gateway-service
 
 spring:
   application:
-    name: gateway
+    name: gateway-service
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
       config:
-        server-addr: 127.0.0.1:8848
-        file-extension: yaml
-        prefix: ${spring.application.name}
-        group: dev
-        enabled: true
-  gateway:
-    default-filters:
+        server-addr: ${REGISTER_HOST:localhost}:${REGISTER_PORT:8848}
+        file-extension: yml
+    gateway:
+      routes:
+      - id: auth-first
+        uri: lb://auth-service
+        predicates:
+        - Path=/auth-service/*
+
 

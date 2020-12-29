@@ -6,6 +6,7 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,13 +15,21 @@ import reactor.core.publisher.Mono;
  * @Author: pch
  * @Date: 2020/12/12 9:57
  */
+@Slf4j
 @Component
 public class GlobalRouterFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
-        return null;
+        exchange.getAttributes().put("requestTimeBegin", System.currentTimeMillis());
+        return chain.filter(exchange).then(
+                Mono.fromRunnable(() -> {
+                    Long startTime = exchange.getAttribute("requestTimeBegin");
+                    if (startTime != null) {
+                        log.info(exchange.getRequest().getURI().getRawPath() + ": " + (System.currentTimeMillis() - startTime) + "ms");
+                    }
+                })
+        );
     }
 
     @Override
