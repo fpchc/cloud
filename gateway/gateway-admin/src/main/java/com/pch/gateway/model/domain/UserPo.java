@@ -1,6 +1,7 @@
 package com.pch.gateway.model.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pch.common.base.BasePo;
 
 import lombok.Data;

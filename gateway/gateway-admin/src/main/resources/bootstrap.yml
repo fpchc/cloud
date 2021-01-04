@@ -18,6 +18,6 @@ spring:
       - id: auth-first
         uri: lb://auth-service
         predicates:
-        - Path=/auth-service/*
+        - Path=/auth-service/**
 
 

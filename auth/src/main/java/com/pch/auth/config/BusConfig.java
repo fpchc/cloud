@@ -1,4 +1,4 @@
-package com.pch.gateway.config;
+package com.pch.auth.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <P> bus 消息总站 </P>
- *
+ * <p> bus 配置 </p>
  * @Author: pch
- * @Date: 2020/12/13 18:01
+ * @Date: 2021/01/04 18:09
  */
 @Configuration
 public class BusConfig {
@@ -46,5 +45,4 @@ public class BusConfig {
     public Binding messageBinding(Queue messageQueue, TopicExchange routeTopicExchange) {
         return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(BusConfig.TOPIC_MESSAGE);
     }
-
 }
