@@ -14,10 +14,4 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class RabbitReceive {
 
-//    @RabbitHandler
-//    @RabbitListener(queues = {BusConfig.GATEWAY_QUEUE})
-//    public void userInsertReceive(String object) {
-//        log.info("user insert receive: {}", object);
-//    }
-
 }

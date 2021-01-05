@@ -44,4 +44,4 @@ logging:
     root: info
     com.pch.gateway.mapper: debug
   file:
-    path: D:/pch/log/gateway # 开发日志路径
+    path: D:/pch/log/auth # 开发日志路径

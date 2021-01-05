@@ -7,6 +7,8 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.pch.common.constant.RabbitMQConstant;
+
 /**
  * <p> bus 配置 </p>
  * @Author: pch
@@ -15,34 +17,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BusConfig {
 
-    public static final String GATEWAY_QUEUE = "gateway.*";
-    public static final String MESSAGE_QUEUE = "gateway.message";
-    public static final String GATEWAY_EXCHANGE = "gatewayExchange";
-    public static final String TOPIC_GATEWAY = "topic.gateway";
-    public static final String TOPIC_MESSAGE = "topic.message";
-
     @Bean
     public Queue gatewayQueue() {
-        return new Queue(BusConfig.GATEWAY_QUEUE);
+        return new Queue(RabbitMQConstant.GATEWAY_QUEUE);
     }
 
     @Bean
     public Queue messageQueue() {
-        return new Queue(BusConfig.MESSAGE_QUEUE);
+        return new Queue(RabbitMQConstant.MESSAGE_QUEUE);
     }
 
     @Bean
     public TopicExchange routeTopicExchange() {
-        return new TopicExchange(BusConfig.GATEWAY_EXCHANGE);
+        return new TopicExchange(RabbitMQConstant.GATEWAY_EXCHANGE);
     }
 
     @Bean
     public Binding gatewayBinding(Queue gatewayQueue, TopicExchange routeTopicExchange) {
-        return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(BusConfig.TOPIC_GATEWAY);
+        return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(RabbitMQConstant.TOPIC_GATEWAY);
     }
 
     @Bean
     public Binding messageBinding(Queue messageQueue, TopicExchange routeTopicExchange) {
-        return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(BusConfig.TOPIC_MESSAGE);
+        return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(RabbitMQConstant.TOPIC_MESSAGE);
     }
 }
