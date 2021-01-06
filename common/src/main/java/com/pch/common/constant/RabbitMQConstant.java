@@ -8,9 +8,9 @@ package com.pch.common.constant;
  */
 public interface RabbitMQConstant {
 
-    String GATEWAY_QUEUE = "gateway.*";
-    String MESSAGE_QUEUE = "gateway.message";
+    String GATEWAY_QUEUE = "gateway.queue";
+    String MESSAGE_QUEUE = "message.queue";
     String GATEWAY_EXCHANGE = "gatewayExchange";
-    String TOPIC_GATEWAY = "topic.gateway";
-    String TOPIC_MESSAGE = "topic.message";
+    String GATEWAY_ROUTE_KEY = "topic.route.gateway";
+    String MESSAGE_ROUTE_KEY = "topic.route.message";
 }

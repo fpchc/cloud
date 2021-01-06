@@ -34,11 +34,11 @@ public class BusConfig {
 
     @Bean
     public Binding gatewayBinding(Queue gatewayQueue, TopicExchange routeTopicExchange) {
-        return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(RabbitMQConstant.TOPIC_GATEWAY);
+        return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(RabbitMQConstant.GATEWAY_ROUTE_KEY);
     }
 
     @Bean
     public Binding messageBinding(Queue messageQueue, TopicExchange routeTopicExchange) {
-        return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(RabbitMQConstant.TOPIC_MESSAGE);
+        return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(RabbitMQConstant.MESSAGE_ROUTE_KEY);
     }
 }

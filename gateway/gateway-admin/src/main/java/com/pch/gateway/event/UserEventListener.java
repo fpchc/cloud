@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.pch.common.constant.RabbitMQConstant;
-import com.pch.gateway.config.BusConfig;
 import com.pch.gateway.model.domain.UserPo;
 import com.pch.gateway.service.UserService;
 
@@ -37,7 +36,7 @@ public class UserEventListener {
     public void userHandler(UserPo userPo, String action) {
         if (StringUtils.equalsIgnoreCase(action, "insert")) {
             boolean b = userService.saveOrUpdate(userPo);
-            rabbitTemplate.convertAndSend(RabbitMQConstant.GATEWAY_EXCHANGE, RabbitMQConstant.TOPIC_GATEWAY, b ? "success" : "failed");
+            rabbitTemplate.convertAndSend(RabbitMQConstant.GATEWAY_EXCHANGE, RabbitMQConstant.MESSAGE_ROUTE_KEY, b ? "success" : "failed");
         }
     }
 
