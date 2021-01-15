@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.pch.common.constant.RabbitMQConstant;
+import com.pch.common.exception.ServiceException;
 import com.pch.gateway.model.domain.UserPo;
 import com.pch.gateway.service.UserService;
 
@@ -35,8 +36,18 @@ public class UserEventListener {
 
     public void userHandler(UserPo userPo, String action) {
         if (StringUtils.equalsIgnoreCase(action, "insert")) {
-            boolean b = userService.saveOrUpdate(userPo);
-            rabbitTemplate.convertAndSend(RabbitMQConstant.GATEWAY_EXCHANGE, RabbitMQConstant.MESSAGE_ROUTE_KEY, b ? "success" : "failed");
+
+        }
+        switch (action) {
+            case "insert":
+            case "update":
+                boolean b = userService.saveOrUpdate(userPo);
+                rabbitTemplate.convertAndSend(RabbitMQConstant.GATEWAY_EXCHANGE,
+                        RabbitMQConstant.MESSAGE_ROUTE_KEY, b ? "success" : "failed");
+                break;
+            default:
+                log.error("userEvent action is not exist: {}", action);
+                throw new ServiceException(10000L, "userEvent action不存在");
         }
     }
 
