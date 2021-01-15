@@ -35,9 +35,6 @@ public class UserEventListener {
     }
 
     public void userHandler(UserPo userPo, String action) {
-        if (StringUtils.equalsIgnoreCase(action, "insert")) {
-
-        }
         switch (action) {
             case "insert":
             case "update":
