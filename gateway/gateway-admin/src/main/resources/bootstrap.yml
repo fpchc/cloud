@@ -13,11 +13,11 @@ spring:
       config:
         server-addr: ${REGISTER_HOST:localhost}:${REGISTER_PORT:8848}
         file-extension: yml
-    gateway:
-      routes:
-      - id: auth-first
-        uri: lb://auth-service
-        predicates:
-        - Path=/auth-service/**
+#    gateway:
+#      routes:
+#      - id: auth-first
+#        uri: lb://auth-service
+#        predicates:
+#        - Path=/auth-service/**
 
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +21,7 @@ import reactor.core.publisher.Mono;
  * @Author: pch
  * @Date: 2020-12-12 11:10
  */
+@Slf4j
 @Component
 public class RedisRouteDefinitionRepository implements RouteDefinitionRepository {
 

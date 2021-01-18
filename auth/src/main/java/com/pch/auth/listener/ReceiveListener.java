@@ -1,10 +1,17 @@
 package com.pch.auth.listener;
 
+import java.util.Map;
+
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import com.pch.auth.domain.UserPo;
 import com.pch.common.constant.RabbitMQConstant;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p> 接受 rabbit内容 <p/>
@@ -12,12 +19,13 @@ import com.pch.common.constant.RabbitMQConstant;
  * @Author: pch
  * @Date: 2021/01/04 18:11
  */
+@Slf4j
 @Component
 public class ReceiveListener {
 
     @RabbitHandler
     @RabbitListener(queues = { RabbitMQConstant.MESSAGE_QUEUE } )
-    public void receive(Object obj) {
-        System.out.println(obj);
+    public void receive(UserPo userPo) {
+        log.info("userPo : {}", userPo);
     }
 }

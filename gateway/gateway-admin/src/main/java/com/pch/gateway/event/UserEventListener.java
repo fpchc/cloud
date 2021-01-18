@@ -28,12 +28,6 @@ public class UserEventListener {
 
     private final UserService userService;
     private final RabbitTemplate rabbitTemplate;
-    private final MessageConverter messageConverter;
-
-    @PostConstruct
-    public void init() {
-        rabbitTemplate.setMessageConverter(messageConverter);
-    }
 
     @EventListener
     public void userEvent(UserEvent event) {

@@ -24,6 +24,7 @@ import com.pch.gateway.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -35,7 +36,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/gateway", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/gateway")
 public class RouteController {
 
     private final ApplicationContext applicationContext;
@@ -44,15 +45,20 @@ public class RouteController {
 
     private final RedisRouteDefinitionRepository routeDefinitionRepository;
 
+    @GetMapping("/routes")
+    public Flux<RouteDefinition> getAllRoutes() {
+        return routeDefinitionRepository.getRouteDefinitions();
+    }
+
     @PostMapping("/route")
     public Mono<Boolean> addRoutes(@Valid @RequestBody RouteDefinition routeDefinition) {
-        Mono<Void> save = routeDefinitionRepository.save(Mono.just(routeDefinition));
+        routeDefinitionRepository.save(Mono.just(routeDefinition));
         return Mono.just(true);
     }
 
     @DeleteMapping("/route/{id}")
-    public Mono<Boolean> delRoutes(@PathVariable String routeId) {
-        Mono<Void> delete = routeDefinitionRepository.delete(Mono.just(routeId));
+    public Mono<Boolean> delRoutes(@PathVariable String id) {
+        routeDefinitionRepository.delete(Mono.just(id));
         return Mono.just(true);
     }
 
@@ -65,7 +71,6 @@ public class RouteController {
 
     @GetMapping(value = "/users")
     public CommonResult<IPage<UserPo>> users(Page<UserPo> page) {
-        if (true) throw new ServiceException(1111L, "测试使用");
         return CommonResult.success(userService.page(page));
     }
 
