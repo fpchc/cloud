@@ -1,7 +1,9 @@
 package com.pch.gateway.event;
 
-import org.apache.commons.lang.StringUtils;
+import javax.annotation.PostConstruct;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,12 @@ public class UserEventListener {
 
     private final UserService userService;
     private final RabbitTemplate rabbitTemplate;
+    private final MessageConverter messageConverter;
+
+    @PostConstruct
+    public void init() {
+        rabbitTemplate.setMessageConverter(messageConverter);
+    }
 
     @EventListener
     public void userEvent(UserEvent event) {
@@ -40,7 +48,7 @@ public class UserEventListener {
             case "update":
                 boolean b = userService.saveOrUpdate(userPo);
                 rabbitTemplate.convertAndSend(RabbitMQConstant.GATEWAY_EXCHANGE,
-                        RabbitMQConstant.MESSAGE_ROUTE_KEY, b ? "success" : "failed");
+                        RabbitMQConstant.MESSAGE_ROUTE_KEY, userPo);
                 break;
             default:
                 log.error("userEvent action is not exist: {}", action);
