@@ -80,7 +80,7 @@
   <!--输出到WARN文件-->
   <appender name="warn_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 正在记录的日志文件的路径及文件名 -->
-    <file>${log.path}/warn_debug.log</file>
+    <file>${log.path}/log_warn.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${WARN_LOG_FILE_NAME_PATTERN}</fileNamePattern>
       <!-- 日志保留天数 -->
