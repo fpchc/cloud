@@ -8,22 +8,26 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import com.pch.common.util.SpringContextHolder;
 
 @EnableAsync
 @EnableScheduling
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableCreateCacheAnnotation
+@EnableMethodCache(basePackages = { "com.pch.gateway" })
 public class GatewayAdminApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GatewayAdminApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayAdminApplication.class, args);
+    }
 
-	@Primary
+    @Primary
     @Bean
     public SpringContextHolder getSpringContextHolder() {
-	    return new SpringContextHolder();
+        return new SpringContextHolder();
     }
 
 }
