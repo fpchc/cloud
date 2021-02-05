@@ -17,7 +17,7 @@ import com.pch.common.util.SpringContextHolder;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCreateCacheAnnotation
-@EnableMethodCache(basePackages = { "com.pch.gateway" })
+@EnableMethodCache(basePackages = { "com.pch" })
 public class GatewayAdminApplication {
 
     public static void main(String[] args) {
