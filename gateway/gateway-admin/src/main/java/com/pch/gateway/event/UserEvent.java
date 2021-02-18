@@ -19,10 +19,6 @@ public class UserEvent extends ApplicationEvent {
     @Setter
     private UserPo userPo;
 
-    public UserPo getUserDO() {
-        return userPo;
-    }
-
     public UserEvent(Object source, UserPo userPo) {
         super(source);
         this.userPo = userPo;

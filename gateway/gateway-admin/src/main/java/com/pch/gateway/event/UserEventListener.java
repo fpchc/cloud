@@ -1,9 +1,6 @@
 package com.pch.gateway.event;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -33,7 +30,7 @@ public class UserEventListener {
     public void userEvent(UserEvent event) {
         log.info("当前线程名称：{}", Thread.currentThread().getName());
         String action = (String) event.getSource();
-        userHandler(event.getUserDO(), action);
+        userHandler(event.getUserPo(), action);
     }
 
     public void userHandler(UserPo userPo, String action) {
