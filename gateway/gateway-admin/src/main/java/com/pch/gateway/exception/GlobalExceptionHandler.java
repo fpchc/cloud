@@ -3,14 +3,10 @@ package com.pch.gateway.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.pch.common.constant.SysState;
 import com.pch.common.exception.ServiceException;
 import com.pch.common.response.CommonResult;
-
-import reactor.core.publisher.Mono;
 
 /**
  * <P> 全局异常 </P>
@@ -25,7 +21,7 @@ public class GlobalExceptionHandler {
      * 处理业务异常
      *
      * @param serviceException  业务异常
-     * @return  Mono<CommonResult<Boolean>>
+     * @return Mono<CommonResult < Boolean>>
      */
     @ExceptionHandler(ServiceException.class)
     @ResponseStatus(HttpStatus.BAD_GATEWAY)

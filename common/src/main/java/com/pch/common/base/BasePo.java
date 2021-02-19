@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -23,7 +22,7 @@ public class BasePo implements Serializable {
     private static final long serialVersionUID = -6551747208670402225L;
 
     @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    protected Long id;
 
     @TableField(fill = FieldFill.INSERT)
     private String createBy;

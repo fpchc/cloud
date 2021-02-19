@@ -24,6 +24,7 @@ import com.pch.common.base.IdGenerator;
 public class MybatisConfig {
 
     public static final Integer GATEWAY_WORK_ID = 1;
+
     public static final Integer GATEWAY_DATACENTER_ID = 1;
 
     /**

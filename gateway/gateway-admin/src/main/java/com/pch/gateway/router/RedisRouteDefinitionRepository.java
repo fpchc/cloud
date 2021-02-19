@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.pch.gateway.event.GatewayRouteEvent;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -25,15 +26,13 @@ import reactor.core.publisher.Mono;
 @Component
 public class RedisRouteDefinitionRepository implements RouteDefinitionRepository {
 
-    private static final String GATEWAY_ROUTES = "gateway-routes";
-
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
         List<RouteDefinition> routeDefinitions = new ArrayList<>();
-        redisTemplate.opsForHash().values(GATEWAY_ROUTES).forEach(routeDefinition ->
+        redisTemplate.opsForHash().values(GatewayRouteEvent.GATEWAY_ROUTES).forEach(routeDefinition ->
                 routeDefinitions.add(JSON.parseObject(routeDefinition.toString(), RouteDefinition.class)));
         return Flux.fromIterable(routeDefinitions);
     }
@@ -41,7 +40,7 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Override
     public Mono<Void> save(Mono<RouteDefinition> route) {
         return route.flatMap(routeDefinition -> {
-            redisTemplate.opsForHash().put(GATEWAY_ROUTES, routeDefinition.getId(), JSONObject.toJSONString(routeDefinition));
+            redisTemplate.opsForHash().put(GatewayRouteEvent.GATEWAY_ROUTES, routeDefinition.getId(), JSONObject.toJSONString(routeDefinition));
             return Mono.empty();
         });
     }
@@ -49,8 +48,8 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Override
     public Mono<Void> delete(Mono<String> routeId) {
         return routeId.flatMap(id -> {
-            if (redisTemplate.opsForHash().hasKey(GATEWAY_ROUTES, id)) {
-                redisTemplate.opsForHash().delete(GATEWAY_ROUTES, id);
+            if (redisTemplate.opsForHash().hasKey(GatewayRouteEvent.GATEWAY_ROUTES, id)) {
+                redisTemplate.opsForHash().delete(GatewayRouteEvent.GATEWAY_ROUTES, id);
                 return Mono.empty();
             }
             return Mono.defer(() -> Mono.error(new NotFoundException("route definition is not found, routeId:" + id)));

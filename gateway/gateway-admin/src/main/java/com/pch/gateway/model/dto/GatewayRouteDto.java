@@ -27,32 +27,32 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class GatewayRouteDto extends BaseDto {
 
     private static final long serialVersionUID = -6945274367384292505L;
+
+    //    @NotBlank(message = "路由id不能为空")
+//    @ApiModelProperty(value = "网关路由id")
+    private String id = "auth-service";
 
     @NotEmpty(message = "网关断言不能为空")
 //    @ApiModelProperty(value = "网关断言")
     private List<PredicateDefinition> predicates = new ArrayList<>();
 
-//    @ApiModelProperty(value = "网关过滤器信息")
+    //    @ApiModelProperty(value = "网关过滤器信息")
     private List<FilterDefinition> filters = new ArrayList<>();
 
     @NotBlank(message = "uri不能为空")
 //    @ApiModelProperty(value = "网关uri")
     private String uri;
 
-    @NotBlank(message = "路由id不能为空")
-//    @ApiModelProperty(value = "网关路由id")
-    private String routeId;
-
-//    @ApiModelProperty(value = "排序")
+    //    @ApiModelProperty(value = "排序")
     private Integer orders = 0;
 
-//    @ApiModelProperty(value = "网关路由描述信息")
+    //    @ApiModelProperty(value = "网关路由描述信息")
     private String description;
 
     public GatewayRoutePo toPo() {
@@ -67,4 +67,6 @@ public class GatewayRouteDto extends BaseDto {
         }
         return gatewayRoutePo;
     }
+
+
 }

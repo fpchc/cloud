@@ -6,7 +6,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.alicp.jetcache.Cache;
@@ -14,8 +17,11 @@ import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pch.gateway.event.GatewayRouteEvent;
+import com.pch.gateway.event.GatewayRouteListener;
 import com.pch.gateway.mapper.RouteMapper;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
@@ -27,28 +33,38 @@ import lombok.extern.slf4j.Slf4j;
  * @Author: pch
  * @Date: 2021/01/19 15:27
  */
-@Service
 @Slf4j
+@Service
 public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRoutePo>
         implements GatewayRouteService {
 
-    private static final String GATEWAY_ROUTES = "gateway_routes::";
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    @CreateCache(name = GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
     public GatewayRouteDto get(String id) {
         GatewayRoutePo gatewayRoutePo = this.getById(id);
-
-        return null;
+        GatewayRouteDto gatewayRouteDto = new GatewayRouteDto();
+        BeanUtils.copyProperties(gatewayRoutePo, gatewayRouteDto);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            gatewayRouteDto.setFilters(objectMapper.readValue(gatewayRoutePo.getFilters(), new TypeReference<>() {}));
+            gatewayRouteDto.setPredicates(objectMapper.readValue(gatewayRoutePo.getPredicates(), new TypeReference<>() {}));
+        } catch (JsonProcessingException e) {
+            log.error("断言或者过滤器配置异常", e);
+        }
+        return gatewayRouteDto;
     }
 
     @Override
     public boolean add(GatewayRouteDto gatewayRouteDto) {
-        boolean isSuccess = this.save(gatewayRouteDto.toPo());
+        boolean isSuccess = this.saveOrUpdate(gatewayRouteDto.toPo());
         RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRouteDto.toPo());
         gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);
+        applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.SAVE_ACTION, routeDefinition));
         return isSuccess;
     }
 
@@ -69,7 +85,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
     public boolean overload() {
         List<GatewayRoutePo> gatewayRoutes = this.list(new QueryWrapper<>());
         gatewayRoutes.forEach(gatewayRoute ->
-                gatewayRouteCache.put(gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute))
+                gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
         );
         log.info("全局初使化网关路由成功!");
         return true;
@@ -83,7 +99,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
      */
     private RouteDefinition gatewayRouteToRouteDefinition(GatewayRoutePo gatewayRoutePo) {
         RouteDefinition routeDefinition = new RouteDefinition();
-        routeDefinition.setId(gatewayRoutePo.getRouteId());
+        routeDefinition.setId(gatewayRoutePo.getId());
         routeDefinition.setOrder(gatewayRoutePo.getOrders());
         routeDefinition.setUri(URI.create(gatewayRoutePo.getUri()));
         ObjectMapper objectMapper = new ObjectMapper();
