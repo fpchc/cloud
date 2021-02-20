@@ -20,8 +20,21 @@ public class GatewayRouteEvent extends ApplicationEvent {
     @Setter
     private RouteDefinition routeDefinition;
 
+    @Getter
+    @Setter
+    private String id;
+
     public GatewayRouteEvent(Object source, RouteDefinition routeDefinition) {
         super(source);
         this.routeDefinition = routeDefinition;
+    }
+
+    public GatewayRouteEvent(Object source, String id) {
+        super(source);
+        this.id = id;
+    }
+
+    public GatewayRouteEvent(Object source) {
+        super(source);
     }
 }

@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.alicp.jetcache.Cache;
@@ -36,9 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRoutePo>
-        implements GatewayRouteService {
+        implements GatewayRouteService, ApplicationContextAware {
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
@@ -60,23 +61,19 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
     }
 
     @Override
-    public boolean add(GatewayRouteDto gatewayRouteDto) {
+    public boolean saveOrUpdate(GatewayRouteDto gatewayRouteDto) {
         boolean isSuccess = this.saveOrUpdate(gatewayRouteDto.toPo());
         RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRouteDto.toPo());
         gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);
-        applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.SAVE_ACTION, routeDefinition));
+        applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return isSuccess;
-    }
-
-    @Override
-    public boolean update(GatewayRouteDto gatewayRouteDto) {
-        return false;
     }
 
     @Override
     public boolean delete(String id) {
         boolean isSuccess = this.delete(id);
         gatewayRouteCache.remove(id);
+        applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return isSuccess;
     }
 
@@ -87,6 +84,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
         gatewayRoutes.forEach(gatewayRoute ->
                 gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
         );
+        applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         log.info("全局初使化网关路由成功!");
         return true;
     }
@@ -110,5 +108,10 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
             log.error("网关路由对象转换失败", e);
         }
         return routeDefinition;
+    }
+
+    @Override
+    public void setApplicationContext(@Nullable ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

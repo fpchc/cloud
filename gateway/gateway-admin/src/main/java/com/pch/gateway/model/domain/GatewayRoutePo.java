@@ -46,14 +46,8 @@ public class GatewayRoutePo implements Serializable {
     private String status = "Y";
 
     @TableField(fill = FieldFill.INSERT)
-    private String createBy;
-
-    @TableField(fill = FieldFill.INSERT)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
-
-    @TableField(fill = FieldFill.UPDATE)
-    private String modifyBy;
 
     @TableField(fill = FieldFill.UPDATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

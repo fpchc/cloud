@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.pch.gateway.router.RedisRouteDefinitionRepository;
 
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
 
 /**
  * @Author: pch
@@ -20,16 +19,17 @@ import reactor.core.publisher.Mono;
 public class GatewayRouteListener {
 
     public static final String SAVE_ACTION = "save";
+
     public static final String DEL_ACTION = "del";
+
     public static final String FIND_ALL_ACTION = "findAll";
 
     @Autowired
     private RedisRouteDefinitionRepository routeDefinitionRepository;
 
-    @EventListener(value = {GatewayRouteEvent.class},
-            condition = "#gatewayRouteEvent.getSource().toString().equals(SAVE_ACTION)")
-    public void receive(GatewayRouteEvent gatewayRouteEvent) {
-        routeDefinitionRepository.save(Mono.just(gatewayRouteEvent.getRouteDefinition()));
+    @EventListener(value = { GatewayRouteEvent.class })
+    public void actionReceive() {
+        routeDefinitionRepository.getRouteDefinitions();
     }
 
 

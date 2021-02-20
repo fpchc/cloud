@@ -1,17 +1,24 @@
 package com.pch.gateway.router;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.cloud.gateway.support.NotFoundException;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.CreateCache;
 import com.pch.gateway.event.GatewayRouteEvent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,32 +34,44 @@ import reactor.core.publisher.Mono;
 public class RedisRouteDefinitionRepository implements RouteDefinitionRepository {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private StringRedisTemplate redisTemplate;
+
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
+    private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
+        return getDefinitionFlux();
+    }
+
+    private Flux<RouteDefinition> getDefinitionFlux() {
         List<RouteDefinition> routeDefinitions = new ArrayList<>();
-        redisTemplate.opsForHash().values(GatewayRouteEvent.GATEWAY_ROUTES).forEach(routeDefinition ->
-                routeDefinitions.add(JSON.parseObject(routeDefinition.toString(), RouteDefinition.class)));
+        Set<String> keys = redisTemplate.keys(GatewayRouteEvent.GATEWAY_ROUTES + "*");
+        if (CollectionUtils.isEmpty(keys)) {
+            return Flux.empty();
+        }
+        Set<String> collect = keys.stream().map(String ->
+                String.replace(GatewayRouteEvent.GATEWAY_ROUTES, StringUtils.EMPTY)).collect(Collectors.toSet());
+        Map<String, RouteDefinition> routeDefinitionMap = gatewayRouteCache.getAll(collect);
+        routeDefinitionMap.values().forEach(routeDefinition -> {
+            try {
+                routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
+            } catch (URISyntaxException e) {
+                log.error("uri 不正确");
+            }
+            routeDefinitions.add(routeDefinition);
+        });
+        log.info("route info:{}", routeDefinitions);
         return Flux.fromIterable(routeDefinitions);
     }
 
     @Override
     public Mono<Void> save(Mono<RouteDefinition> route) {
-        return route.flatMap(routeDefinition -> {
-            redisTemplate.opsForHash().put(GatewayRouteEvent.GATEWAY_ROUTES, routeDefinition.getId(), JSONObject.toJSONString(routeDefinition));
-            return Mono.empty();
-        });
+        return Mono.empty();
     }
 
     @Override
     public Mono<Void> delete(Mono<String> routeId) {
-        return routeId.flatMap(id -> {
-            if (redisTemplate.opsForHash().hasKey(GatewayRouteEvent.GATEWAY_ROUTES, id)) {
-                redisTemplate.opsForHash().delete(GatewayRouteEvent.GATEWAY_ROUTES, id);
-                return Mono.empty();
-            }
-            return Mono.defer(() -> Mono.error(new NotFoundException("route definition is not found, routeId:" + id)));
-        });
+        return Mono.empty();
     }
 }

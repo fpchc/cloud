@@ -24,7 +24,7 @@ public class ServiceException extends RuntimeException {
      */
     private String message;
 
-    public ServiceException(Long code, String message) {
+    public ServiceException(String message) {
         this.message = message;
         this.code = code;
     }

@@ -26,7 +26,7 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @param gatewayRouteDto
      * @return
      */
-    boolean add(GatewayRouteDto gatewayRouteDto);
+    boolean saveOrUpdate(GatewayRouteDto gatewayRouteDto);
 
     /**
      * 查询网关路由
@@ -34,13 +34,6 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @return
      */
 //    List<RouteDefinitionPoVo> query(RouteDefinitionPoQueryParam RouteDefinitionPoQueryParam);
-
-    /**
-     * 更新网关路由信息
-     *
-     * @param gatewayRouteDto
-     */
-    boolean update(GatewayRouteDto gatewayRouteDto);
 
     /**
      * 根据id删除网关路由
