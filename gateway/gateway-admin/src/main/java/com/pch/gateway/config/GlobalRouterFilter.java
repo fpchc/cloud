@@ -1,7 +1,5 @@
 package com.pch.gateway.config;
 
-import java.net.URI;
-
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -33,6 +31,7 @@ public class GlobalRouterFilter implements GlobalFilter, Ordered {
         exchange.getAttributes().put("requestTimeBegin", System.currentTimeMillis());
         return chain.filter(exchange).then(
                 Mono.fromRunnable(() -> {
+                    // todo 权限判断 日志记录
                     Long startTime = exchange.getAttribute("requestTimeBegin");
                     if (startTime != null) {
                         log.info(exchange.getRequest().getURI().getRawPath() + ": " + (System.currentTimeMillis() - startTime) + "ms");
@@ -43,6 +42,6 @@ public class GlobalRouterFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return -1;
     }
 }

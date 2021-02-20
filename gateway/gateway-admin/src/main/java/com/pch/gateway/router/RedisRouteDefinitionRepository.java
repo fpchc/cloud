@@ -45,14 +45,17 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     }
 
     private Flux<RouteDefinition> getDefinitionFlux() {
-        List<RouteDefinition> routeDefinitions = new ArrayList<>();
-        Set<String> keys = redisTemplate.keys(GatewayRouteEvent.GATEWAY_ROUTES + "*");
-        if (CollectionUtils.isEmpty(keys)) {
+        Set<String> routeKeys = getGatewayRouteKeys();
+        if (CollectionUtils.isEmpty(routeKeys)) {
             return Flux.empty();
         }
-        Set<String> collect = keys.stream().map(String ->
-                String.replace(GatewayRouteEvent.GATEWAY_ROUTES, StringUtils.EMPTY)).collect(Collectors.toSet());
-        Map<String, RouteDefinition> routeDefinitionMap = gatewayRouteCache.getAll(collect);
+        List<RouteDefinition> routeDefinitions = getRouteDefinitions(routeKeys);
+        return Flux.fromIterable(routeDefinitions);
+    }
+
+    public List<RouteDefinition> getRouteDefinitions(Set<String> routeKeys) {
+        Map<String, RouteDefinition> routeDefinitionMap = gatewayRouteCache.getAll(routeKeys);
+        List<RouteDefinition> routeDefinitions = new ArrayList<>();
         routeDefinitionMap.values().forEach(routeDefinition -> {
             try {
                 routeDefinition.setUri(new URI(routeDefinition.getUri().toASCIIString()));
@@ -62,7 +65,16 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
             routeDefinitions.add(routeDefinition);
         });
         log.info("route info:{}", routeDefinitions);
-        return Flux.fromIterable(routeDefinitions);
+        return routeDefinitions;
+    }
+
+    public Set<String> getGatewayRouteKeys() {
+        Set<String> keys = redisTemplate.keys(GatewayRouteEvent.GATEWAY_ROUTES + "*");
+        if (CollectionUtils.isEmpty(keys)) {
+            return null;
+        }
+        return keys.stream().map(String ->
+                String.replace(GatewayRouteEvent.GATEWAY_ROUTES, StringUtils.EMPTY)).collect(Collectors.toSet());
     }
 
     @Override
