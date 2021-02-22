@@ -1,13 +1,12 @@
 spring:
   rabbitmq:
-    host: ${RABBIT_MQ_HOST:localhost}
+    host: ${RABBIT_MQ_HOST:127.0.0.1}
     port: ${RABBIT_MQ_PORT:5672}
-    username: ${RABBIT_MQ_USERNAME:admin}
-    password: ${RABBIT_MQ_PASSWORD:admin}
-    virtual-host: my_vhost
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
   redis:
     database: 11
-    host: ${REDIS_HOST:localhost}
+    host: ${REDIS_HOST:127.0.0.1}
     port: ${REDIS_PORT:6379}
     #password: ${REDIS_PASSWORD:}
     lettuce:
@@ -15,7 +14,7 @@ spring:
         max-active: 300
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
@@ -65,7 +64,7 @@ jetcache:
       expireAfterWriteInMillis: 3600000
       # readFrom: slavePreferred # 优先从Slave节点中读取
       # uri: redis-sentinel://host1:26379,host2:26379,host3:26379/?sentinelMasterId=mymaster # 哨兵模式
-      uri: redis://192.168.0.104:6379/11 # 单节点模式
+      uri: redis://127.0.0.1:6379/11 # 单节点模式
       # mode: masterslave # 设置为主从模式
       # uri: # 集群模式
       # - redis://127.0.0.1:7000

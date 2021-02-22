@@ -1,7 +1,5 @@
 server:
-  port: 80
-  servlet:
-    context-path: /gateway-service
+  port: 8091
 
 spring:
   application:

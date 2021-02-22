@@ -1,4 +1,4 @@
-package com.pch.auth.config;
+package com.pch.gateway.config;
 
 import java.util.List;
 
@@ -21,26 +21,29 @@ import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * <P> swagger 文档配置类 </P>
  *
+ *
  * @Author: pch
  * @Date: 2021/2/21
  */
-@Configuration
-@EnableSwagger2WebMvc
-@Import(BeanValidatorPluginsConfiguration.class)
+//@Configuration
+//@EnableSwagger2WebFlux
+//@Import(BeanValidatorPluginsConfiguration.class)
+// todo knife4j 目前不支持webflux
 public class SwaggerConfiguration {
 
-    @Bean(value = "authApi")
+    @Bean(value = "gatewayRouteApi")
     @Order(value = 1)
     public Docket groupRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(groupApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.pch.auth.rest"))
+                .apis(RequestHandlerSelectors.basePackage("com.pch.gateway.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(CollectionUtils.newArrayList(securityContext(), securityContext1()))
@@ -49,8 +52,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo groupApiInfo() {
         return new ApiInfoBuilder()
-                .title("权限管理")
-                .description("<div style='font-size:14px;color:red;'>权限管理 APIs</div>")
+                .title("路由管理")
+                .description("<div style='font-size:14px;color:red;'>路由管理 APIs</div>")
                 .termsOfServiceUrl("http://www.google.com")
                 .contact("group@qq.com")
                 .version("1.0")
