@@ -1,5 +1,7 @@
 package com.pch.gateway.service;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
@@ -48,4 +50,11 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @return 成功返回true
      */
     boolean overload();
+
+    /**
+     * 显示所有路由信息
+     *
+     * @return
+     */
+    List<GatewayRouteDto> findAll();
 }

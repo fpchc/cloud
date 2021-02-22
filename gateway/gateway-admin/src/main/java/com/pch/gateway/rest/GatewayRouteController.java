@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pch.gateway.model.dto.GatewayRouteDto;
 import com.pch.gateway.service.GatewayRouteService;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -25,20 +27,25 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping(value = "/gateway/route")
 public class GatewayRouteController {
 
-    @Autowired
-    private GatewayRouteService gatewayRouteService;
+    private final GatewayRouteService gatewayRouteService;
 
     @PostMapping("/add")
     public Mono<Boolean> add(@Valid @RequestBody GatewayRouteDto gatewayRouteDto) {
         return Mono.just(gatewayRouteService.saveOrUpdate(gatewayRouteDto));
     }
 
-    @GetMapping("/overload")
+    @PostMapping("/overload")
     public Mono<Boolean> overload() {
         return Mono.just(gatewayRouteService.overload());
+    }
+
+    @GetMapping("/findAll")
+    public Flux<GatewayRouteDto> findAll() {
+        return Flux.fromIterable(gatewayRouteService.findAll());
     }
 
     @DeleteMapping("/del/{id}")

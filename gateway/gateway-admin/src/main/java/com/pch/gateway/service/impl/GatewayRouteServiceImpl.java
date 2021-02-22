@@ -3,6 +3,7 @@ package com.pch.gateway.service.impl;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
@@ -48,6 +49,10 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
     @Override
     public GatewayRouteDto get(String id) {
         GatewayRoutePo gatewayRoutePo = this.getById(id);
+        return getGatewayRouteDto(gatewayRoutePo);
+    }
+
+    private GatewayRouteDto getGatewayRouteDto(GatewayRoutePo gatewayRoutePo) {
         GatewayRouteDto gatewayRouteDto = new GatewayRouteDto();
         BeanUtils.copyProperties(gatewayRoutePo, gatewayRouteDto);
         try {
@@ -75,6 +80,12 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
         gatewayRouteCache.remove(id);
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return isSuccess;
+    }
+
+    @Override
+    public List<GatewayRouteDto> findAll() {
+        List<GatewayRoutePo> gatewayRoutes = this.list(new QueryWrapper<>());
+        return gatewayRoutes.stream().map(this::getGatewayRouteDto).collect(Collectors.toList());
     }
 
     @Override

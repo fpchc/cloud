@@ -1,5 +1,6 @@
 package com.pch.gateway.rest;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
+import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
@@ -21,7 +24,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
  * 2020年10月29日 18:38:01
  */
 @RestController
-public class SwaggerHandler {
+public class SwaggerController {
 
     @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;
@@ -32,7 +35,7 @@ public class SwaggerHandler {
     private final SwaggerResourcesProvider swaggerResources;
 
     @Autowired
-    public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {
+    public SwaggerController(SwaggerResourcesProvider swaggerResources) {
         this.swaggerResources = swaggerResources;
     }
 
@@ -50,7 +53,7 @@ public class SwaggerHandler {
     }
 
     @GetMapping("/swagger-resources")
-    public Mono<ResponseEntity> swaggerResources() {
+    public Mono<ResponseEntity<List<SwaggerResource>>> swaggerResources() {
         return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
     }
 }

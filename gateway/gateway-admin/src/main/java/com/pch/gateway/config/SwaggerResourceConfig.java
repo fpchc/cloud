@@ -34,6 +34,8 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
 
     private final RedisRouteDefinitionRepository routeDefinitionRepository;
 
+    private static final String PREDICATE_KEY = "pattern";
+
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
@@ -42,7 +44,7 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         routeDefinitions.forEach(route -> route.getPredicates().stream()
                 .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
                 .forEach(predicateDefinition -> resources.add(swaggerResource(route.getId(),
-                        predicateDefinition.getArgs().get("pattern").replace("**", "v2/api-docs")))));
+                        predicateDefinition.getArgs().get(PREDICATE_KEY).replace("**", "v2/api-docs")))));
         return resources;
     }
 
