@@ -3,6 +3,7 @@ package com.pch.gateway.service.impl;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -10,10 +11,12 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
@@ -25,7 +28,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pch.gateway.event.GatewayRouteEvent;
 import com.pch.gateway.event.GatewayRouteListener;
-import com.pch.gateway.mapper.RouteMapper;
+import com.pch.gateway.mapper.RouteRepository;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
 import com.pch.gateway.service.GatewayRouteService;
@@ -38,18 +41,20 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRoutePo>
-        implements GatewayRouteService, ApplicationContextAware {
+public class GatewayRouteServiceImpl implements GatewayRouteService, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private RouteRepository routeRepository;
 
     @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
-    public GatewayRouteDto get(String id) {
-        GatewayRoutePo gatewayRoutePo = this.getById(id);
-        return getGatewayRouteDto(gatewayRoutePo);
+    public Optional<GatewayRouteDto> get(String id) {
+        Optional<GatewayRoutePo> gatewayRoutePo = routeRepository.findById(id);
+        return gatewayRoutePo.map(this::getGatewayRouteDto);
     }
 
     private GatewayRouteDto getGatewayRouteDto(GatewayRoutePo gatewayRoutePo) {
@@ -66,15 +71,17 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
     }
 
     @Override
-    public boolean saveOrUpdate(GatewayRouteDto gatewayRouteDto) {
-        boolean isSuccess = this.saveOrUpdate(gatewayRouteDto.toPo());
-        RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRouteDto.toPo());
+    @Transactional
+    public String saveOrUpdate(GatewayRouteDto gatewayRouteDto) {
+        GatewayRoutePo gatewayRoutePo = routeRepository.save(gatewayRouteDto.toPo());
+        RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
         gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
-        return isSuccess;
+        return routeDefinition.getId();
     }
 
     @Override
+    @Transactional
     public boolean delete(String id) {
         boolean isSuccess = this.delete(id);
         gatewayRouteCache.remove(id);
@@ -84,14 +91,14 @@ public class GatewayRouteServiceImpl extends ServiceImpl<RouteMapper, GatewayRou
 
     @Override
     public List<GatewayRouteDto> findAll() {
-        List<GatewayRoutePo> gatewayRoutes = this.list(new QueryWrapper<>());
+        List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
         return gatewayRoutes.stream().map(this::getGatewayRouteDto).collect(Collectors.toList());
     }
 
     @Override
     @PostConstruct
     public boolean overload() {
-        List<GatewayRoutePo> gatewayRoutes = this.list(new QueryWrapper<>());
+        List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
         gatewayRoutes.forEach(gatewayRoute ->
                 gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
         );

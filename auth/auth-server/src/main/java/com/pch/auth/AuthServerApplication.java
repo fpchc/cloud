@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
@@ -14,11 +15,12 @@ import com.alicp.jetcache.anno.config.EnableMethodCache;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableCreateCacheAnnotation
+@EnableTransactionManagement(proxyTargetClass = true)
 @EnableMethodCache(basePackages = { "com.pch" })
-public class AuthApplication {
+public class AuthServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        SpringApplication.run(AuthServerApplication.class, args);
     }
 
 }

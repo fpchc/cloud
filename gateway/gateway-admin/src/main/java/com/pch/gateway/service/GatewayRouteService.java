@@ -1,6 +1,7 @@
 package com.pch.gateway.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pch.gateway.model.domain.GatewayRoutePo;
@@ -12,7 +13,7 @@ import com.pch.gateway.model.dto.GatewayRouteDto;
  * @Author: pch
  * @Date: 2021/01/19 15:24
  */
-public interface GatewayRouteService extends IService<GatewayRoutePo> {
+public interface GatewayRouteService {
 
     /**
      * 获取网关路由
@@ -20,7 +21,7 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @param id
      * @return
      */
-    GatewayRouteDto get(String id);
+    Optional<GatewayRouteDto> get(String id);
 
     /**
      * 新增网关路由
@@ -28,7 +29,7 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @param gatewayRouteDto
      * @return
      */
-    boolean saveOrUpdate(GatewayRouteDto gatewayRouteDto);
+    String saveOrUpdate(GatewayRouteDto gatewayRouteDto);
 
     /**
      * 查询网关路由

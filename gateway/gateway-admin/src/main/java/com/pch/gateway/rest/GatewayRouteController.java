@@ -34,7 +34,7 @@ public class GatewayRouteController {
     private final GatewayRouteService gatewayRouteService;
 
     @PostMapping("/add")
-    public Mono<Boolean> add(@Valid @RequestBody GatewayRouteDto gatewayRouteDto) {
+    public Mono<String> add(@Valid @RequestBody GatewayRouteDto gatewayRouteDto) {
         return Mono.just(gatewayRouteService.saveOrUpdate(gatewayRouteDto));
     }
 
