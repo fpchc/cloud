@@ -13,14 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommonResult<T> implements Serializable {
 
-    private static final long serialVersionUID = -7327749889983711127L;
+    private static final Long serialVersionUID = -7327749889983711127L;
 
     /**
      * 成功返回编码
      */
-    private static final Long SUCCESS_CODE = 0L;
+    private static final String SUCCESS_CODE = "0";
 
-    private Long code;
+    private String code;
 
     private String message;
 
@@ -69,8 +69,18 @@ public class CommonResult<T> implements Serializable {
      * @param errorCode 错误码
      * @param message   错误信息
      */
-    public static <T> CommonResult<T> failed(Long errorCode, String message) {
+    public static <T> CommonResult<T> failed(String errorCode, String message) {
         return new CommonResult<>(errorCode, message, null);
+    }
+
+    /**
+     * 失败返回结果
+     *
+     * @param errorCode 错误码
+     * @param data   错误信息
+     */
+    public static <T> CommonResult<T> failed(String errorCode, T data) {
+        return new CommonResult<>(errorCode, null, data);
     }
 
     /**
@@ -121,11 +131,11 @@ public class CommonResult<T> implements Serializable {
                 ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

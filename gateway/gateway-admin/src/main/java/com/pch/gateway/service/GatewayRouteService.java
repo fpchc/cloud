@@ -3,8 +3,6 @@ package com.pch.gateway.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
 
 /**

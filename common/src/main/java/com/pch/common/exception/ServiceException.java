@@ -17,7 +17,7 @@ public class ServiceException extends RuntimeException {
     /**
      * 错误编码
      */
-    private Long code;
+    private String code;
 
     /**
      * 错误信息

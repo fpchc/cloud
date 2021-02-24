@@ -5,7 +5,7 @@ package com.pch.common.response;
  */
 public interface IErrorCode {
 
-    Long getCode();
+    String getCode();
 
     String getMessage();
 }

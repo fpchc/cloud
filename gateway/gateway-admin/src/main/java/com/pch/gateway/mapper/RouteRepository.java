@@ -2,7 +2,6 @@ package com.pch.gateway.mapper;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 
 /**
