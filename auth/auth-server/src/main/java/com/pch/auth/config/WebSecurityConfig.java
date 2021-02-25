@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/assets/**", "/css/**", "/images/**", "swagger-ui.html", "doc.html",
-                "webjars/**", "/v2/api-docs", "/user/register", "/user/login");
+                "webjars/**", "/v2/api-docs", "/user/**", "/role/**", "/permission/**");
     }
 
     @Override
@@ -52,9 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll();
+                .anyRequest().authenticated();
 
     }
 

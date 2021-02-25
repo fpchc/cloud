@@ -17,7 +17,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
-import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -43,8 +42,8 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.pch.auth.rest"))
                 .paths(PathSelectors.any())
                 .build()
-                .securityContexts(CollectionUtils.newArrayList(securityContext(), securityContext1()))
-                .securitySchemes(CollectionUtils.<SecurityScheme>newArrayList(apiKey(), apiKey1()));
+                .securityContexts(CollectionUtils.newArrayList(securityContext()))
+                .securitySchemes(CollectionUtils.newArrayList(apiKey()));
     }
 
     private ApiInfo groupApiInfo() {
@@ -62,20 +61,9 @@ public class SwaggerConfiguration {
         return new ApiKey("BearerToken", "Authorization", "header");
     }
 
-    private ApiKey apiKey1() {
-        return new ApiKey("BearerToken1", "Authorization-x", "header");
-    }
-
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/.*"))
-                .build();
-    }
-
-    private SecurityContext securityContext1() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth1())
                 .forPaths(PathSelectors.regex("/.*"))
                 .build();
     }
@@ -85,13 +73,6 @@ public class SwaggerConfiguration {
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return CollectionUtils.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
-    }
-
-    List<SecurityReference> defaultAuth1() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return CollectionUtils.newArrayList(new SecurityReference("BearerToken1", authorizationScopes));
     }
 
 }

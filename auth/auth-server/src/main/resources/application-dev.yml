@@ -47,6 +47,12 @@ spring:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  security:
+    oauth2:
+      jwt:
+        signingKey: my_user_demo #JWT加解密使用的密钥
+
+
 jetcache:
   statIntervalMinutes: 60
   areaInCacheName: false

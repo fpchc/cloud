@@ -1,13 +1,15 @@
-package com.pch.auth.domain;
+package com.pch.auth.model.domain;
 
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.pch.common.base.BasePo;
 
@@ -15,21 +17,31 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author ChengJianSheng
- * @date 2019-02-11
+ * @Author: pch
+ * @Date: 2020/9/11
  */
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(schema = "permission", name = "tb_role")
-public class RolePo extends BasePo {
-    private static final long serialVersionUID = -7136537864183138269L;
+@EntityListeners({ AuditingEntityListener.class })
+@Table(name = "tb_permission")
+public class PermissionPo extends BasePo {
+    private static final long serialVersionUID = 4285835478693487481L;
 
-    private String roleName;
+    private Integer pid;
 
-    private String roleCode;
+    private Integer type;
 
-    private String roleDescription;
+    @Column(length = 50)
+    private String name;
+
+    @Column(length = 50)
+    private String code;
+
+    @Column(length = 150)
+    private String uri;
+
+    private Integer seq = 1;
 
     @Column(updatable = false, length = 32)
     private String createBy;
@@ -52,4 +64,5 @@ public class RolePo extends BasePo {
      */
     @UpdateTimestamp
     private LocalDateTime updateTime;
+
 }

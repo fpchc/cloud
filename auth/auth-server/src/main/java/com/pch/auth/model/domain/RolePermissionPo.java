@@ -1,4 +1,4 @@
-package com.pch.auth.domain;
+package com.pch.auth.model.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -9,14 +9,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @author ChengJianSheng
- * @date 2019-02-12
+ * @Author: pch
+ * @Date: 2020/9/11
  */
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(schema = "permission", name = "tb_role_permission")
+@Table(name = "tb_role_permission")
 public class RolePermissionPo extends BasePo {
+
     private static final long serialVersionUID = 7402412601579098788L;
 
     private Long roleId;

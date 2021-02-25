@@ -1,4 +1,4 @@
-package com.pch.auth.domain;
+package com.pch.auth.model.domain;
 
 import java.time.LocalDateTime;
 
@@ -17,9 +17,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 用户
- * @author: pch
- * @date: 2020/9/11
+ * @Author: pch
+ * @Date: 2020/9/11
  */
 @Data
 @Entity
@@ -45,7 +44,7 @@ public class UserPo extends BasePo {
     /**
      * 密码
      */
-    @Column(length = 64)
+    @Column(length = 150)
     private String password;
 
     /**

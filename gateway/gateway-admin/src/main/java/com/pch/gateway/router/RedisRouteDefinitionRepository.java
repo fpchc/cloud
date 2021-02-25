@@ -36,7 +36,7 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = 0)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override

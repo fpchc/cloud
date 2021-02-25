@@ -2,7 +2,8 @@ package com.pch.auth.service;
 
 import java.util.List;
 
-import com.pch.auth.domain.PermissionPo;
+import com.pch.auth.model.domain.PermissionPo;
+import com.pch.auth.model.dto.PermissionDto;
 
 /**
  * @Author: pch
@@ -17,4 +18,8 @@ public interface PermissionService {
      * @return
      */
     List<PermissionPo> findByUserId(Long userId);
+
+    PermissionDto findById(Long id);
+
+    Long add(PermissionDto permissionDto);
 }

@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import com.pch.auth.domain.UserPo;
+import com.pch.auth.model.domain.UserPo;
 import com.pch.common.constant.RabbitMQConstant;
 
 import lombok.extern.slf4j.Slf4j;

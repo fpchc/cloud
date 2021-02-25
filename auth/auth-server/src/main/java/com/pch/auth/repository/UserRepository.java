@@ -3,7 +3,7 @@ package com.pch.auth.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.pch.auth.domain.UserPo;
+import com.pch.auth.model.domain.UserPo;
 
 /**
  * @Author: pch
