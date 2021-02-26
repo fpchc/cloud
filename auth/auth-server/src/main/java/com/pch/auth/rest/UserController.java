@@ -32,8 +32,8 @@ public class UserController {
 
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("添加用户")
-    public CommonResult<Long> add(@Valid @RequestBody UserDto userDto) {
-        return CommonResult.success(userService.add(userDto));
+    public CommonResult<Long> add(@Valid @RequestBody UserVO userVO) {
+        return CommonResult.success(userService.add(userVO));
     }
 
     @PostMapping(value = "/user/bindRole", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -43,6 +43,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/user/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("用户登录")
     public CommonResult<String> login(@Valid @RequestBody UserVO userVO) {
         return CommonResult.success(userService.login(userVO));
     }

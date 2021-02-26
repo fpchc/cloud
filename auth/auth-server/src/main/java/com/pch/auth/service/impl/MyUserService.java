@@ -54,6 +54,6 @@ public class MyUserService implements UserDetailsService {
         for (PermissionPo permissionPo : permissionPos) {
             authorityList.add(new SimpleGrantedAuthority(permissionPo.getCode()));
         }
-        return new User(username, passwordEncoder.encode(userPo.getPassword()), authorityList);
+        return new User(username, userPo.getPassword(), authorityList);
     }
 }

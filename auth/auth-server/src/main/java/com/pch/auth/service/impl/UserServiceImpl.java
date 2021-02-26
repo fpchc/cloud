@@ -25,10 +25,13 @@ import com.pch.auth.repository.UserRoleRepository;
 import com.pch.auth.service.UserService;
 import com.pch.common.exception.ServiceException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @Author: pch
  * @Date: 2021/2/23
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -43,9 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Long add(UserDto userDto) {
+    public Long add(UserVO userVO) {
         UserPo userPo = new UserPo();
-        BeanUtils.copyProperties(userDto, userPo);
+        BeanUtils.copyProperties(userVO, userPo);
         userPo.setPassword(passwordEncoder.encode(userPo.getPassword()));
         userPo.setEnable(true);
         UserPo save = userRepository.save(userPo);
@@ -67,7 +70,7 @@ public class UserServiceImpl implements UserService {
                 userDetails, null, userDetails.getAuthorities()
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return null;
+        return "success";
     }
 
     @Override

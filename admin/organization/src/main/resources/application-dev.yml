@@ -109,7 +109,5 @@ logging:
   level:
     root: info
     com.pch.gateway.mapper: debug
-    org.springframework.security: debug
-
   file:
-    path: D:/pch/log/auth # 开发日志路径
+    path: D:/pch/log/organization # 开发日志路径

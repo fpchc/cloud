@@ -13,7 +13,7 @@ public interface UserService {
 
     UserPo loadByUsername(String username);
 
-    Long add(UserDto userDto);
+    Long add(UserVO userVO);
 
     Boolean bindRoleIds(UserRoleDto userRoleDto);
 
