@@ -1,4 +1,4 @@
-package com.pch.gateway.exception;
+package com.pch.auth.exceaption;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

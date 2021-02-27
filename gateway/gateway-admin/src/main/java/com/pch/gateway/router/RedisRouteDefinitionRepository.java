@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.anno.CacheConsts;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.pch.gateway.event.GatewayRouteEvent;
@@ -36,7 +37,7 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = 0)
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = -1)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override

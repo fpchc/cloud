@@ -33,8 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MyUserService implements UserDetailsService {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
@@ -52,7 +50,7 @@ public class MyUserService implements UserDetailsService {
             throw new PermissionNotFoundException("this user bind permission is not exist");
         }
         for (PermissionPo permissionPo : permissionPos) {
-            authorityList.add(new SimpleGrantedAuthority(permissionPo.getCode()));
+            authorityList.add(new SimpleGrantedAuthority("ROlE_" + permissionPo.getCode()));
         }
         return new User(username, userPo.getPassword(), authorityList);
     }
