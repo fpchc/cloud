@@ -50,7 +50,7 @@ public class MyUserService implements UserDetailsService {
             throw new PermissionNotFoundException("this user bind permission is not exist");
         }
         for (PermissionPo permissionPo : permissionPos) {
-            authorityList.add(new SimpleGrantedAuthority("ROlE_" + permissionPo.getCode()));
+            authorityList.add(new SimpleGrantedAuthority(("ROlE_" + permissionPo.getCode()).toUpperCase()));
         }
         return new User(username, userPo.getPassword(), authorityList);
     }

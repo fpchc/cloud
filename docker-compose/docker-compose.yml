@@ -1,0 +1,50 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    volumes:
+      - D:\javaTool\docker\redis\redis.conf:/etc/redis/redis.conf
+      - D:\javaTool\docker\redis\data:/data
+    environment:
+      - REDIS_PASSWORD=root
+    networks:
+      - my-net
+    ports:
+      - 6379:6379
+    env_file: .env
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    volumes:
+      - D:\javaTool\docker\rabbitmq\data:/var/lib/rabbitmq
+    networks:
+      - my-net
+    ports:
+      - 5672:5672
+      - 15672:15672
+    env_file: .env
+
+  mysql:
+    image: mysql:8.0.22
+    container_name: mysql
+    restart: always
+    networks:
+      - my-net
+    ports:
+      - 3306:3306
+    volumes:
+      - D:\javaTool\docker\mysql\conf:/etc/mysql
+      - D:\javaTool\docker\mysql\logs:/var/log/mysql
+      - D:\javaTool\docker\mysql\logs\mysql-files:/var/lib/mysql-files/
+      - D:\javaTool\docker\mysql\data:/var/lib/mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+
+networks:
+  my-net:
+    external: false

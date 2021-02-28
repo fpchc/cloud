@@ -1,16 +1,9 @@
 package com.pch.auth.config;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,9 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
-                "/assets/**", "/css/**", "/images/**",
+                "/css/**", "/images/**", "/permission/**",
                 "swagger-ui.html", "doc.html", "webjars/**",
-                "/v2/api-docs", "/login"
+                "/v2/api-docs", "/login", "/user/**", "/role/**"
         );
     }
 
@@ -73,7 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(restfulAccessDeniedHandler())
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
-                .formLogin().permitAll()
+                .formLogin()
+                .loginProcessingUrl("/login") // 自定义登录请求路径(post)
+                .permitAll()
 
         ;
 

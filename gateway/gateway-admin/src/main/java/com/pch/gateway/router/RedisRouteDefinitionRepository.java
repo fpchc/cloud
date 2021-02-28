@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +38,8 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = -1)
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE,
+            expire = Integer.MAX_VALUE, timeUnit = TimeUnit.DAYS)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
