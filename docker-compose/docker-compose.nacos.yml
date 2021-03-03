@@ -9,7 +9,7 @@ services:
       - PREFER_HOST_MODE=hostname
       - MODE=standalone
     volumes:
-      - D:\javaTool\docker\nacos\data\nacos-server\logs/:/home/nacos/logs
+      - D:\javaTool\docker\nacos\data\nacos-server\logs:/home/nacos/logs
     ports:
       - "8848:8848"
 
