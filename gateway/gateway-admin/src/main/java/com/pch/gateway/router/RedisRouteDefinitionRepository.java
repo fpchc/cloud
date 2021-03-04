@@ -38,8 +38,9 @@ public class RedisRouteDefinitionRepository implements RouteDefinitionRepository
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    // 路由缓存存最大值
     @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE,
-            expire = Integer.MAX_VALUE, timeUnit = TimeUnit.DAYS)
+            expire = Integer.MAX_VALUE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override

@@ -27,7 +27,7 @@ public interface GatewayRouteService {
      * @param gatewayRouteDto
      * @return
      */
-    String saveOrUpdate(GatewayRouteDto gatewayRouteDto);
+    Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto);
 
     /**
      * 查询网关路由

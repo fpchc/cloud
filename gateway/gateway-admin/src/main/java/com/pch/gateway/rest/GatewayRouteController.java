@@ -1,5 +1,7 @@
 package com.pch.gateway.rest;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,8 @@ public class GatewayRouteController {
     private final GatewayRouteService gatewayRouteService;
 
     @PostMapping("/add")
-    public Mono<String> add(@Valid @RequestBody GatewayRouteDto gatewayRouteDto) {
-        return Mono.just(gatewayRouteService.saveOrUpdate(gatewayRouteDto));
+    public Mono<Boolean> add(@Valid @RequestBody List<GatewayRouteDto> gatewayRouteDtos) {
+        return Mono.just(gatewayRouteService.saveOrUpdate(gatewayRouteDtos));
     }
 
     @PostMapping("/overload")

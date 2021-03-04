@@ -44,16 +44,14 @@
     <file>${log.path}/log_debug.log</file>
     <!--日志文档输出格式-->
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
-      </pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
       <charset>UTF-8</charset> <!-- 设置字符集 -->
     </encoder>
     <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <!-- 日志归档 -->
-      <fileNamePattern>${log.path}/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <timeBasedFileNamingAndTriggeringPolicy
-          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+      <fileNamePattern>${log.path}/debug/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>100MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
       <!--日志文档保留天数-->
@@ -73,16 +71,14 @@
     <file>${log.path}/log_info.log</file>
     <!--日志文档输出格式-->
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
-      </pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
       <charset>UTF-8</charset>
     </encoder>
     <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <!-- 每天日志归档路径以及格式 -->
-      <fileNamePattern>${log.path}/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <timeBasedFileNamingAndTriggeringPolicy
-          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+      <fileNamePattern>${log.path}/info/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>100MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
       <!--日志文档保留天数-->
@@ -102,15 +98,13 @@
     <file>${log.path}/log_warn.log</file>
     <!--日志文档输出格式-->
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
-      </pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
       <charset>UTF-8</charset> <!-- 此处设置字符集 -->
     </encoder>
     <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${log.path}/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <timeBasedFileNamingAndTriggeringPolicy
-          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+      <fileNamePattern>${log.path}/warn/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>100MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
       <!--日志文档保留天数-->
@@ -130,15 +124,13 @@
     <file>${log.path}/log_error.log</file>
     <!--日志文档输出格式-->
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
-      </pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
       <charset>UTF-8</charset> <!-- 此处设置字符集 -->
     </encoder>
     <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${log.path}/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <timeBasedFileNamingAndTriggeringPolicy
-          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+      <fileNamePattern>${log.path}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>100MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
       <!--日志文档保留天数-->
@@ -183,22 +175,22 @@
   <!-- 4.1 开发环境:打印控制台-->
   <springProfile name="dev">
     <root level="debug">
-      <appender-ref ref="CONSOLE"/>
-      <appender-ref ref="DEBUG_FILE"/>
-      <appender-ref ref="INFO_FILE"/>
-      <appender-ref ref="WARN_FILE"/>
-      <appender-ref ref="ERROR_FILE"/>
+      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="DEBUG_FILE" />
+      <appender-ref ref="INFO_FILE" />
+      <appender-ref ref="WARN_FILE" />
+      <appender-ref ref="ERROR_FILE" />
     </root>
   </springProfile>
 
   <!--  4.2 生产环境:输出到文档-->
   <springProfile name="pro">
     <root level="info">
-      <appender-ref ref="CONSOLE"/>
-      <appender-ref ref="DEBUG_FILE"/>
-      <appender-ref ref="INFO_FILE"/>
-      <appender-ref ref="ERROR_FILE"/>
-      <appender-ref ref="WARN_FILE"/>
+      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="DEBUG_FILE" />
+      <appender-ref ref="INFO_FILE" />
+      <appender-ref ref="ERROR_FILE" />
+      <appender-ref ref="WARN_FILE" />
     </root>
   </springProfile>
 

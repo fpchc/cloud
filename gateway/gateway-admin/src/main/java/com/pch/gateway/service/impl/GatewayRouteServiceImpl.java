@@ -70,12 +70,15 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
 
     @Override
     @Transactional
-    public String saveOrUpdate(GatewayRouteDto gatewayRouteDto) {
-        GatewayRoutePo gatewayRoutePo = routeRepository.save(gatewayRouteDto.toPo());
-        RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
-        gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);
+    public Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto) {
+        List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDto.stream().map(GatewayRouteDto::toPo).collect(Collectors.toList());
+        routeRepository.saveAll(gatewayRoutePos);
+        gatewayRoutePos.forEach(gatewayRoutePo -> {
+            RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
+            gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);
+        });
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
-        return routeDefinition.getId();
+        return Boolean.TRUE;
     }
 
     @Override
