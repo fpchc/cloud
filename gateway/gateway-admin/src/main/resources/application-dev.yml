@@ -102,7 +102,6 @@ jetcache:
 logging:
   level:
     root: info
-    com.pch.gateway.mapper: debug
   file:
     path: D:/pch/log/gateway # 开发日志路径
 
