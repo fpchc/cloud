@@ -3,6 +3,7 @@ package com.pch.auth.authorization.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +21,7 @@ import com.pch.auth.authorization.repository.UserRoleRepository;
 import com.pch.auth.authorization.service.UserService;
 import com.pch.auth.authorization.model.domain.UserRolePo;
 import com.pch.auth.authorization.model.dto.UserRoleDto;
-import com.pch.auth.authorization.model.vo.UserVO;
+import com.pch.auth.authorization.model.vo.UserLoginVO;
 import com.pch.auth.authorization.model.domain.UserPo;
 import com.pch.common.exception.ServiceException;
 
@@ -36,16 +37,23 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserRoleRepository userRoleRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private MyUserService myUserService;
 
     @Override
     @Transactional
-    public Long add(UserVO userVO) {
+    public Long add(UserLoginVO userVO) {
+        Optional<UserPo> byUsername = userRepository.findByUsername(userVO.getUsername());
+        if (byUsername.isPresent()) {
+            throw new ServiceException("", "");
+        }
         UserPo userPo = new UserPo();
         BeanUtils.copyProperties(userVO, userPo);
         userPo.setPassword(passwordEncoder.encode(userPo.getPassword()));
@@ -55,22 +63,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(UserVO userVO) {
-        UserPo userPo = userRepository.findByUsername(userVO.getUsername());
-        if (userPo == null) {
+    public String login(UserLoginVO userVO) {
+        Optional<UserPo> byUsername = userRepository.findByUsername(userVO.getUsername());
+        if (!byUsername.isPresent()) {
             throw new UsernameNotFoundException("username is not exist");
         }
-        String admin = passwordEncoder.encode("admin");
-        System.out.println(admin);
-        boolean matches = passwordEncoder.matches(userVO.getPassword(), userPo.getPassword());
-        if (!matches) {
-            throw new ServiceException("", "password is not matches");
-        }
-        UserDetails userDetails = myUserService.loadUserByUsername(userVO.getUsername());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities()
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        byUsername.ifPresent(userPo -> {
+            if (!passwordEncoder.matches(userVO.getPassword(), userPo.getPassword())) {
+                throw new ServiceException("", "password is not matches");
+            }
+            UserDetails userDetails = myUserService.loadUserByUsername(userVO.getUsername());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        });
         return "success";
     }
 
@@ -90,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPo loadByUsername(String username) {
+    public Optional<UserPo> loadByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 }

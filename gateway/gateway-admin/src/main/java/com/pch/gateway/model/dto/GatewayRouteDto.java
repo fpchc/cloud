@@ -34,25 +34,19 @@ public class GatewayRouteDto extends BaseDto {
 
     private static final long serialVersionUID = -6945274367384292505L;
 
-    //    @NotBlank(message = "路由id不能为空")
-//    @ApiModelProperty(value = "网关路由id")
-    private String id = "auth-service";
+    @NotBlank(message = "路由id不能为空")
+    private String id;
 
     @NotEmpty(message = "网关断言不能为空")
-//    @ApiModelProperty(value = "网关断言")
     private List<PredicateDefinition> predicates = new ArrayList<>();
 
-    //    @ApiModelProperty(value = "网关过滤器信息")
     private List<FilterDefinition> filters = new ArrayList<>();
 
     @NotBlank(message = "uri不能为空")
-//    @ApiModelProperty(value = "网关uri")
     private String uri;
 
-    //    @ApiModelProperty(value = "排序")
     private Integer orders = 0;
 
-    //    @ApiModelProperty(value = "网关路由描述信息")
     private String description;
 
     public GatewayRoutePo toPo() {

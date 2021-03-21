@@ -84,10 +84,10 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     @Override
     @Transactional
     public boolean delete(String id) {
-        boolean isSuccess = this.delete(id);
+        routeRepository.deleteById(id);
         gatewayRouteCache.remove(id);
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
-        return isSuccess;
+        return true;
     }
 
     @Override

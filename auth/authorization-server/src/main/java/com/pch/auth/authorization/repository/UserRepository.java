@@ -1,5 +1,6 @@
 package com.pch.auth.authorization.repository;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -12,5 +13,5 @@ import com.pch.auth.authorization.model.domain.UserPo;
 public interface UserRepository extends JpaSpecificationExecutor<UserPo>,
         JpaRepository<UserPo, Integer> {
 
-    UserPo findByUsername(String username);
+    Optional<UserPo> findByUsername(String username);
 }
