@@ -1,11 +1,11 @@
 server:
   port: 8002
   servlet:
-    context-path: /authenticaion
+    context-path: /authentication
 
 spring:
   application:
-    name: authenticaion-service
+    name: authentication-service
   cloud:
     nacos:
       discovery:
