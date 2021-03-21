@@ -35,6 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/oauth/**").permitAll()
                 .antMatchers(
                         "/swagger-ui.html", "/doc.html",
                         "/webjars/**", "/v2/api-docs"

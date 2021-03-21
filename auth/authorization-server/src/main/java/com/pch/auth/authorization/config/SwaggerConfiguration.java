@@ -39,7 +39,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(groupApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.pch.auth.rest"))
+                .apis(RequestHandlerSelectors.basePackage("com.pch.auth.authorization.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(CollectionUtils.newArrayList(securityContext()))
