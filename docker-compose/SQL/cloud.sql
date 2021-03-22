@@ -3,15 +3,15 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : MySQL
- Source Server Version : 80022
- Source Host           : 127.0.0.1:3306
+ Source Server Version : 80023
+ Source Host           : localhost:3306
  Source Schema         : cloud
 
  Target Server Type    : MySQL
- Target Server Version : 80022
+ Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 28/02/2021 21:08:51
+ Date: 21/03/2021 13:12:08
 */
 
 SET NAMES utf8mb4;
@@ -74,7 +74,7 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('test_client', NULL, '$2aC', 'read', 'client_credentials,authorization_code,mobile,password,refresh_token', 'http://baidu.com', NULL, 7200, 108000, NULL, NULL);
+INSERT INTO `oauth_client_details` VALUES ('client_id', NULL, '$2a$10$MIMYGgJDTPAKmaULX/0vYe/J5PvfoOdJHSil6uNTx1LKslKnGDQGC', 'read', 'client_credentials,authorization_code,mobile,password,refresh_token', 'http://baidu.com', NULL, 7200, 108000, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for oauth_client_token
@@ -140,7 +140,8 @@ CREATE TABLE `tb_gateway_route`  (
 -- ----------------------------
 -- Records of tb_gateway_route
 -- ----------------------------
-INSERT INTO `tb_gateway_route` VALUES ('auth-service', '2021-02-28 04:09:57', NULL, '[]', '2021-02-28 04:09:57', 0, '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/auth/**\"}}]', 'Y', 'lb://auth-service', 0);
+INSERT INTO `tb_gateway_route` VALUES ('authentication-service', '2021-03-20 11:51:08', NULL, '[]', '2021-03-20 11:51:08', 0, '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/authentication/**\"}}]', 'Y', 'lb://authentication-service', 0);
+INSERT INTO `tb_gateway_route` VALUES ('authorization-service', '2021-03-20 11:51:08', NULL, '[]', '2021-03-20 11:51:08', 0, '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/authorization/**\"}}]', 'Y', 'lb://authorization-service', 0);
 
 -- ----------------------------
 -- Table structure for tb_permission
@@ -204,7 +205,7 @@ CREATE TABLE `tb_role_permission`  (
 -- ----------------------------
 -- Records of tb_role_permission
 -- ----------------------------
-INSERT INTO `tb_role_permission` VALUES (1, 0, 1365931042782973952, 1365931042782973952);
+INSERT INTO `tb_role_permission` VALUES (1, 0, 1365931476583059456, 1365931042782973952);
 
 -- ----------------------------
 -- Table structure for tb_user
@@ -230,7 +231,7 @@ CREATE TABLE `tb_user`  (
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES (1365930890148057088, 0, NULL, '2021-02-28 07:44:37', NULL, b'1', NULL, '$2a$10$4TFGNhecr0.g88OsxQmP2.F9VD7f3RQNwZFz7ZLQ4ZvjNmqEUh28a', NULL, NULL, '2021-02-28 07:44:37', NULL, 'admin');
+INSERT INTO `tb_user` VALUES (1365930890148057088, 0, NULL, '2021-02-28 07:44:37', NULL, b'1', NULL, '$2a$10$ffJVR33Dh6NtngiJTOvF5.aI2olZuRBS/fwN0Y4rbBHUn7oQ2jweC', NULL, NULL, '2021-02-28 07:44:37', NULL, 'admin');
 
 -- ----------------------------
 -- Table structure for tb_user_role

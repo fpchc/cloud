@@ -2,7 +2,8 @@ package com.pch.auth.authorization.service;
 
 import com.pch.auth.authorization.model.domain.UserPo;
 import com.pch.auth.authorization.model.dto.UserRoleDto;
-import com.pch.auth.authorization.model.vo.UserVO;
+import com.pch.auth.authorization.model.vo.UserLoginVO;
+import java.util.Optional;
 
 /**
  * @Author: pch
@@ -10,11 +11,11 @@ import com.pch.auth.authorization.model.vo.UserVO;
  */
 public interface UserService {
 
-    UserPo loadByUsername(String username);
+    Optional<UserPo> loadByUsername(String username);
 
-    Long add(UserVO userVO);
+    Long add(UserLoginVO userVO);
 
     Boolean bindRoleIds(UserRoleDto userRoleDto);
 
-    String login(UserVO userVO);
+    String login(UserLoginVO userVO);
 }

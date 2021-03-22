@@ -3,8 +3,12 @@ package com.pch.auth.authorization.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,11 +39,12 @@ public class MyUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserPo userPo = userService.loadByUsername(username);
-        if (null == userPo) {
+        Optional<UserPo> userPoOptional = userService.loadByUsername(username);
+        if (userPoOptional.isEmpty()) {
             log.warn("用户{}不存在", username);
             throw new UsernameNotFoundException(username + "username is not exist");
         }
+        UserPo userPo = userPoOptional.get();
         List<PermissionPo> permissionPos = permissionService.findByUserId(userPo.getId());
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         if (CollectionUtils.isEmpty(permissionPos)) {
@@ -48,6 +53,11 @@ public class MyUserService implements UserDetailsService {
         for (PermissionPo permissionPo : permissionPos) {
             authorityList.add(new SimpleGrantedAuthority(("ROlE_" + permissionPo.getCode()).toUpperCase()));
         }
-        return new User(username, userPo.getPassword(), authorityList);
+        UserDetails userDetails = new User(username, userPo.getPassword(), authorityList);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return userDetails;
     }
 }

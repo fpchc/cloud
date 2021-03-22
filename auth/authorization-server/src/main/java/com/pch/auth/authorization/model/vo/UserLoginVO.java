@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @ApiModel("用户登录模型")
 @EqualsAndHashCode(callSuper = true)
-public class UserVO extends BaseVo {
+public class UserLoginVO extends BaseVo {
 
     private static final long serialVersionUID = 2085570980822071154L;
 

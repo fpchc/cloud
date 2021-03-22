@@ -1,31 +1,70 @@
 version: '3'
 services:
-  nacos:
-    image: nacos/nacos-server:1.1.3
-    container_name: nacos-standalone
+  mysql:
+    image: mysql:8.0
     networks:
-      - sr-net
-    environment:
-      - PREFER_HOST_MODE=hostname
-      - MODE=standalone
-    volumes:
-      - D:\javaTool\docker\nacos\data\nacos-server\logs:/home/nacos/logs
+      - my-net
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysql8
+    restart: always
     ports:
-      - "8848:8848"
+      - 3306:3306
+    volumes:
+      - D:\docker\mysql\conf:/etc/mysql
+      - D:\docker\mysql\logs:/var/log/mysql
+      - D:\docker\mysql\logs\mysql-files:/var/lib/mysql-files/
+      - D:\docker\mysql\data:/var/lib/mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+
+  nacos:
+    image: nacos/nacos-server:1.4.1
+    container_name: nacos
+    networks:
+      - my-net
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      PREFER_HOST_MODE: hostname #如果支持主机名可以使用hostname,否则使用ip，默认也是ip
+      SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty
+      MODE: standalone
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      NACOS_APPLICATION_PORT: 8848
+      JVM_XMS: 512m
+      JVM_MMS: 320m
+    volumes:
+      - D:\docker\nacos\standalone-logs/:/home/nacos/logs
+      - D:\docker\nacos\plugins\:/home/nacos/plugins
+      - D:\docker\nacos\conf\application.properties:/home/nacos/conf/application.properties
+    ports:
+      - 8848:8848
 
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
-    networks:
-      - sr-net
-#    volumes:
-#      - D:\javaTool\docker\prometheus\nacos\prometheus.yaml:/etc/prometheus/prometheus.yml
+    volumes:
+      - D:\docker\nacos\prometheus\prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - 9090:9090
     depends_on:
       - nacos
     restart: on-failure
 
+  grafana:
+    container_name: grafana
+    networks:
+      - my-net
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    restart: on-failure
+
 networks:
-  sr-net:
-    driver: bridge
+  my-net:
+    external: false
