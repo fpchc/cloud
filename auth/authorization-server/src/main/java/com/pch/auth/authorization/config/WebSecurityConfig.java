@@ -1,5 +1,7 @@
 package com.pch.auth.authorization.config;
 
+import com.pch.auth.authorization.oauth2.MobileUserDetailsService;
+import com.pch.auth.authorization.oauth2.granter.MobileAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -28,21 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("myUserDetailsService")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    @Qualifier("mobileUserDetailsService")
+    private MobileUserDetailsService mobileUserDetailsService;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    /**
-     * 注入自定义的userDetailsService实现，获取用户信息，设置密码加密方式
-     *
-     * @param auth
-     * @throws Exception
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -57,32 +52,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
+//                .and()
+//                .exceptionHandling()
+//                .accessDeniedHandler(restfulAccessDeniedHandler())
+//                .authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
-                .exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler())
-                .authenticationEntryPoint(restAuthenticationEntryPoint())
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/login") // 自定义登录请求路径(post)
-                .permitAll()
-
+                .formLogin().permitAll()
         ;
-
     }
 
-    private AuthenticationEntryPoint restAuthenticationEntryPoint() {
-        return new RestAuthenticationEntryPoint();
-    }
-
-    private AccessDeniedHandler restfulAccessDeniedHandler() {
-        return new RestfulAccessDeniedHandler();
+    /**
+     * 注入自定义的userDetailsService实现，获取用户信息，设置密码加密方式
+     *
+     * @param authenticationManagerBuilder
+     * @throws Exception
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+        // 设置手机验证码登陆的AuthenticationProvider
+        authenticationManagerBuilder.authenticationProvider(mobileAuthenticationProvider());
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 创建手机验证码登陆的AuthenticationProvider
+     *
+     * @return mobileAuthenticationProvider
+     */
+    @Bean
+    public MobileAuthenticationProvider mobileAuthenticationProvider() {
+        MobileAuthenticationProvider mobileAuthenticationProvider = new MobileAuthenticationProvider(this.mobileUserDetailsService);
+        mobileAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return mobileAuthenticationProvider;
     }
 
 }

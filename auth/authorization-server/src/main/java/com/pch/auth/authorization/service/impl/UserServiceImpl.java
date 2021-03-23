@@ -1,5 +1,6 @@
 package com.pch.auth.authorization.service.impl;
 
+import com.pch.auth.authorization.oauth2.MyUserService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(UserLoginVO userVO) {
         Optional<UserPo> byUsername = userRepository.findByUsername(userVO.getUsername());
-        if (!byUsername.isPresent()) {
+        if (byUsername.isEmpty()) {
             throw new UsernameNotFoundException("username is not exist");
         }
         byUsername.ifPresent(userPo -> {

@@ -1,9 +1,14 @@
-package com.pch.auth.authorization.service.impl;
+package com.pch.auth.authorization.oauth2;
 
+import com.pch.auth.authorization.exceaption.PermissionNotFoundException;
+import com.pch.auth.authorization.model.domain.PermissionPo;
+import com.pch.auth.authorization.model.domain.UserPo;
+import com.pch.auth.authorization.service.PermissionService;
+import com.pch.auth.authorization.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,14 +20,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import com.pch.auth.authorization.exceaption.PermissionNotFoundException;
-import com.pch.auth.authorization.service.UserService;
-import com.pch.auth.authorization.model.domain.PermissionPo;
-import com.pch.auth.authorization.model.domain.UserPo;
-import com.pch.auth.authorization.service.PermissionService;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author: admin
@@ -57,7 +54,6 @@ public class MyUserService implements UserDetailsService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities()
         );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         return userDetails;
     }
 }
