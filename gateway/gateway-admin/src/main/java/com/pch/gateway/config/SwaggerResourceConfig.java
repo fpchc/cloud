@@ -7,22 +7,16 @@
 
 package com.pch.gateway.config;
 
+import com.pch.gateway.router.RedisRouteDefinitionRepository;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.config.GatewayProperties;
-import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.support.NameUtils;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
-
-import com.pch.gateway.router.RedisRouteDefinitionRepository;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
@@ -41,6 +35,10 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         List<SwaggerResource> resources = new ArrayList<>();
         Set<String> routeKeys = routeDefinitionRepository.getGatewayRouteKeys();
         List<RouteDefinition> routeDefinitions = routeDefinitionRepository.getRouteDefinitions(routeKeys);
+        routeDefinitions.forEach(routeDefinition -> {
+            URI uri = routeDefinition.getUri();
+            String host = uri.getHost();
+        });
         routeDefinitions.forEach(route -> route.getPredicates().stream()
                 .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
                 .forEach(predicateDefinition -> resources.add(swaggerResource(route.getId(),

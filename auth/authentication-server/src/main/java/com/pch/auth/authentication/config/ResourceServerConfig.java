@@ -23,8 +23,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resourceServerSecurityConfigurer) {
         resourceServerSecurityConfigurer
-                .tokenStore(tokenStore())
-                .resourceId("WEBS");
+            .tokenStore(tokenStore())
+            .resourceId("WEBS");
     }
 
     @Override
@@ -34,14 +34,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/oauth/**").permitAll()
-                .antMatchers(
-                        "/swagger-ui.html", "/doc.html",
-                        "/webjars/**", "/v2/api-docs"
-                )
-                .permitAll()
-                .anyRequest().authenticated();
+            .antMatchers("/actuator/**").permitAll()
+            .antMatchers("/oauth/**").permitAll()
+            .antMatchers(
+                "/swagger-ui.html", "/doc.html",
+                "/webjars/**", "/v2/api-docs"
+            )
+            .permitAll()
+            .anyRequest().authenticated();
     }
 
     @Bean

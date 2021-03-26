@@ -14,7 +14,7 @@ public interface PermissionService {
     /**
      * 获取关联用户权限
      *
-     * @param userId    用户id
+     * @param userId 用户id
      * @return
      */
     List<PermissionPo> findByUserId(Long userId);

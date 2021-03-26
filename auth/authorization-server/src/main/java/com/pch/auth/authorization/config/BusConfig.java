@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p> bus 配置 </p>
+ *
  * @Author: pch
  * @Date: 2021/01/04 18:09
  */

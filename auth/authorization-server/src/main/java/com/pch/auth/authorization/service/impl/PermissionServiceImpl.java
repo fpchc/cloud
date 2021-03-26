@@ -1,23 +1,21 @@
 package com.pch.auth.authorization.service.impl;
 
+import com.pch.auth.authorization.model.domain.PermissionPo;
+import com.pch.auth.authorization.model.domain.RolePermissionPo;
+import com.pch.auth.authorization.model.domain.UserRolePo;
+import com.pch.auth.authorization.model.dto.PermissionDto;
+import com.pch.auth.authorization.repository.PermissionRepository;
+import com.pch.auth.authorization.repository.RolePermissionRepository;
+import com.pch.auth.authorization.repository.UserRoleRepository;
+import com.pch.auth.authorization.service.PermissionService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
-import com.pch.auth.authorization.repository.PermissionRepository;
-import com.pch.auth.authorization.repository.RolePermissionRepository;
-import com.pch.auth.authorization.repository.UserRoleRepository;
-import com.pch.auth.authorization.model.domain.PermissionPo;
-import com.pch.auth.authorization.model.domain.RolePermissionPo;
-import com.pch.auth.authorization.model.domain.UserRolePo;
-import com.pch.auth.authorization.model.dto.PermissionDto;
-import com.pch.auth.authorization.service.PermissionService;
 
 /**
  * @Author: pch
@@ -28,8 +26,10 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
     @Autowired
     private RolePermissionRepository rolePermissionRepository;
+
     @Autowired
     private PermissionRepository permissionRepository;
 

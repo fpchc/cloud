@@ -1,16 +1,16 @@
 server:
-  port: 8001
-  servlet:
-    context-path: /authorization
+    port: 8001
+    servlet:
+        context-path: /authorization
 
 spring:
-  application:
-    name: authorization-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-      config:
-        server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
-        file-extension: yml
+    application:
+        name: authorization-service
+    cloud:
+        nacos:
+            discovery:
+                server-addr: 127.0.0.1:8848
+            config:
+                server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
+                file-extension: yml
 

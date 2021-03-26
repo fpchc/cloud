@@ -37,42 +37,42 @@ public class SwaggerConfiguration {
     @Order(value = 1)
     public Docket groupRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(groupApiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.pch.auth.authorization.rest"))
-                .paths(PathSelectors.any())
-                .build()
-                .securityContexts(CollectionUtils.newArrayList(securityContext()))
-                .securitySchemes(CollectionUtils.newArrayList(apiKey()));
+            .apiInfo(groupApiInfo())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.pch.auth.authorization.rest"))
+            .paths(PathSelectors.any())
+            .build()
+            .securityContexts(CollectionUtils.newArrayList(securityContext()))
+            .securitySchemes(CollectionUtils.newArrayList(apiKey()));
     }
 
     private ApiInfo groupApiInfo() {
         return new ApiInfoBuilder()
-                .title("权限管理")
-                .description("<div style='font-size:14px;color:red;'>权限管理 APIs</div>")
-                .termsOfServiceUrl("http://www.google.com")
-                .contact("group@qq.com")
-                .version("1.0")
-                .build();
+            .title("权限管理")
+            .description("<div style='font-size:14px;color:red;'>权限管理 APIs</div>")
+            .termsOfServiceUrl("http://www.google.com")
+            .contact("group@qq.com")
+            .version("1.0")
+            .build();
     }
 
 
     private ApiKey apiKey() {
-        return new ApiKey("BearerToken", "Authorization", "header");
+        return new ApiKey("Bearer ", "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
         return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/.*"))
-                .build();
+            .securityReferences(defaultAuth())
+            .forPaths(PathSelectors.regex("/.*"))
+            .build();
     }
 
     List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return CollectionUtils.newArrayList(new SecurityReference("BearerToken", authorizationScopes));
+        return CollectionUtils.newArrayList(new SecurityReference("Bearer ", authorizationScopes));
     }
 
 }

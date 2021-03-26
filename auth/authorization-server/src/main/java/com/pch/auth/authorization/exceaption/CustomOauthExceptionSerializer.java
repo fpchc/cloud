@@ -13,7 +13,7 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthExc
 
     @Override
     public void serialize(CustomOauthException value, JsonGenerator gen,
-            SerializerProvider provider) throws IOException {
+                          SerializerProvider provider) throws IOException {
         gen.writeObject(value.getMessage());
     }
 }

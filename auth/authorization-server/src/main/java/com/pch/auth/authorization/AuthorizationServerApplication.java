@@ -18,7 +18,7 @@ import com.alicp.jetcache.anno.config.EnableMethodCache;
 @SpringBootApplication
 @EnableCreateCacheAnnotation
 @EnableTransactionManagement(proxyTargetClass = true)
-@EnableMethodCache(basePackages = { "com.pch" })
+@EnableMethodCache(basePackages = {"com.pch"})
 public class AuthorizationServerApplication {
 
     public static void main(String[] args) {

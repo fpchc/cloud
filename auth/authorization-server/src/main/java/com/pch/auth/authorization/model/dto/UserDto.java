@@ -23,7 +23,7 @@ public class UserDto extends BaseDto {
     private Long id;
 
     @NotBlank(message = "username is blank")
-    @ApiModelProperty(value = "用户名" ,required = true)
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
     /**

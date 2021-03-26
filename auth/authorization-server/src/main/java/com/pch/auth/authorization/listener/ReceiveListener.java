@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReceiveListener {
 
     @RabbitHandler
-    @RabbitListener(queues = { RabbitMQConstant.MESSAGE_QUEUE } )
+    @RabbitListener(queues = {RabbitMQConstant.MESSAGE_QUEUE})
     public void receive(UserPo userPo) {
         log.info("userPo : {}", userPo);
     }

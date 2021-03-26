@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners({ AuditingEntityListener.class })
+@EntityListeners({AuditingEntityListener.class})
 @Table(schema = "permission", name = "tb_role")
 public class RolePo extends BasePo {
     private static final long serialVersionUID = -7136537864183138269L;

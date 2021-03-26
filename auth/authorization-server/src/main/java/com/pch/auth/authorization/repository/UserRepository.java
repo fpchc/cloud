@@ -11,7 +11,7 @@ import com.pch.auth.authorization.model.domain.UserPo;
  * @Date: 2021/2/23
  */
 public interface UserRepository extends JpaSpecificationExecutor<UserPo>,
-        JpaRepository<UserPo, Integer> {
+    JpaRepository<UserPo, Integer> {
 
     Optional<UserPo> findByUsername(String username);
 }

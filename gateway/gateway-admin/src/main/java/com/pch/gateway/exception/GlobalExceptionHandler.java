@@ -17,11 +17,11 @@ import com.pch.common.response.CommonResult;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends DefaultGlobalExceptionHandlerAdvice {
-
+    
     /**
      * 处理业务异常
      *
-     * @param serviceException  业务异常
+     * @param serviceException 业务异常
      * @return Mono<CommonResult < Boolean>>
      */
     @ExceptionHandler(ServiceException.class)

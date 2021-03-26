@@ -67,7 +67,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 支持将client参数放在header或body中
         oauthServer.allowFormAuthenticationForClients();
         oauthServer.tokenKeyAccess("isAuthenticated()")
-                .checkTokenAccess("permitAll()");
+            .checkTokenAccess("permitAll()");
     }
 
     @Override
@@ -80,14 +80,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         // 配置token的数据源、自定义的tokenServices等信息,配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
         endpoints.tokenStore(tokenStore())
-                .authorizationCodeServices(authorizationCodeServices())
-                .approvalStore(approvalStore())
-                .exceptionTranslator(customExceptionTranslator())
-                .tokenEnhancer(tokenEnhancerChain())
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
-                //update by joe_chen add  granter
-                .tokenGranter(tokenGranter(endpoints));
+            .authorizationCodeServices(authorizationCodeServices())
+            .approvalStore(approvalStore())
+            .exceptionTranslator(customExceptionTranslator())
+            .tokenEnhancer(tokenEnhancerChain())
+            .authenticationManager(authenticationManager)
+            .userDetailsService(userDetailsService)
+            //update by joe_chen add  granter
+            .tokenGranter(tokenGranter(endpoints));
 
     }
 
@@ -166,10 +166,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
         List<TokenGranter> granters = Lists.newArrayList(endpoints.getTokenGranter());
         granters.add(new MobileTokenGranter(
-                authenticationManager,
-                endpoints.getTokenServices(),
-                endpoints.getClientDetailsService(),
-                endpoints.getOAuth2RequestFactory()));
+            authenticationManager,
+            endpoints.getTokenServices(),
+            endpoints.getClientDetailsService(),
+            endpoints.getOAuth2RequestFactory()));
         return new CompositeTokenGranter(granters);
     }
 }

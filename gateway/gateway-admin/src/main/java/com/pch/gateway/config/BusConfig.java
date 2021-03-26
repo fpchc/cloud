@@ -23,7 +23,7 @@ import com.pch.common.constant.RabbitMQConstant;
  */
 @Configuration
 public class BusConfig {
-
+    
     /**
      * rabbitmq 转化器 通过producerJackson2MessageConverter转换为json格式
      */
@@ -33,7 +33,7 @@ public class BusConfig {
         rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
         return rabbitTemplate;
     }
-
+    
     @Bean
     public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -41,30 +41,30 @@ public class BusConfig {
         objectMapper.registerModule(new JavaTimeModule());
         return new Jackson2JsonMessageConverter(objectMapper);
     }
-
+    
     @Bean
     public Queue gatewayQueue() {
         return new Queue(RabbitMQConstant.GATEWAY_QUEUE);
     }
-
+    
     @Bean
     public Queue messageQueue() {
         return new Queue(RabbitMQConstant.MESSAGE_QUEUE);
     }
-
+    
     @Bean
     public TopicExchange routeTopicExchange() {
         return new TopicExchange(RabbitMQConstant.GATEWAY_EXCHANGE);
     }
-
+    
     @Bean
     public Binding gatewayBinding(Queue gatewayQueue, TopicExchange routeTopicExchange) {
         return BindingBuilder.bind(gatewayQueue).to(routeTopicExchange).with(RabbitMQConstant.GATEWAY_ROUTE_KEY);
     }
-
+    
     @Bean
     public Binding messageBinding(Queue messageQueue, TopicExchange routeTopicExchange) {
         return BindingBuilder.bind(messageQueue).to(routeTopicExchange).with(RabbitMQConstant.MESSAGE_ROUTE_KEY);
     }
-
+    
 }

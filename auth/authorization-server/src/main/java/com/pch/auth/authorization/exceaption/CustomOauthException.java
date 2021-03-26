@@ -21,7 +21,7 @@ public class CustomOauthException extends OAuth2Exception {
     CustomOauthException(OAuth2Exception oAuth2Exception) {
         super(oAuth2Exception.getSummary(), oAuth2Exception);
         this.commonResult = CommonResult.failed(
-                AuthErrorEnum.valueOf(oAuth2Exception.getOAuth2ErrorCode().toUpperCase()).getCode(), oAuth2Exception
+            AuthErrorEnum.valueOf(oAuth2Exception.getOAuth2ErrorCode().toUpperCase()).getCode(), oAuth2Exception
         );
     }
 }

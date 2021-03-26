@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
-                "/swagger-ui.html", "/doc.html", "/v2/api-docs"
+            "/swagger-ui.html", "/doc.html", "/v2/api-docs"
         );
     }
 
@@ -51,15 +51,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/actuator/**").permitAll()
-                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling()
-//                .accessDeniedHandler(restfulAccessDeniedHandler())
-//                .authenticationEntryPoint(restAuthenticationEntryPoint())
-                .and()
-                .formLogin().permitAll()
+            .antMatchers("/actuator/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+            .accessDeniedHandler(restfulAccessDeniedHandler())
+            .authenticationEntryPoint(restAuthenticationEntryPoint())
+            .and()
+            .formLogin()
+            .permitAll()
         ;
+    }
+
+    @Bean
+    public AuthenticationEntryPoint restAuthenticationEntryPoint() {
+        return new RestAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public AccessDeniedHandler restfulAccessDeniedHandler() {
+        return new RestfulAccessDeniedHandler();
     }
 
     /**
@@ -71,8 +82,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
         // 设置手机验证码登陆的AuthenticationProvider
         authenticationManagerBuilder.authenticationProvider(mobileAuthenticationProvider());
     }

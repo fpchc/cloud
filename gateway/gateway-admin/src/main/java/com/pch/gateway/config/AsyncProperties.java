@@ -36,17 +36,5 @@ public class AsyncProperties {
         private int keepAliveSeconds;
     }
 
-    @Getter
-    public class Test1 {
-
-        private String ttt = "111";
-
-        private String test = "222";
-
-        public void test() {
-            log.info("内部类 参数 {}， {}", ttt, test);
-        }
-    }
-
 
 }
