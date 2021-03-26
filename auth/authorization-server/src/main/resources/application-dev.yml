@@ -1,115 +1,115 @@
 spring:
-    rabbitmq:
-        host: ${RABBIT_MQ_HOST:127.0.0.1}
-        port: ${RABBIT_MQ_PORT:5672}
-        username: ${RABBIT_MQ_USERNAME:guest}
-        password: ${RABBIT_MQ_PASSWORD:guest}
-    redis:
-        database: 11
-        host: ${REDIS_HOST:127.0.0.1}
-        port: ${REDIS_PORT:6379}
-        #password: ${REDIS_PASSWORD:}
-        lettuce:
-            pool:
-                max-active: 300
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
-        username: root
-        password: root
-        type: com.alibaba.druid.pool.DruidDataSource
-        #最大活跃数
-        maxActive: 20
-        #初始化数量
-        initialSize: 1
-        #最大连接等待超时时间
-        maxWait: 60000
-        #打开PSCache，并且指定每个连接PSCache的大小
-        poolPreparedStatements: true
-        maxPoolPreparedStatementPerConnectionSize: 20
-        #通过connectionProperties属性来打开mergeSql功能；慢SQL记录
-        #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: select 1 from dual
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
-        filters: stat, wall, log4j
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-        open-in-view: false
-        properties: #使用redisson做二级缓存，项目地址：https://github.com/redisson/redisson
-            hibernate.format_sql: true
-            hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:127.0.0.1}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+  redis:
+    database: 11
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:}
+    lettuce:
+      pool:
+        max-active: 300
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/cloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    #最大活跃数
+    maxActive: 20
+    #初始化数量
+    initialSize: 1
+    #最大连接等待超时时间
+    maxWait: 60000
+    #打开PSCache，并且指定每个连接PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #通过connectionProperties属性来打开mergeSql功能；慢SQL记录
+    #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 1 from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
+    filters: stat, wall, log4j
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties: #使用redisson做二级缓存，项目地址：https://github.com/redisson/redisson
+      hibernate.format_sql: true
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-    security:
-        oauth2:
-            jwt:
-                signingKey: my_user_demo #JWT加解密使用的密钥
+  security:
+    oauth2:
+      jwt:
+        signingKey: my_user_demo #JWT加解密使用的密钥
 
 
 jetcache:
-    statIntervalMinutes: 60
-    areaInCacheName: false
-    penetrationProtect: false
-    enableMethodCache: true
-    hiddenPackages: com.xxx.xxx,com.xxx.xxx
-    local:
-        default:
-            type: caffeine # 支持的类型：linkedhashmap、caffeine
-            limit: 100
-            #为LOCAL时可以指定为none，此时通过equals方法来识别key。方法缓存必须指定keyConvertor。
-            #支持自定义转换器函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
-            keyConvertor: fastjson # 支持的类型：fastjson，可自定义转换器函数
-            expireAfterWriteInMillis: 600000
-            expireAfterAccessInMillis: 300000
-    remote:
-        default:
-            type: redis.lettuce # 支持的类型：redis、redis.lettuce
-            keyPrefix: 'pch:gateway:'
-            keyConvertor: fastjson
-            valueEncoder: java # 支持的类型：kryo、java，可自定义编码器
-            valueDecoder: java # 支持的类型：kryo、java，可自定义解码器
-            expireAfterWriteInMillis: 3600000
-            # readFrom: slavePreferred # 优先从Slave节点中读取
-            # uri: redis-sentinel://host1:26379,host2:26379,host3:26379/?sentinelMasterId=mymaster # 哨兵模式
-            uri: redis://127.0.0.1:6379/11 # 单节点模式
-            # mode: masterslave # 设置为主从模式
-            # uri: # 集群模式
-            # - redis://127.0.0.1:7000
-            # - redis://127.0.0.1:7001
-            # - redis://127.0.0.1:7002
-            #    example:
-            #      keyPrefix: '系统简称:所属名字:'
-            #      type: redis
-            #      keyConvertor: fastjson
-            #      valueEncoder: java
-            #      valueDecoder: java
-            #      expireAfterWriteInMillis: 3600000
-            #      poolConfig:
-            #        minIdle: 10
-            #        maxIdle: 20
-            #        maxTotal: 50
-            #password: xxx # 连接密码
-            #timeout: 2000 # 连接的超时时间，读取数据的超时时间
-            #database: 0 # 连接的数据库
-            #clientName: null # 客户端名称
-            #ssl: 是否使用SSL
-            #      host: ${redis.host}
-            #      port: ${redis.port}
-            #sentinel: host1:26379,host2:26379,host3:26379 # 哨兵模式
-            #masterName: mymaster
+  statIntervalMinutes: 60
+  areaInCacheName: false
+  penetrationProtect: false
+  enableMethodCache: true
+  hiddenPackages: com.xxx.xxx,com.xxx.xxx
+  local:
+    default:
+      type: caffeine # 支持的类型：linkedhashmap、caffeine
+      limit: 100
+      #为LOCAL时可以指定为none，此时通过equals方法来识别key。方法缓存必须指定keyConvertor。
+      #支持自定义转换器函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      keyConvertor: fastjson # 支持的类型：fastjson，可自定义转换器函数
+      expireAfterWriteInMillis: 600000
+      expireAfterAccessInMillis: 300000
+  remote:
+    default:
+      type: redis.lettuce # 支持的类型：redis、redis.lettuce
+      keyPrefix: 'pch:gateway:'
+      keyConvertor: fastjson
+      valueEncoder: java # 支持的类型：kryo、java，可自定义编码器
+      valueDecoder: java # 支持的类型：kryo、java，可自定义解码器
+      expireAfterWriteInMillis: 3600000
+      # readFrom: slavePreferred # 优先从Slave节点中读取
+      # uri: redis-sentinel://host1:26379,host2:26379,host3:26379/?sentinelMasterId=mymaster # 哨兵模式
+      uri: redis://127.0.0.1:6379/11 # 单节点模式
+      # mode: masterslave # 设置为主从模式
+      # uri: # 集群模式
+      # - redis://127.0.0.1:7000
+      # - redis://127.0.0.1:7001
+      # - redis://127.0.0.1:7002
+      #    example:
+      #      keyPrefix: '系统简称:所属名字:'
+      #      type: redis
+      #      keyConvertor: fastjson
+      #      valueEncoder: java
+      #      valueDecoder: java
+      #      expireAfterWriteInMillis: 3600000
+      #      poolConfig:
+      #        minIdle: 10
+      #        maxIdle: 20
+      #        maxTotal: 50
+      #password: xxx # 连接密码
+      #timeout: 2000 # 连接的超时时间，读取数据的超时时间
+      #database: 0 # 连接的数据库
+      #clientName: null # 客户端名称
+      #ssl: 是否使用SSL
+      #      host: ${redis.host}
+      #      port: ${redis.port}
+      #sentinel: host1:26379,host2:26379,host3:26379 # 哨兵模式
+      #masterName: mymaster
 
 logging:
-    level:
-        root: info
-        com.pch.gateway.mapper: debug
-        org.springframework.security: debug
+  level:
+    root: info
+    com.pch.gateway.mapper: debug
+    org.springframework.security: debug
 
-    file:
-        path: D:/pch/log/authorization # 开发日志路径
+  file:
+    path: D:/pch/log/authorization # 开发日志路径
