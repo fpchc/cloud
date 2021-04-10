@@ -1,11 +1,11 @@
 package com.pch.auth.authorization.config;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
