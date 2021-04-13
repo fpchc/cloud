@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +20,8 @@ import lombok.EqualsAndHashCode;
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
+@Getter
+@Setter
 @ApiModel("权限模型")
 @EqualsAndHashCode(callSuper = true)
 public class PermissionDto extends BaseDto {

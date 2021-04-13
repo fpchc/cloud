@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import com.pch.common.base.BaseDto;
@@ -16,7 +18,8 @@ import lombok.EqualsAndHashCode;
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
+@Getter
+@Setter
 @ApiModel("用户角色模型")
 @EqualsAndHashCode(callSuper = true)
 public class UserRoleDto extends BaseDto {

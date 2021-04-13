@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,7 +22,8 @@ import lombok.EqualsAndHashCode;
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_user")
 @EqualsAndHashCode(callSuper = true)

@@ -1,31 +1,30 @@
 package com.pch.auth.authorization.model.domain;
 
+import com.pch.common.base.BasePo;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
-
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.pch.common.base.BasePo;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Data
 @Entity
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners({ AuditingEntityListener.class })
 @Table(name = "tb_permission")
 public class PermissionPo extends BasePo {
+
     private static final long serialVersionUID = 4285835478693487481L;
 
     private Integer pid;

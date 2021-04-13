@@ -8,12 +8,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("角色模型")
 public class RoleDto extends BaseDto {

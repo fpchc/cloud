@@ -8,12 +8,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
+@Getter
+@Setter
 @ApiModel("用户实体")
 @EqualsAndHashCode(callSuper = true)
 public class UserDto extends BaseDto {

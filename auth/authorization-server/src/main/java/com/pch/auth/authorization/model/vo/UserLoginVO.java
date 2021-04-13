@@ -1,23 +1,19 @@
 package com.pch.auth.authorization.model.vo;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.codehaus.jackson.map.Serializers.Base;
-
-import com.pch.common.base.BaseDto;
 import com.pch.common.base.BaseVo;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import javax.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
+@Getter
+@Setter
 @ApiModel("用户登录模型")
 @EqualsAndHashCode(callSuper = true)
 public class UserLoginVO extends BaseVo {

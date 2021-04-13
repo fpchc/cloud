@@ -7,13 +7,16 @@ import com.pch.common.base.BasePo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Data
 @Entity
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "tb_role_permission")
 public class RolePermissionPo extends BasePo {
