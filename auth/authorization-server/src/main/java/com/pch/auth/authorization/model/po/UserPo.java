@@ -1,4 +1,4 @@
-package com.pch.auth.authorization.model.domain;
+package com.pch.auth.authorization.model.po;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.pch.common.base.BasePo;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**

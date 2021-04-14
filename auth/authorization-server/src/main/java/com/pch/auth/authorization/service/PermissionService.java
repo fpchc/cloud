@@ -2,7 +2,7 @@ package com.pch.auth.authorization.service;
 
 import java.util.List;
 
-import com.pch.auth.authorization.model.domain.PermissionPo;
+import com.pch.auth.authorization.model.po.PermissionPo;
 import com.pch.auth.authorization.model.dto.PermissionDto;
 
 /**

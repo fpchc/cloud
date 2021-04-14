@@ -1,8 +1,8 @@
 package com.pch.auth.authorization.oauth2;
 
 import com.pch.auth.authorization.exceaption.PermissionNotFoundException;
-import com.pch.auth.authorization.model.domain.PermissionPo;
-import com.pch.auth.authorization.model.domain.UserPo;
+import com.pch.auth.authorization.model.po.PermissionPo;
+import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.auth.authorization.service.PermissionService;
 import com.pch.auth.authorization.service.UserService;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

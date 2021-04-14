@@ -2,7 +2,7 @@ package com.pch.auth.authorization.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pch.auth.authorization.model.domain.RolePo;
+import com.pch.auth.authorization.model.po.RolePo;
 
 /**
  * @Author: pch

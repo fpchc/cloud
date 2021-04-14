@@ -1,6 +1,6 @@
 package com.pch.auth.authorization.oauth2;
 
-import com.pch.auth.authorization.model.domain.UserPo;
+import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.auth.authorization.service.UserService;
 import com.pch.common.exception.ServiceException;
 import java.util.Optional;

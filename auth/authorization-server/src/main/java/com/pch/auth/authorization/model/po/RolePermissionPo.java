@@ -1,11 +1,10 @@
-package com.pch.auth.authorization.model.domain;
+package com.pch.auth.authorization.model.po;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.pch.common.base.BasePo;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,16 +13,16 @@ import lombok.Setter;
  * @Author: pch
  * @Date: 2020/9/11
  */
+@Entity
 @Getter
 @Setter
-@Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "tb_user_role")
-public class UserRolePo extends BasePo {
+@Table(name = "tb_role_permission")
+public class RolePermissionPo extends BasePo {
 
-    private static final long serialVersionUID = -1810195806444298544L;
-
-    private Long userId;
+    private static final long serialVersionUID = 7402412601579098788L;
 
     private Long roleId;
+
+    private Long permissionId;
 }

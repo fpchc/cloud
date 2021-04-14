@@ -1,6 +1,6 @@
 package com.pch.auth.authorization.model.vo;
 
-import com.pch.common.base.BaseVo;
+import com.pch.common.base.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("用户登录模型")
 @EqualsAndHashCode(callSuper = true)
-public class UserLoginVO extends BaseVo {
+public class UserLoginVO extends BaseModel {
 
     private static final long serialVersionUID = 2085570980822071154L;
 

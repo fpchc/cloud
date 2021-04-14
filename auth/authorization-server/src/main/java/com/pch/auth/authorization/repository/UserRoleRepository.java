@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pch.auth.authorization.model.domain.UserRolePo;
+import com.pch.auth.authorization.model.po.UserRolePo;
 
 /**
  * @Author: pch

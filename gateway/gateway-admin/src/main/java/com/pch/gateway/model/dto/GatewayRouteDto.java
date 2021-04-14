@@ -1,5 +1,6 @@
 package com.pch.gateway.model.dto;
 
+import com.pch.common.base.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pch.common.base.BaseDto;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class GatewayRouteDto extends BaseDto {
+public class GatewayRouteDto extends BaseModel {
 
     private static final long serialVersionUID = -6945274367384292505L;
 

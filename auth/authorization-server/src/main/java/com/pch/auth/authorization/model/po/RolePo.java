@@ -1,4 +1,4 @@
-package com.pch.auth.authorization.model.domain;
+package com.pch.auth.authorization.model.po;
 
 import com.pch.common.base.BasePo;
 import java.time.LocalDateTime;
@@ -17,30 +17,20 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Entity
-@Setter
 @Getter
+@Setter
+@Entity
 @EqualsAndHashCode(callSuper = true)
-@EntityListeners({ AuditingEntityListener.class })
-@Table(name = "tb_permission")
-public class PermissionPo extends BasePo {
+@EntityListeners({AuditingEntityListener.class})
+@Table(name = "tb_role")
+public class RolePo extends BasePo {
+    private static final long serialVersionUID = -7136537864183138269L;
 
-    private static final long serialVersionUID = 4285835478693487481L;
+    private String roleName;
 
-    private Integer pid;
+    private String roleCode;
 
-    private Integer type;
-
-    @Column(length = 50)
-    private String name;
-
-    @Column(length = 50)
-    private String code;
-
-    @Column(length = 150)
-    private String uri;
-
-    private Integer seq = 1;
+    private String roleDescription;
 
     @Column(updatable = false, length = 32)
     private String createBy;
@@ -63,5 +53,4 @@ public class PermissionPo extends BasePo {
      */
     @UpdateTimestamp
     private LocalDateTime updateTime;
-
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.pch.auth.authorization.model.domain.RolePermissionPo;
+import com.pch.auth.authorization.model.po.RolePermissionPo;
 
 /**
  * @Author: pch

@@ -1,8 +1,8 @@
 package com.pch.auth.authorization.service.impl;
 
-import com.pch.auth.authorization.model.domain.PermissionPo;
-import com.pch.auth.authorization.model.domain.RolePermissionPo;
-import com.pch.auth.authorization.model.domain.UserRolePo;
+import com.pch.auth.authorization.model.po.PermissionPo;
+import com.pch.auth.authorization.model.po.RolePermissionPo;
+import com.pch.auth.authorization.model.po.UserRolePo;
 import com.pch.auth.authorization.model.dto.PermissionDto;
 import com.pch.auth.authorization.repository.PermissionRepository;
 import com.pch.auth.authorization.repository.RolePermissionRepository;

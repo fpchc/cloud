@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pch.auth.authorization.repository.RoleRepository;
-import com.pch.auth.authorization.model.domain.RolePo;
+import com.pch.auth.authorization.model.po.RolePo;
 import com.pch.auth.authorization.model.dto.RoleDto;
 import com.pch.auth.authorization.service.RoleService;
 

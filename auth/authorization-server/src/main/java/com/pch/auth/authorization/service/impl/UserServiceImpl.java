@@ -20,10 +20,10 @@ import org.springframework.util.CollectionUtils;
 import com.pch.auth.authorization.repository.UserRepository;
 import com.pch.auth.authorization.repository.UserRoleRepository;
 import com.pch.auth.authorization.service.UserService;
-import com.pch.auth.authorization.model.domain.UserRolePo;
+import com.pch.auth.authorization.model.po.UserRolePo;
 import com.pch.auth.authorization.model.dto.UserRoleDto;
 import com.pch.auth.authorization.model.vo.UserLoginVO;
-import com.pch.auth.authorization.model.domain.UserPo;
+import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.common.exception.ServiceException;
 
 import lombok.extern.slf4j.Slf4j;
