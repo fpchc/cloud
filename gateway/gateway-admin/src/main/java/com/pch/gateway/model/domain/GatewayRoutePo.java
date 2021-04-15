@@ -1,22 +1,18 @@
 package com.pch.gateway.model.domain;
 
-import java.io.Serializable;
+import com.pch.common.base.BaseModel;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * <P> 路由实体 </P>
@@ -24,13 +20,12 @@ import lombok.NoArgsConstructor;
  * @Author: pch
  * @Date: 2021/2/18
  */
-@Data
+@Getter
+@Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "tb_gateway_route")
 @EntityListeners({ AuditingEntityListener.class })
-public class GatewayRoutePo implements Serializable {
+public class GatewayRoutePo extends BaseModel {
 
     private static final long serialVersionUID = -4043749724295641961L;
 

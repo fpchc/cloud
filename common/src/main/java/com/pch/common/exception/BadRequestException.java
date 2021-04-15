@@ -5,8 +5,8 @@ import lombok.EqualsAndHashCode;
 
 /**
  *
- * @author: pch
- * @date: 2020/9/11
+ * @Author: pch
+ * @Date: 2020/9/11
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

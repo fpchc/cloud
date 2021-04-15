@@ -3,8 +3,8 @@ package com.pch.common.constant;
 /**
  * 常量
  *
- * @author: pch
- * @date: 2020/9/17
+ * @Author: pch
+ * @Date: 2020/9/17
  */
 public interface AdminConstant {
 

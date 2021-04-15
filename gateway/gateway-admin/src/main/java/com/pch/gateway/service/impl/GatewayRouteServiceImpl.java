@@ -36,24 +36,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 public class GatewayRouteServiceImpl implements GatewayRouteService, ApplicationContextAware {
-    
+
     private ApplicationContext applicationContext;
-    
+
     @Autowired
     private RouteRepository routeRepository;
-    
+
     @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
-    
+
     @Override
     public Optional<GatewayRouteDto> get(String id) {
         Optional<GatewayRoutePo> gatewayRoutePo = routeRepository.findById(id);
         return gatewayRoutePo.map(this::getGatewayRouteDto);
     }
-    
+
     private GatewayRouteDto getGatewayRouteDto(GatewayRoutePo gatewayRoutePo) {
         GatewayRouteDto gatewayRouteDto = new GatewayRouteDto();
         BeanUtils.copyProperties(gatewayRoutePo, gatewayRouteDto);
+        log.info("====={}=====", gatewayRoutePo);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             gatewayRouteDto.setFilters(objectMapper.readValue(gatewayRoutePo.getFilters(), new TypeReference<>() {
@@ -65,7 +66,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
         }
         return gatewayRouteDto;
     }
-    
+
     @Override
     @Transactional
     public Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto) {
@@ -78,7 +79,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return Boolean.TRUE;
     }
-    
+
     @Override
     @Transactional
     public boolean delete(String id) {
@@ -87,13 +88,13 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return true;
     }
-    
+
     @Override
     public List<GatewayRouteDto> findAll() {
         List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
         return gatewayRoutes.stream().map(this::getGatewayRouteDto).collect(Collectors.toList());
     }
-    
+
     @Override
     @PostConstruct
     public boolean overload() {
@@ -105,7 +106,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
         log.info("全局初使化网关路由成功!");
         return true;
     }
-    
+
     /**
      * 将数据库中json对象转换为网关需要的RouteDefinition对象
      *
@@ -128,7 +129,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
         }
         return routeDefinition;
     }
-    
+
     @Override
     public void setApplicationContext(@Nullable ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
