@@ -57,9 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
             .accessDeniedHandler(restfulAccessDeniedHandler())
             .authenticationEntryPoint(restAuthenticationEntryPoint())
-            .and()
-            .formLogin()
-            .permitAll()
+            .and().formLogin().permitAll()
         ;
     }
 

@@ -13,4 +13,7 @@ spring:
       config:
         server-addr: ${REGISTER_HOST:127.0.0.1}:${REGISTER_PORT:8848}
         file-extension: yml
-
+    sentinel:
+      transport:
+        dashboard: localhost:8021
+        port: 8719

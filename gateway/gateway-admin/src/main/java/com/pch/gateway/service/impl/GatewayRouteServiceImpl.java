@@ -54,7 +54,6 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     private GatewayRouteDto getGatewayRouteDto(GatewayRoutePo gatewayRoutePo) {
         GatewayRouteDto gatewayRouteDto = new GatewayRouteDto();
         BeanUtils.copyProperties(gatewayRoutePo, gatewayRouteDto);
-        log.info("====={}=====", gatewayRoutePo);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             gatewayRouteDto.setFilters(objectMapper.readValue(gatewayRoutePo.getFilters(), new TypeReference<>() {

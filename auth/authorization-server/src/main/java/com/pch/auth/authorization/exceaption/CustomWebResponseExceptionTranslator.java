@@ -7,13 +7,14 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 /**
  * 自定义异常转换器
  */
-public class CustomWebResponseExceptionTranslator implements WebResponseExceptionTranslator<OAuth2Exception> {
+public class CustomWebResponseExceptionTranslator
+        implements WebResponseExceptionTranslator<OAuth2Exception> {
 
     @Override
     public ResponseEntity<OAuth2Exception> translate(Exception e) {
 
         OAuth2Exception oAuth2Exception = (OAuth2Exception) e;
         return ResponseEntity.status(oAuth2Exception.getHttpErrorCode())
-            .body(new CustomOauthException(oAuth2Exception));
+                .body(new CustomOauthException(oAuth2Exception));
     }
 }
