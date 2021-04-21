@@ -1,5 +1,7 @@
 package com.pch.gateway.rest;
 
+import com.pch.auth.authentication.client.provide.AuthenticationProvide;
+import com.pch.common.response.CommonResult;
 import com.pch.gateway.model.dto.GatewayRouteDto;
 import com.pch.gateway.service.GatewayRouteService;
 import java.util.List;
@@ -30,7 +32,7 @@ public class GatewayRouteController {
 
     private final GatewayRouteService gatewayRouteService;
 
-//    private final AuthenticationProvide authenticationProvide;
+    private final AuthenticationProvide authenticationProvide;
 
     @PostMapping("/add")
     public Mono<Boolean> add(@Validated @RequestBody List<GatewayRouteDto> gatewayRouteDtoList) {
@@ -52,9 +54,10 @@ public class GatewayRouteController {
         return Mono.just(gatewayRouteService.delete(id));
     }
 
-//    @GetMapping("/test")
-//    public Mono<String> get() {
-//
-//    }
+    @PostMapping("/test")
+    public Mono<String> get() {
+        CommonResult<String> string = authenticationProvide.getString();
+        return Mono.just(string.getData());
+    }
 
 }
