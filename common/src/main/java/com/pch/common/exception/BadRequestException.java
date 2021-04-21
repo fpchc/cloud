@@ -4,13 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- *
  * @Author: pch
  * @Date: 2020/9/11
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BadRequestException extends RuntimeException{
+public class BadRequestException extends RuntimeException {
 
     private static final long serialVersionUID = -2550055596501377450L;
 

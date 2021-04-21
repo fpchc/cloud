@@ -16,7 +16,4 @@ public class JwtUtils {
     private String secret;
 
 
-
-
-
 }

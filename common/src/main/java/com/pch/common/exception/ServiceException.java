@@ -1,7 +1,6 @@
 package com.pch.common.exception;
 
 import com.pch.common.constant.SysState;
-
 import lombok.Getter;
 import lombok.Setter;
 

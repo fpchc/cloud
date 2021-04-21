@@ -15,13 +15,12 @@
  */
 package com.pch.common.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.env.Environment;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author: pch
@@ -61,7 +60,8 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         T result = defaultValue;
         try {
             result = getBean(Environment.class).getProperty(property, requiredType);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return result;
     }
 
@@ -114,7 +114,8 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (SpringContextHolder.applicationContext != null) {
-            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringContextHolder.applicationContext);
+            log.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
+                    + SpringContextHolder.applicationContext);
         }
         SpringContextHolder.applicationContext = applicationContext;
     }

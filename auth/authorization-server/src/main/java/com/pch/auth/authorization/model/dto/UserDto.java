@@ -4,7 +4,6 @@ import com.pch.common.base.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("用户实体")
-@EqualsAndHashCode(callSuper = true)
 public class UserDto extends BaseModel {
 
     private static final long serialVersionUID = -1987138807436518343L;

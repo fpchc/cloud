@@ -1,11 +1,12 @@
 package com.pch.auth.authorization.config;
 
+import com.google.common.collect.Lists;
+import com.pch.auth.authorization.exceaption.CustomWebResponseExceptionTranslator;
+import com.pch.auth.authorization.oauth2.enhancer.CustomTokenEnhancer;
+import com.pch.auth.authorization.oauth2.granter.MobileTokenGranter;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.sql.DataSource;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -29,12 +30,6 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import com.google.common.collect.Lists;
-import com.pch.auth.authorization.exceaption.CustomWebResponseExceptionTranslator;
-import com.pch.auth.authorization.oauth2.enhancer.CustomTokenEnhancer;
-import com.pch.auth.authorization.oauth2.granter.MobileTokenGranter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**

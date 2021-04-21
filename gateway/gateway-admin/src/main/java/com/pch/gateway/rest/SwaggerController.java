@@ -17,8 +17,7 @@ import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 
 /**
- * @author xiaoymin
- * 2020年10月29日 18:38:01
+ * @author xiaoymin 2020年10月29日 18:38:01
  */
 @RestController
 public class SwaggerController {
@@ -40,13 +39,14 @@ public class SwaggerController {
     @GetMapping("/swagger-resources/configuration/security")
     public Mono<ResponseEntity<SecurityConfiguration>> securityConfiguration() {
         return Mono.just(new ResponseEntity<>(
-            Optional.ofNullable(securityConfiguration).orElse(SecurityConfigurationBuilder.builder().build()), HttpStatus.OK));
+                Optional.ofNullable(securityConfiguration).orElse(SecurityConfigurationBuilder.builder().build()),
+                HttpStatus.OK));
     }
 
     @GetMapping("/swagger-resources/configuration/ui")
     public Mono<ResponseEntity<UiConfiguration>> uiConfiguration() {
         return Mono.just(new ResponseEntity<>(
-            Optional.ofNullable(uiConfiguration).orElse(UiConfigurationBuilder.builder().build()), HttpStatus.OK));
+                Optional.ofNullable(uiConfiguration).orElse(UiConfigurationBuilder.builder().build()), HttpStatus.OK));
     }
 
     @GetMapping("/swagger-resources")

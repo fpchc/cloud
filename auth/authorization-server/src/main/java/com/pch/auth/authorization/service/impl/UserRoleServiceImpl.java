@@ -1,8 +1,7 @@
 package com.pch.auth.authorization.service.impl;
 
-import org.springframework.stereotype.Service;
-
 import com.pch.auth.authorization.service.UserRoleService;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: pch
@@ -10,4 +9,5 @@ import com.pch.auth.authorization.service.UserRoleService;
  */
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
+
 }

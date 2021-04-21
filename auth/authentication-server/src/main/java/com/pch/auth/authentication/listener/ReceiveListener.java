@@ -1,8 +1,7 @@
 package com.pch.auth.authentication.listener;
 
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * <p> 接受 rabbit内容 <p/>

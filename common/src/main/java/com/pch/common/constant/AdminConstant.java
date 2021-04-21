@@ -8,10 +8,14 @@ package com.pch.common.constant;
  */
 public interface AdminConstant {
 
-    /** token 命名前缀 */
+    /**
+     * token 命名前缀
+     */
     String REDIS_TOKEN_SPACE = "pch_token:";
-    
-    /** webSocket 常量 */
+
+    /**
+     * webSocket 常量
+     */
     String WEBSOCKET_ENDPOINT = "/endpoint";
     String ENABLE_BROKER_TOPIC = "/topic";
     String ENABLE_BROKER_QUEUE = "/queue";

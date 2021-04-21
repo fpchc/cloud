@@ -1,6 +1,6 @@
 package com.pch.auth.authentication.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
@@ -23,8 +21,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resourceServerSecurityConfigurer) {
         resourceServerSecurityConfigurer
-            .tokenStore(tokenStore())
-            .resourceId("WEBS");
+                .tokenStore(tokenStore())
+                .resourceId("WEBS");
     }
 
     @Override
@@ -34,14 +32,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
         http.csrf().disable();
         http.authorizeRequests()
-            .antMatchers("/actuator/**").permitAll()
-            .antMatchers("/oauth/**").permitAll()
-            .antMatchers(
-                "/swagger-ui.html", "/doc.html",
-                "/webjars/**", "/v2/api-docs"
-            )
-            .permitAll()
-            .anyRequest().authenticated();
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/oauth/**").permitAll()
+                .antMatchers(
+                        "/swagger-ui.html", "/doc.html",
+                        "/webjars/**", "/v2/api-docs"
+                )
+                .permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean

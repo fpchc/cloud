@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class GlobalRouterFilter implements GlobalFilter, Ordered {
-    
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
@@ -29,16 +29,17 @@ public class GlobalRouterFilter implements GlobalFilter, Ordered {
         HttpMethod method = request.getMethod();
         exchange.getAttributes().put("requestTimeBegin", System.currentTimeMillis());
         return chain.filter(exchange).then(
-            Mono.fromRunnable(() -> {
-                // todo 权限判断 日志记录
-                Long startTime = exchange.getAttribute("requestTimeBegin");
-                if (startTime != null) {
-                    log.info(exchange.getRequest().getURI().getRawPath() + ": " + (System.currentTimeMillis() - startTime) + "ms");
-                }
-            })
+                Mono.fromRunnable(() -> {
+                    // todo 权限判断 日志记录
+                    Long startTime = exchange.getAttribute("requestTimeBegin");
+                    if (startTime != null) {
+                        log.info(exchange.getRequest().getURI().getRawPath() + ": " + (System.currentTimeMillis()
+                                - startTime) + "ms");
+                    }
+                })
         );
     }
-    
+
     @Override
     public int getOrder() {
         return -1;

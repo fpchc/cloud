@@ -1,10 +1,18 @@
 package com.pch.auth.authorization.service.impl;
 
+import com.pch.auth.authorization.model.dto.UserRoleDto;
+import com.pch.auth.authorization.model.po.UserPo;
+import com.pch.auth.authorization.model.po.UserRolePo;
+import com.pch.auth.authorization.model.vo.UserLoginVO;
 import com.pch.auth.authorization.oauth2.MyUserService;
+import com.pch.auth.authorization.repository.UserRepository;
+import com.pch.auth.authorization.repository.UserRoleRepository;
+import com.pch.auth.authorization.service.UserService;
+import com.pch.common.exception.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,17 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
-import com.pch.auth.authorization.repository.UserRepository;
-import com.pch.auth.authorization.repository.UserRoleRepository;
-import com.pch.auth.authorization.service.UserService;
-import com.pch.auth.authorization.model.po.UserRolePo;
-import com.pch.auth.authorization.model.dto.UserRoleDto;
-import com.pch.auth.authorization.model.vo.UserLoginVO;
-import com.pch.auth.authorization.model.po.UserPo;
-import com.pch.common.exception.ServiceException;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author: pch
@@ -75,7 +72,7 @@ public class UserServiceImpl implements UserService {
             }
             UserDetails userDetails = myUserService.loadUserByUsername(userVO.getUsername());
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities()
+                    userDetails, null, userDetails.getAuthorities()
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
         });

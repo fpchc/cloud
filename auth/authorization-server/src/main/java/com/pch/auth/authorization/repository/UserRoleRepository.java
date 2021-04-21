@@ -1,10 +1,8 @@
 package com.pch.auth.authorization.repository;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.pch.auth.authorization.model.po.UserRolePo;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @Author: pch

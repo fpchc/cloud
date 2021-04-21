@@ -27,27 +27,34 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 @RequestMapping(value = "/gateway/route")
 public class GatewayRouteController {
-    
+
     private final GatewayRouteService gatewayRouteService;
-    
+
+//    private final AuthenticationProvide authenticationProvide;
+
     @PostMapping("/add")
     public Mono<Boolean> add(@Validated @RequestBody List<GatewayRouteDto> gatewayRouteDtoList) {
         return Mono.just(gatewayRouteService.saveOrUpdate(gatewayRouteDtoList));
     }
-    
+
     @PostMapping("/overload")
     public Mono<Boolean> overload() {
         return Mono.just(gatewayRouteService.overload());
     }
-    
+
     @GetMapping("/findAll")
     public Flux<GatewayRouteDto> findAll() {
         return Flux.fromIterable(gatewayRouteService.findAll());
     }
-    
+
     @DeleteMapping("/del/{id}")
     public Mono<Boolean> del(@PathVariable String id) {
         return Mono.just(gatewayRouteService.delete(id));
     }
-    
+
+//    @GetMapping("/test")
+//    public Mono<String> get() {
+//
+//    }
+
 }

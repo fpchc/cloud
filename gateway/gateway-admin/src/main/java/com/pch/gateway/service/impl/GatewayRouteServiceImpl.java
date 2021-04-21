@@ -69,7 +69,8 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     @Override
     @Transactional
     public Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto) {
-        List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDto.stream().map(GatewayRouteDto::toPo).collect(Collectors.toList());
+        List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDto.stream().map(GatewayRouteDto::toPo)
+                .collect(Collectors.toList());
         routeRepository.saveAll(gatewayRoutePos);
         gatewayRoutePos.forEach(gatewayRoutePo -> {
             RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
@@ -99,7 +100,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     public boolean overload() {
         List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
         gatewayRoutes.forEach(gatewayRoute ->
-            gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
+                gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
         );
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         log.info("全局初使化网关路由成功!");

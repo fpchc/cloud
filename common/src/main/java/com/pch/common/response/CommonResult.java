@@ -1,7 +1,6 @@
 package com.pch.common.response;
 
 import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -77,7 +76,7 @@ public class CommonResult<T> implements Serializable {
      * 失败返回结果
      *
      * @param errorCode 错误码
-     * @param data   错误信息
+     * @param data      错误信息
      */
     public static <T> CommonResult<T> failed(String errorCode, T data) {
         return new CommonResult<>(errorCode, null, data);

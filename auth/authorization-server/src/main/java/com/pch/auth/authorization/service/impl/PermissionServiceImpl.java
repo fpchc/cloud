@@ -1,9 +1,9 @@
 package com.pch.auth.authorization.service.impl;
 
+import com.pch.auth.authorization.model.dto.PermissionDto;
 import com.pch.auth.authorization.model.po.PermissionPo;
 import com.pch.auth.authorization.model.po.RolePermissionPo;
 import com.pch.auth.authorization.model.po.UserRolePo;
-import com.pch.auth.authorization.model.dto.PermissionDto;
 import com.pch.auth.authorization.repository.PermissionRepository;
 import com.pch.auth.authorization.repository.RolePermissionRepository;
 import com.pch.auth.authorization.repository.UserRoleRepository;
@@ -44,7 +44,8 @@ public class PermissionServiceImpl implements PermissionService {
         if (CollectionUtils.isEmpty(rolePermissionPos)) {
             return null;
         }
-        List<Long> permissionIds = rolePermissionPos.stream().map(RolePermissionPo::getPermissionId).collect(Collectors.toList());
+        List<Long> permissionIds = rolePermissionPos.stream().map(RolePermissionPo::getPermissionId)
+                .collect(Collectors.toList());
         return permissionRepository.findByPermissionIds(permissionIds);
     }
 

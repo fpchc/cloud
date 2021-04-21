@@ -1,14 +1,11 @@
 package com.pch.auth.authorization.model.dto;
 
 import com.pch.common.base.BaseModel;
-import java.time.LocalDateTime;
-
-import lombok.Getter;
-import lombok.Setter;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.EqualsAndHashCode;
+import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: pch
@@ -17,7 +14,6 @@ import lombok.EqualsAndHashCode;
 @Getter
 @Setter
 @ApiModel("权限模型")
-@EqualsAndHashCode(callSuper = true)
 public class PermissionDto extends BaseModel {
 
     private static final long serialVersionUID = -9026406455401591586L;

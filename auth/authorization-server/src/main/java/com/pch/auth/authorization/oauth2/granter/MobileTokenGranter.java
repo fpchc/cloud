@@ -2,7 +2,6 @@ package com.pch.auth.authorization.oauth2.granter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +19,7 @@ import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswo
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
 /**
- * @author joe_chen
- * 短信验证码登陆与用户名密码登陆相似,密码为动态
- * 故继承ResourceOwnerPasswordTokenGranter
+ * @author joe_chen 短信验证码登陆与用户名密码登陆相似,密码为动态 故继承ResourceOwnerPasswordTokenGranter
  */
 public class MobileTokenGranter extends ResourceOwnerPasswordTokenGranter {
 
@@ -31,8 +28,8 @@ public class MobileTokenGranter extends ResourceOwnerPasswordTokenGranter {
     private AuthenticationManager authenticationManager;
 
     public MobileTokenGranter(AuthenticationManager authenticationManager,
-                              AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
-                              OAuth2RequestFactory requestFactory) {
+            AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+            OAuth2RequestFactory requestFactory) {
         super(authenticationManager, tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }

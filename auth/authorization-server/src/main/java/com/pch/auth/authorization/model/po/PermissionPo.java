@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,7 +19,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Setter
 @Getter
-@EqualsAndHashCode(callSuper = true)
 @EntityListeners({ AuditingEntityListener.class })
 @Table(name = "tb_permission")
 public class PermissionPo extends BasePo {

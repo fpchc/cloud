@@ -5,4 +5,5 @@ package com.pch.auth.authorization.service;
  * @Date: 2021/2/24
  */
 public interface RolePermissionService {
+
 }

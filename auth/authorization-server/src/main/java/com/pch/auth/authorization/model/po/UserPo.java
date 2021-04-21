@@ -1,21 +1,16 @@
 package com.pch.auth.authorization.model.po;
 
+import com.pch.common.base.BasePo;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.pch.common.base.BasePo;
-
-import lombok.EqualsAndHashCode;
 
 /**
  * @Author: pch
@@ -25,8 +20,7 @@ import lombok.EqualsAndHashCode;
 @Setter
 @Entity
 @Table(name = "tb_user")
-@EqualsAndHashCode(callSuper = true)
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners({ AuditingEntityListener.class })
 public class UserPo extends BasePo {
 
     private static final long serialVersionUID = -8692760072307721060L;

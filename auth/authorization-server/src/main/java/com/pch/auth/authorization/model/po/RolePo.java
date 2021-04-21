@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,10 +19,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@EntityListeners({AuditingEntityListener.class})
 @Table(name = "tb_role")
+@EntityListeners({ AuditingEntityListener.class })
 public class RolePo extends BasePo {
+
     private static final long serialVersionUID = -7136537864183138269L;
 
     private String roleName;

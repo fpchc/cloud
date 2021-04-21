@@ -1,10 +1,9 @@
 package com.pch.gateway.event;
 
-import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.context.ApplicationEvent;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @Author: pch

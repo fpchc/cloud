@@ -14,7 +14,7 @@ spring:
     sentinel:
       transport:
         dashboard: localhost:8021
-        #取消控制台懒加载
+      #取消控制台懒加载
       eager: true
 #    gateway:
 #      routes:

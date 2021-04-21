@@ -1,10 +1,9 @@
 package com.pch.gateway.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 异步配置属性
@@ -15,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-@ConfigurationProperties("task.pool")
+@ConfigurationProperties(prefix = "task.pool")
 public class AsyncProperties {
 
     /**

@@ -1,13 +1,12 @@
 package com.pch.gateway.exception;
 
+import com.pch.common.exception.DefaultGlobalExceptionHandlerAdvice;
+import com.pch.common.exception.ServiceException;
+import com.pch.common.response.CommonResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.pch.common.exception.DefaultGlobalExceptionHandlerAdvice;
-import com.pch.common.exception.ServiceException;
-import com.pch.common.response.CommonResult;
 
 /**
  * <P> 全局异常 </P>
@@ -17,7 +16,7 @@ import com.pch.common.response.CommonResult;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends DefaultGlobalExceptionHandlerAdvice {
-    
+
     /**
      * 处理业务异常
      *

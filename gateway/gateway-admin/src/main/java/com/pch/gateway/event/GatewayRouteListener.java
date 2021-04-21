@@ -1,13 +1,11 @@
 package com.pch.gateway.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pch.gateway.router.RedisRouteDefinitionRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import com.pch.gateway.router.RedisRouteDefinitionRepository;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author: pch
@@ -16,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Async
 @Component
+@RequiredArgsConstructor
 public class GatewayRouteListener {
 
     public static final String SAVE_ACTION = "save";
@@ -24,11 +23,13 @@ public class GatewayRouteListener {
 
     public static final String FIND_ALL_ACTION = "findAll";
 
-    @Autowired
-    private RedisRouteDefinitionRepository routeDefinitionRepository;
+    private final RedisRouteDefinitionRepository routeDefinitionRepository;
 
-    @EventListener(value = { GatewayRouteEvent.class })
-    public void actionReceive() {
+    @EventListener(value = { GatewayRouteEvent.class },
+            condition = "#gatewayRouteEvent.getSource().toString() eq "
+                    + "(T(com.pch.gateway.event.GatewayRouteListener).FIND_ALL_ACTION)")
+    public void actionReceive(GatewayRouteEvent gatewayRouteEvent) {
+        log.info("路由监听器执行===>{}", gatewayRouteEvent);
         routeDefinitionRepository.getRouteDefinitions();
     }
 

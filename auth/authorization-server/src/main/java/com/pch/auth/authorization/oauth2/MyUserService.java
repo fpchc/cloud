@@ -52,7 +52,7 @@ public class MyUserService implements UserDetailsService {
         }
         UserDetails userDetails = new User(username, userPo.getPassword(), authorityList);
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-            userDetails, null, userDetails.getAuthorities()
+                userDetails, null, userDetails.getAuthorities()
         );
         return userDetails;
     }

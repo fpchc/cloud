@@ -28,8 +28,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Date: 2020/9/17
  */
 @Configuration
-@EnableCreateCacheAnnotation
-@EnableMethodCache(basePackages = { "com.pch" })
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean

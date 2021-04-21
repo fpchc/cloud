@@ -1,8 +1,7 @@
 package com.pch.gateway.mapper;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.pch.gateway.model.domain.GatewayRoutePo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @Author: pch

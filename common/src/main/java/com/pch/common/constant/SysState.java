@@ -16,7 +16,6 @@ public enum SysState {
     user_id_not_exist("40000004", "用户id不存在"),
     user_login_name_exist("40000005", "用户登录名称已存在"),
 
-
     /**业务相关*/
 
     ;
