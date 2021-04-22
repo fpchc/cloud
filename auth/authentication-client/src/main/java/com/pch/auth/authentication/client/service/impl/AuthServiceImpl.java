@@ -16,7 +16,7 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationProvide authenticationProvide;
 
     @Override
-    public String test() {
-        return authenticationProvide.getString().getData();
+    public String test(String authorization) {
+        return authenticationProvide.getString(authorization).getData();
     }
 }

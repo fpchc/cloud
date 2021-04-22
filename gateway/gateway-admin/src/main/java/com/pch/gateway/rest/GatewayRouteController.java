@@ -6,6 +6,8 @@ import com.pch.gateway.service.GatewayRouteService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,8 +56,10 @@ public class GatewayRouteController {
     }
 
     @PostMapping("/test")
-    public Mono<String> get() {
-        return Mono.just(authService.test());
+    public Mono<String> get(ServerHttpRequest request) {
+        String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        String test = authService.test(authorization);
+        return Mono.just(test);
     }
 
 }

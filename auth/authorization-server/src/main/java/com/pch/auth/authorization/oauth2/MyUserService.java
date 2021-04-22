@@ -1,24 +1,20 @@
 package com.pch.auth.authorization.oauth2;
 
-import com.pch.auth.authorization.exceaption.PermissionNotFoundException;
-import com.pch.auth.authorization.model.po.PermissionPo;
+import com.pch.auth.authorization.model.dto.RoleDto;
 import com.pch.auth.authorization.model.po.UserPo;
-import com.pch.auth.authorization.service.PermissionService;
-import com.pch.auth.authorization.service.UserService;
+import com.pch.auth.authorization.repository.UserRepository;
+import com.pch.auth.authorization.service.RoleService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @Author: admin
@@ -26,34 +22,26 @@ import org.springframework.util.CollectionUtils;
  */
 @Slf4j
 @Service("myUserDetailsService")
+@RequiredArgsConstructor
 public class MyUserService implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PermissionService permissionService;
+    private final RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserPo> userPoOptional = userService.loadByUsername(username);
+        Optional<UserPo> userPoOptional = userRepository.findByUsername(username);
         if (userPoOptional.isEmpty()) {
             log.warn("用户{}不存在", username);
             throw new UsernameNotFoundException(username + "username is not exist");
         }
         UserPo userPo = userPoOptional.get();
-        List<PermissionPo> permissionPos = permissionService.findByUserId(userPo.getId());
+        List<RoleDto> roleDtoList = roleService.findByUserId(userPo.getId());
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-        if (CollectionUtils.isEmpty(permissionPos)) {
-            throw new PermissionNotFoundException("this user bind permission is not exist");
+        for (RoleDto roleDto : roleDtoList) {
+            authorityList.add(new SimpleGrantedAuthority((roleDto.getRoleCode())));
         }
-        for (PermissionPo permissionPo : permissionPos) {
-            authorityList.add(new SimpleGrantedAuthority(("ROlE_" + permissionPo.getCode()).toUpperCase()));
-        }
-        UserDetails userDetails = new User(username, userPo.getPassword(), authorityList);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities()
-        );
-        return userDetails;
+        return new User(username, userPo.getPassword(), authorityList);
     }
 }

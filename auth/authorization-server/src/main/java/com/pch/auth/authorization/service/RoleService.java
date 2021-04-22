@@ -1,6 +1,7 @@
 package com.pch.auth.authorization.service;
 
 import com.pch.auth.authorization.model.dto.RoleDto;
+import java.util.List;
 
 /**
  * @Author: pch
@@ -9,12 +10,10 @@ import com.pch.auth.authorization.model.dto.RoleDto;
 public interface RoleService {
 
     /**
-     * 通过id查询角色
+     * 通过userId查询角色集合
      *
-     * @param id
-     * @return
+     * @param userId    用户id
      */
-    RoleDto findById(Long id);
+    List<RoleDto> findByUserId(Long userId);
 
-    Long save(RoleDto roleDto);
 }

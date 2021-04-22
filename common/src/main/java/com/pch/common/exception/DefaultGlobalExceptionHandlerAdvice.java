@@ -23,6 +23,7 @@ public class DefaultGlobalExceptionHandlerAdvice {
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResult<Boolean> exception(Exception ex) {
+        log.info("Exception：{}", ex.getMessage());
         return CommonResult.failed(ResultCode.FAILED.getCode(), ex.getMessage());
     }
 }

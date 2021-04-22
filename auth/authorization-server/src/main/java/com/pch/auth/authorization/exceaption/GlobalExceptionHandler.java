@@ -21,11 +21,21 @@ public class GlobalExceptionHandler extends DefaultGlobalExceptionHandlerAdvice 
      * 处理业务异常
      *
      * @param serviceException 业务异常
-     * @return Mono<CommonResult < Boolean>>
      */
     @ExceptionHandler(ServiceException.class)
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public CommonResult<Boolean> serviceExceptionHandler(ServiceException serviceException) {
         return CommonResult.failed(serviceException.getCode(), serviceException.getMessage());
     }
+
+    /**
+     * 角色不存在异常
+     *
+     * @param roleNotFoundException roleNotFoundException
+     */
+    @ExceptionHandler(RoleNotFoundException.class)
+    public CommonResult<Boolean> roleNotFoundExceptionHandler(RoleNotFoundException roleNotFoundException) {
+        return CommonResult.failed(roleNotFoundException.getMessage());
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.pch.auth.authorization.oauth2;
 
 import com.pch.auth.authorization.model.po.UserPo;
-import com.pch.auth.authorization.service.UserService;
+import com.pch.auth.authorization.repository.UserRepository;
 import com.pch.common.exception.ServiceException;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class MobileUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String uniqueId) {
 
-        Optional<UserPo> userPo = userService.loadByUsername(uniqueId);
+        Optional<UserPo> userPo = userRepository.findByUsername(uniqueId);
 //        log.info("load user by mobile:{}", user.toString());
 
         // 如果为mobile模式，从短信服务中获取验证码（动态密码）

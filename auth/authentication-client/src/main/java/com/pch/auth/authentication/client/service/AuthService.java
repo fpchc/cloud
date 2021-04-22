@@ -6,6 +6,6 @@ package com.pch.auth.authentication.client.service;
  */
 public interface AuthService {
 
-    String test();
+    String test(String authorization);
 
 }
