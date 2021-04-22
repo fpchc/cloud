@@ -1,11 +1,10 @@
 package com.pch.gateway.rest;
 
-import com.pch.auth.authentication.client.provide.AuthenticationProvide;
-import com.pch.common.response.CommonResult;
+import com.pch.auth.authentication.client.service.AuthService;
 import com.pch.gateway.model.dto.GatewayRouteDto;
 import com.pch.gateway.service.GatewayRouteService;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,13 +25,13 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(value = "/gateway/route")
 public class GatewayRouteController {
 
     private final GatewayRouteService gatewayRouteService;
 
-    private final AuthenticationProvide authenticationProvide;
+    private final AuthService authService;
 
     @PostMapping("/add")
     public Mono<Boolean> add(@Validated @RequestBody List<GatewayRouteDto> gatewayRouteDtoList) {
@@ -56,8 +55,7 @@ public class GatewayRouteController {
 
     @PostMapping("/test")
     public Mono<String> get() {
-        CommonResult<String> string = authenticationProvide.getString();
-        return Mono.just(string.getData());
+        return Mono.just(authService.test());
     }
 
 }

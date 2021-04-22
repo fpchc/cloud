@@ -16,10 +16,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableJpaAuditing
 @EnableScheduling
-@EnableFeignClients
-@SpringBootApplication
+@EnableFeignClients(basePackages = "com.pch")
 @EnableDiscoveryClient
 @EnableCreateCacheAnnotation
+@SpringBootApplication(scanBasePackages = { "com.pch" })
 @EnableMethodCache(basePackages = { "com.pch", "org.springframework.cloud" })
 public class GatewayAdminApplication {
 

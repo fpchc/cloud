@@ -47,6 +47,15 @@ spring:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+feign:
+  # Okhttp参数配置
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+    max-connections: 200 # 默认值
+    max-connections-per-route: 50 # 默认值
+
 jetcache:
   statIntervalMinutes: 60
   areaInCacheName: false
