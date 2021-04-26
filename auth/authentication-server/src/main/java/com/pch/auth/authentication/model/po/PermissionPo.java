@@ -25,20 +25,32 @@ public class PermissionPo extends BasePo {
 
     private static final long serialVersionUID = 4285835478693487481L;
 
-    private Integer pid;
-
-    private Integer type;
-
-    @Column(length = 50)
-    private String name;
-
-    @Column(length = 50)
+    /**
+     * 代码
+     */
     private String code;
 
-    @Column(length = 150)
-    private String uri;
+    /**
+     * 类型
+     */
+    private Integer type;
 
-    private Integer seq = 1;
+    /**
+     * 名称
+     */
+    private String name;
+
+    private String url;
+
+    /**
+     * 方法
+     */
+    private String method;
+
+    /**
+     * 简介
+     */
+    private String description;
 
     @Column(updatable = false, length = 32)
     private String createBy;

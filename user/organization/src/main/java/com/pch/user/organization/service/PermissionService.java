@@ -1,7 +1,7 @@
 package com.pch.user.organization.service;
 
 import com.pch.user.organization.model.dto.PermissionDto;
-import com.pch.user.organization.model.po.PermissionPo;
+import com.pch.user.organization.model.po.ResourcesPo;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ public interface PermissionService {
      * @param userId 用户id
      * @return
      */
-    List<PermissionPo> findByUserId(Long userId);
+    List<ResourcesPo> findByUserId(Long userId);
 
     PermissionDto findById(Long id);
 

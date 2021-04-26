@@ -1,8 +1,8 @@
 package com.pch.user.organization.service.impl;
 
 import com.pch.user.organization.model.dto.PermissionDto;
-import com.pch.user.organization.model.po.PermissionPo;
-import com.pch.user.organization.model.po.RolePermissionPo;
+import com.pch.user.organization.model.po.ResourcesPo;
+import com.pch.user.organization.model.po.RoleResourcesPo;
 import com.pch.user.organization.model.po.UserRolePo;
 import com.pch.user.organization.repository.PermissionRepository;
 import com.pch.user.organization.repository.RolePermissionRepository;
@@ -34,17 +34,17 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionRepository permissionRepository;
 
     @Override
-    public List<PermissionPo> findByUserId(Long userId) {
+    public List<ResourcesPo> findByUserId(Long userId) {
         List<UserRolePo> userRolePos = userRoleRepository.findByUserId(userId);
         if (CollectionUtils.isEmpty(userRolePos)) {
             return null;
         }
         List<Long> roleIds = userRolePos.stream().map(UserRolePo::getRoleId).collect(Collectors.toList());
-        List<RolePermissionPo> rolePermissionPos = rolePermissionRepository.findByRoleIds(roleIds);
-        if (CollectionUtils.isEmpty(rolePermissionPos)) {
+        List<RoleResourcesPo> roleResourcesPos = rolePermissionRepository.findByRoleIds(roleIds);
+        if (CollectionUtils.isEmpty(roleResourcesPos)) {
             return null;
         }
-        List<Long> permissionIds = rolePermissionPos.stream().map(RolePermissionPo::getPermissionId)
+        List<Long> permissionIds = roleResourcesPos.stream().map(RoleResourcesPo::getPermissionId)
                 .collect(Collectors.toList());
         return permissionRepository.findByPermissionIds(permissionIds);
     }
@@ -52,17 +52,17 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     @Transactional
     public Long add(PermissionDto permissionDto) {
-        PermissionPo permissionPo = new PermissionPo();
-        BeanUtils.copyProperties(permissionDto, permissionPo);
-        permissionPo = permissionRepository.save(permissionPo);
-        return permissionPo.getId();
+        ResourcesPo resourcesPo = new ResourcesPo();
+        BeanUtils.copyProperties(permissionDto, resourcesPo);
+        resourcesPo = permissionRepository.save(resourcesPo);
+        return resourcesPo.getId();
     }
 
     @Override
     public PermissionDto findById(Long id) {
-        Optional<PermissionPo> permissionPo = permissionRepository.findById(id);
+        Optional<ResourcesPo> permissionPo = permissionRepository.findById(id);
         PermissionDto permissionDto = new PermissionDto();
-        permissionPo.ifPresent(permissionPo1 -> BeanUtils.copyProperties(permissionPo1, permissionDto));
+        permissionPo.ifPresent(resourcesPo1 -> BeanUtils.copyProperties(resourcesPo1, permissionDto));
         return permissionDto;
     }
 }

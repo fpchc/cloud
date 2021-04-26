@@ -23,7 +23,6 @@ import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 @Slf4j
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 public class GatewayRouteDto extends BaseModel {
 
     private static final long serialVersionUID = -6945274367384292505L;

@@ -78,11 +78,6 @@
       <version>${jetcache.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-jpa</artifactId>
-    </dependency>
-
     <!-- 使用 lettuce 客户端添加以下依赖 -->
     <dependency>
       <groupId>com.alicp.jetcache</groupId>

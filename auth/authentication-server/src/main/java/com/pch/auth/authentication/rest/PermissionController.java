@@ -1,16 +1,11 @@
 package com.pch.auth.authentication.rest;
 
-import com.pch.auth.authentication.model.dto.PermissionDto;
 import com.pch.auth.authentication.service.PermissionService;
 import com.pch.common.response.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,15 +19,11 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @ApiOperation("通过id查询权限")
-    @GetMapping("/permission/{id}")
-    public CommonResult<PermissionDto> findById(@PathVariable Long id) {
-        return CommonResult.success(permissionService.findById(id));
+    @ApiOperation("添加权限")
+    @PostMapping("/auth")
+    public CommonResult<Boolean> authPermission() {
+        return null;
     }
 
-    @ApiOperation("添加权限")
-    @PostMapping("/permission")
-    public CommonResult<Long> add(@Valid @RequestBody PermissionDto permissionDto) {
-        return CommonResult.success(permissionService.add(permissionDto));
-    }
+
 }

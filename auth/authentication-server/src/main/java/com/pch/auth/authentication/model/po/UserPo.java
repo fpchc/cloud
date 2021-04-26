@@ -56,14 +56,19 @@ public class UserPo extends BasePo {
     private String email;
 
     /**
-     * 状态
-     */
-    private Short status;
-
-    /**
-     * 启用禁用
+     * true 启用
      */
     private Boolean enable;
+
+    /**
+     * 账户是否启用 true 没有过期
+     */
+    private Boolean accountNonExpired;
+
+    /**
+     * 账户是否锁定 true 没有锁定
+     */
+    private Boolean accountNonLocked;
 
     /**
      * 创建人

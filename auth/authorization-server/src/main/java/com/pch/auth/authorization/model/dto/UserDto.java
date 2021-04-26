@@ -24,45 +24,28 @@ public class UserDto extends BaseModel {
     @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
-    /**
-     * 登录名称
-     */
     @ApiModelProperty("登录名")
     private String loginName;
 
-    /**
-     * 密码
-     */
     @NotBlank(message = "password is blank")
     @ApiModelProperty("密码")
     private String password;
 
-    /**
-     * tell
-     */
     @ApiModelProperty("电话")
     private String telephone;
 
-    /**
-     * 邮箱
-     */
     @ApiModelProperty("邮箱")
     private String email;
 
-    /**
-     * 状态
-     */
-    private Short status;
+    @ApiModelProperty("账户是否启用 true 没有过期")
+    private Boolean accountNonExpired;
 
-    /**
-     * 启用禁用
-     */
+    @ApiModelProperty("账户是否锁定 true 没有所的那个")
+    private Boolean accountNonLocked;
+
     @ApiModelProperty("状态 启用 禁用")
     private Boolean enable;
 
-    /**
-     * 更新人
-     */
     @ApiModelProperty("更新者")
     private String updatedBy;
 
