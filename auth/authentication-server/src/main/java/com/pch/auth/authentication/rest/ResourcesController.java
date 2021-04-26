@@ -1,6 +1,6 @@
 package com.pch.auth.authentication.rest;
 
-import com.pch.auth.authentication.service.PermissionService;
+import com.pch.auth.authentication.service.ResourcesService;
 import com.pch.common.response.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "权限管理")
 @RestController
-public class PermissionController {
+public class ResourcesController {
 
     @Autowired
-    private PermissionService permissionService;
+    private ResourcesService resourcesService;
 
     @ApiOperation("添加权限")
     @PostMapping("/auth")

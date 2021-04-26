@@ -1,6 +1,6 @@
 package com.pch.user.organization.service.impl;
 
-import com.pch.user.organization.service.RolePermissionService;
+import com.pch.user.organization.service.RoleResourcesService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
  * @Date: 2021/2/24
  */
 @Service
-public class RolePermissionServiceImpl implements RolePermissionService {
+public class RoleResourcesServiceImpl implements RoleResourcesService {
 
 }

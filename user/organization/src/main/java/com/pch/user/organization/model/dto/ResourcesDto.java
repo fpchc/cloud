@@ -12,10 +12,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("权限模型")
-public class PermissionDto extends BaseModel {
+@ApiModel("资源模型")
+public class ResourcesDto extends BaseModel {
 
     private static final long serialVersionUID = -9026406455401591586L;
+
+    private Long id;
 
     @ApiModelProperty("代码")
     private String code;

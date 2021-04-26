@@ -1,6 +1,6 @@
 package com.pch.user.organization.service;
 
-import com.pch.user.organization.model.dto.PermissionDto;
+import com.pch.user.organization.model.dto.ResourcesDto;
 import com.pch.user.organization.model.po.ResourcesPo;
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @Author: pch
  * @Date: 2021/2/24
  */
-public interface PermissionService {
+public interface ResourcesService {
 
     /**
      * 获取关联用户权限
@@ -18,7 +18,7 @@ public interface PermissionService {
      */
     List<ResourcesPo> findByUserId(Long userId);
 
-    PermissionDto findById(Long id);
+    ResourcesDto findById(Long id);
 
-    Long add(PermissionDto permissionDto);
+    Long add(ResourcesDto resourcesDto);
 }

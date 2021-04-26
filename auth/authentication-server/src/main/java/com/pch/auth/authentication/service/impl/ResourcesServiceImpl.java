@@ -1,13 +1,13 @@
-package com.pch.user.organization.service.impl;
+package com.pch.auth.authentication.service.impl;
 
-import com.pch.user.organization.model.dto.PermissionDto;
-import com.pch.user.organization.model.po.ResourcesPo;
-import com.pch.user.organization.model.po.RoleResourcesPo;
-import com.pch.user.organization.model.po.UserRolePo;
-import com.pch.user.organization.repository.PermissionRepository;
-import com.pch.user.organization.repository.RolePermissionRepository;
-import com.pch.user.organization.repository.UserRoleRepository;
-import com.pch.user.organization.service.PermissionService;
+import com.pch.auth.authentication.model.dto.PermissionDto;
+import com.pch.auth.authentication.model.po.ResourcesPo;
+import com.pch.auth.authentication.model.po.RoleResourcesPo;
+import com.pch.auth.authentication.model.po.UserRolePo;
+import com.pch.auth.authentication.repository.ResourcesRepository;
+import com.pch.auth.authentication.repository.RoleResourcesRepository;
+import com.pch.auth.authentication.repository.UserRoleRepository;
+import com.pch.auth.authentication.service.ResourcesService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,16 +22,16 @@ import org.springframework.util.CollectionUtils;
  * @Date: 2021/2/24
  */
 @Service
-public class PermissionServiceImpl implements PermissionService {
+public class ResourcesServiceImpl implements ResourcesService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
 
     @Autowired
-    private RolePermissionRepository rolePermissionRepository;
+    private RoleResourcesRepository roleResourcesRepository;
 
     @Autowired
-    private PermissionRepository permissionRepository;
+    private ResourcesRepository resourcesRepository;
 
     @Override
     public List<ResourcesPo> findByUserId(Long userId) {
@@ -40,13 +40,13 @@ public class PermissionServiceImpl implements PermissionService {
             return null;
         }
         List<Long> roleIds = userRolePos.stream().map(UserRolePo::getRoleId).collect(Collectors.toList());
-        List<RoleResourcesPo> roleResourcesPos = rolePermissionRepository.findByRoleIds(roleIds);
+        List<RoleResourcesPo> roleResourcesPos = roleResourcesRepository.findByRoleIds(roleIds);
         if (CollectionUtils.isEmpty(roleResourcesPos)) {
             return null;
         }
-        List<Long> permissionIds = roleResourcesPos.stream().map(RoleResourcesPo::getPermissionId)
+        List<Long> permissionIds = roleResourcesPos.stream().map(RoleResourcesPo::getResourcesId)
                 .collect(Collectors.toList());
-        return permissionRepository.findByPermissionIds(permissionIds);
+        return resourcesRepository.findByResourcesIds(permissionIds);
     }
 
     @Override
@@ -54,13 +54,13 @@ public class PermissionServiceImpl implements PermissionService {
     public Long add(PermissionDto permissionDto) {
         ResourcesPo resourcesPo = new ResourcesPo();
         BeanUtils.copyProperties(permissionDto, resourcesPo);
-        resourcesPo = permissionRepository.save(resourcesPo);
+        resourcesPo = resourcesRepository.save(resourcesPo);
         return resourcesPo.getId();
     }
 
     @Override
     public PermissionDto findById(Long id) {
-        Optional<ResourcesPo> permissionPo = permissionRepository.findById(id);
+        Optional<ResourcesPo> permissionPo = resourcesRepository.findById(id);
         PermissionDto permissionDto = new PermissionDto();
         permissionPo.ifPresent(resourcesPo1 -> BeanUtils.copyProperties(resourcesPo1, permissionDto));
         return permissionDto;
