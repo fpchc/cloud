@@ -13,8 +13,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_role_resources")
-public class RoleResourcesPo extends BasePo {
+@Table(name = "tb_role_resource_relation")
+public class RoleResourcePo extends BasePo {
 
     private static final long serialVersionUID = 7402412601579098788L;
 

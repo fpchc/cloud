@@ -1,14 +1,20 @@
 package com.pch.gateway.filter;
 
+import com.pch.auth.authentication.client.service.AuthService;
+import java.nio.charset.StandardCharsets;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,25 +25,39 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class GlobalRouterFilter implements GlobalFilter, Ordered {
+
+    private final AuthService authService;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        long requestStartTime = System.currentTimeMillis();
         ServerHttpRequest request = exchange.getRequest();
         String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        String url = request.getPath().value();
+        String url = request.getURI().getRawPath();
         HttpMethod method = request.getMethod();
-        exchange.getAttributes().put("requestTimeBegin", System.currentTimeMillis());
-        return chain.filter(exchange).then(
-                Mono.fromRunnable(() -> {
-                    // todo 权限判断 日志记录
-                    Long startTime = exchange.getAttribute("requestTimeBegin");
-                    if (startTime != null) {
-                        log.info(exchange.getRequest().getURI().getRawPath() + ": " + (System.currentTimeMillis()
-                                - startTime) + "ms");
-                    }
-                })
-        );
+        log.info("url: {}, method: {}, header: {}, 请求时间: {}ms", url, method, request.getHeaders(),
+                System.currentTimeMillis() - requestStartTime);
+        if (authService.ignoreUrls().contains(url)) {
+            return chain.filter(exchange);
+        }
+        if (authService.authentication(authorization, url, method)) {
+            ServerHttpRequest.Builder builder = request.mutate();
+            //TODO 转发的请求都加上服务间认证token
+//            builder.header(X_CLIENT_TOKEN, "TODO zhoutaoo添加服务间简单认证");
+//            //将jwt token中的用户信息传给服务
+//            builder.header(X_CLIENT_TOKEN_USER, getUserToken(authentication));
+            return chain.filter(exchange.mutate().request(builder.build()).build());
+        }
+        return unauthorized(exchange);
+    }
+
+    private Mono<Void> unauthorized(ServerWebExchange exchange) {
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        DataBuffer dataBuffer = exchange.getResponse().bufferFactory()
+                .wrap(HttpStatus.UNAUTHORIZED.getReasonPhrase().getBytes(StandardCharsets.UTF_8));
+        return exchange.getResponse().writeWith(Flux.just(dataBuffer));
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.pch.user.organization.service.impl;
 
 import com.pch.user.organization.model.dto.ResourcesDto;
-import com.pch.user.organization.model.po.ResourcesPo;
-import com.pch.user.organization.model.po.RoleResourcesPo;
+import com.pch.user.organization.model.po.ResourcePo;
+import com.pch.user.organization.model.po.RoleResourcePo;
 import com.pch.user.organization.model.po.UserRolePo;
-import com.pch.user.organization.repository.PermissionRepository;
-import com.pch.user.organization.repository.RolePermissionRepository;
+import com.pch.user.organization.repository.ResourceRepository;
+import com.pch.user.organization.repository.RoleResourceRepository;
 import com.pch.user.organization.repository.UserRoleRepository;
-import com.pch.user.organization.service.ResourcesService;
+import com.pch.user.organization.service.ResourceService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,47 +22,47 @@ import org.springframework.util.CollectionUtils;
  * @Date: 2021/2/24
  */
 @Service
-public class ResourcesServiceImpl implements ResourcesService {
+public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
 
     @Autowired
-    private RolePermissionRepository rolePermissionRepository;
+    private RoleResourceRepository roleResourceRepository;
 
     @Autowired
-    private PermissionRepository permissionRepository;
+    private ResourceRepository resourceRepository;
 
     @Override
-    public List<ResourcesPo> findByUserId(Long userId) {
+    public List<ResourcePo> findByUserId(Long userId) {
         List<UserRolePo> userRolePos = userRoleRepository.findByUserId(userId);
         if (CollectionUtils.isEmpty(userRolePos)) {
             return null;
         }
         List<Long> roleIds = userRolePos.stream().map(UserRolePo::getRoleId).collect(Collectors.toList());
-        List<RoleResourcesPo> roleResourcesPos = rolePermissionRepository.findByRoleIds(roleIds);
-        if (CollectionUtils.isEmpty(roleResourcesPos)) {
+        List<RoleResourcePo> roleResourcePos = roleResourceRepository.findByRoleIds(roleIds);
+        if (CollectionUtils.isEmpty(roleResourcePos)) {
             return null;
         }
-        List<Long> permissionIds = roleResourcesPos.stream().map(RoleResourcesPo::getPermissionId)
+        List<Long> permissionIds = roleResourcePos.stream().map(RoleResourcePo::getPermissionId)
                 .collect(Collectors.toList());
-        return permissionRepository.findByPermissionIds(permissionIds);
+        return resourceRepository.findByPermissionIds(permissionIds);
     }
 
     @Override
     @Transactional
     public Long add(ResourcesDto resourcesDto) {
-        ResourcesPo resourcesPo = new ResourcesPo();
-        BeanUtils.copyProperties(resourcesDto, resourcesPo);
-        resourcesPo = permissionRepository.save(resourcesPo);
-        return resourcesPo.getId();
+        ResourcePo resourcePo = new ResourcePo();
+        BeanUtils.copyProperties(resourcesDto, resourcePo);
+        resourcePo = resourceRepository.save(resourcePo);
+        return resourcePo.getId();
     }
 
     @Override
     public ResourcesDto findById(Long id) {
-        Optional<ResourcesPo> permissionPo = permissionRepository.findById(id);
+        Optional<ResourcePo> permissionPo = resourceRepository.findById(id);
         ResourcesDto resourcesDto = new ResourcesDto();
-        permissionPo.ifPresent(resourcesPo1 -> BeanUtils.copyProperties(resourcesPo1, resourcesDto));
+        permissionPo.ifPresent(resourcePo1 -> BeanUtils.copyProperties(resourcePo1, resourcesDto));
         return resourcesDto;
     }
 }

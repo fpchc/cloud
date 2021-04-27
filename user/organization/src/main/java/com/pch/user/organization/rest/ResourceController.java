@@ -2,7 +2,7 @@ package com.pch.user.organization.rest;
 
 import com.pch.common.response.CommonResult;
 import com.pch.user.organization.model.dto.ResourcesDto;
-import com.pch.user.organization.service.ResourcesService;
+import com.pch.user.organization.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
@@ -19,20 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "资源管理")
-public class ResourcesController {
+public class ResourceController {
 
     @Autowired
-    private ResourcesService resourcesService;
+    private ResourceService resourceService;
 
     @ApiOperation("通过id查询权限")
     @GetMapping("/permission/{id}")
     public CommonResult<ResourcesDto> findById(@PathVariable Long id) {
-        return CommonResult.success(resourcesService.findById(id));
+        return CommonResult.success(resourceService.findById(id));
     }
 
     @ApiOperation("添加权限")
     @PostMapping("/permission")
     public CommonResult<Long> add(@Valid @RequestBody ResourcesDto resourcesDto) {
-        return CommonResult.success(resourcesService.add(resourcesDto));
+        return CommonResult.success(resourceService.add(resourcesDto));
     }
 }

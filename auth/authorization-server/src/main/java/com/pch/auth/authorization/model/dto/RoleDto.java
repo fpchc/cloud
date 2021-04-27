@@ -32,21 +32,12 @@ public class RoleDto extends BaseModel {
     @ApiModelProperty(hidden = true)
     private String createBy;
 
-    /**
-     * 更新人
-     */
     @ApiModelProperty(hidden = true)
     private String updatedBy;
 
-    /**
-     * 创建时间
-     */
     @ApiModelProperty(hidden = true)
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
     @ApiModelProperty(hidden = true)
     private LocalDateTime updateTime;
 }
