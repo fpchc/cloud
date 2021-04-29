@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date: 2021/4/19 17:23
  */
 @Component
-@FeignClient(name = "authentication-service")
+@FeignClient(name = "authentication-service", fallback = AuthenticationProvideBack.class)
 public interface AuthenticationProvide {
 
     @GetMapping("/authentication/get")
     CommonResult<String> getString(@RequestHeader(HttpHeaders.AUTHORIZATION) String authentication);
 
     @PostMapping("/authentication/resource/authentication")
-    Boolean authentication(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+    CommonResult<Boolean> authentication(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
             @RequestParam("url") String url, @RequestParam("method") HttpMethod method);
 }

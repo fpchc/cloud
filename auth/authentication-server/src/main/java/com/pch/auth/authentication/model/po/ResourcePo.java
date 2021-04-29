@@ -20,8 +20,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @Getter
 @EntityListeners({ AuditingEntityListener.class })
-@Table(name = "tb_permission")
-public class ResourcesPo extends BasePo {
+@Table(name = "tb_resource")
+public class ResourcePo extends BasePo {
 
     private static final long serialVersionUID = 4285835478693487481L;
 

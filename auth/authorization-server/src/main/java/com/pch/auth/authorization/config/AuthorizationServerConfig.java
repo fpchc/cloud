@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -60,8 +61,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * jwt 对称加密密钥
      */
-//    @Value("${spring.security.oauth2.jwt.signingKey}")
-    public static final String signingKey = "pch";
+    @Value("${spring.security.oauth2.jwt.signingKey}")
+    public String signingKey;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {

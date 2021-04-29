@@ -1,26 +1,21 @@
 package com.pch.auth.authentication.service.impl;
 
+import com.alicp.jetcache.anno.CacheConsts;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.CreateCache;
 import com.pch.auth.authentication.model.dto.ResourceDto;
-import com.pch.auth.authentication.model.po.ResourcesPo;
-import com.pch.auth.authentication.model.po.RoleResourcesPo;
-import com.pch.auth.authentication.model.po.UserRolePo;
 import com.pch.auth.authentication.repository.ResourcesRepository;
 import com.pch.auth.authentication.repository.RoleResourcesRepository;
 import com.pch.auth.authentication.repository.UserRoleRepository;
 import com.pch.auth.authentication.service.ResourcesService;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @Author: pch
@@ -31,41 +26,13 @@ import org.springframework.util.CollectionUtils;
 @RequiredArgsConstructor
 public class ResourcesServiceImpl implements ResourcesService {
 
-    private final UserRoleRepository userRoleRepository;
-
-    private final RoleResourcesRepository roleResourcesRepository;
-
-    private final ResourcesRepository resourcesRepository;
+    public static final String RESOURCE_CACHE_PREFIX = "resource:";
 
     @Value("${spring.security.oauth2.jwt.signingKey}")
     private String signingKey;
 
-    @Override
-    public List<ResourcesPo> findByUserId(Long userId) {
-        List<UserRolePo> userRolePos = userRoleRepository.findByUserId(userId);
-        if (CollectionUtils.isEmpty(userRolePos)) {
-            log.info("该用户没有绑定角色！！");
-            return null;
-        }
-        List<Long> roleIds = userRolePos.stream().map(UserRolePo::getRoleId).collect(Collectors.toList());
-        List<RoleResourcesPo> roleResourcesPos = roleResourcesRepository.findByRoleIds(roleIds);
-        if (CollectionUtils.isEmpty(roleResourcesPos)) {
-            log.info("该用户没有绑定资源权限！！");
-            return null;
-        }
-        List<Long> permissionIds = roleResourcesPos.stream().map(RoleResourcesPo::getResourcesId)
-                .collect(Collectors.toList());
-        return resourcesRepository.findByResourcesIds(permissionIds);
-    }
-
-    @Override
-    @Transactional
-    public Long add(ResourceDto resourceDto) {
-        ResourcesPo resourcesPo = new ResourcesPo();
-        BeanUtils.copyProperties(resourceDto, resourcesPo);
-        resourcesPo = resourcesRepository.save(resourcesPo);
-        return resourcesPo.getId();
-    }
+    @CreateCache(name = RESOURCE_CACHE_PREFIX, cacheType = CacheType.REMOTE)
+    private List<ResourceDto> resourceDtoList;
 
     @Override
     public Boolean authentication(HttpServletRequest request, String url, String method) {
@@ -74,11 +41,4 @@ public class ResourcesServiceImpl implements ResourcesService {
         return null;
     }
 
-    @Override
-    public ResourceDto findById(Long id) {
-        Optional<ResourcesPo> permissionPo = resourcesRepository.findById(id);
-        ResourceDto resourceDto = new ResourceDto();
-        permissionPo.ifPresent(resourcesPo1 -> BeanUtils.copyProperties(resourcesPo1, resourceDto));
-        return resourceDto;
-    }
 }

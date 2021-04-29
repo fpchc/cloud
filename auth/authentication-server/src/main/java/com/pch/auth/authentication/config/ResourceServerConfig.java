@@ -1,6 +1,7 @@
 package com.pch.auth.authentication.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +19,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private static final String signingKey = "pch";
+    @Value("${spring.security.oauth2.jwt.signingKey}")
+    public String signingKey;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

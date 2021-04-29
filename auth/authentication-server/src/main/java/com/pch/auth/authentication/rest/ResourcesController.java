@@ -25,12 +25,6 @@ public class ResourcesController {
     @Autowired
     private ResourcesService resourcesService;
 
-    @ApiOperation("添加权限")
-    @PostMapping
-    public CommonResult<Boolean> authPermission() {
-        return null;
-    }
-
     @ApiOperation("认证")
     @PostMapping("/authentication")
     public CommonResult<Boolean> authentication(@RequestParam("url") String url,
