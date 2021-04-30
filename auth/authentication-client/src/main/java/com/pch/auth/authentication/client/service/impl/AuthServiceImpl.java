@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<String> ignoreUrls() {
-        return Stream.of("/oauth").collect(Collectors.toList());
+    public Boolean ignoreUrls(String matchUrl) {
+        return Stream.of("/authorization/oauth").anyMatch(url -> url.startsWith(StringUtils.trim(url)));
     }
 }

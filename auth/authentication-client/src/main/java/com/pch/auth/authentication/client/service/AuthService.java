@@ -1,6 +1,5 @@
 package com.pch.auth.authentication.client.service;
 
-import java.util.List;
 import org.springframework.http.HttpMethod;
 
 /**
@@ -13,8 +12,11 @@ public interface AuthService {
 
     /**
      * 获取需要忽略的url
+     *
+     * @param matchUrl 需要匹配的url
+     * @return true: match success
      */
-    List<String> ignoreUrls();
+    Boolean ignoreUrls(String matchUrl);
 
 
     boolean authentication(String authorization, String url, HttpMethod method);

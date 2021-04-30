@@ -13,5 +13,5 @@ import org.springframework.data.repository.query.Param;
 public interface ResourceRepository extends JpaRepository<ResourcePo, Long> {
 
     @Query("select p from ResourcePo p where p.id in (:resourceIds)")
-    List<ResourcePo> findByPermissionIds(@Param("permissionIds") List<Long> resourceIds);
+    List<ResourcePo> findByPermissionIds(@Param("resourceIds") List<Long> resourceIds);
 }

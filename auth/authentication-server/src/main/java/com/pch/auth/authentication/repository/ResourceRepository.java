@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
  * @Author: pch
  * @Date: 2021/2/24
  */
-public interface ResourcesRepository extends JpaRepository<ResourcePo, Long> {
+public interface ResourceRepository extends JpaRepository<ResourcePo, Long> {
 
-    @Query("select p from ResourcePo p where p.id in (:resourcesList)")
-    List<ResourcePo> findByResourcesIds(@Param("permissionIds") List<Long> resourcesList);
+    @Query("select p from ResourcePo p where p.id in (:resourceIds)")
+    List<ResourcePo> findByResourcesIds(@Param("resourceIds") List<Long> resourceIds);
 }

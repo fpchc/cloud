@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
  * @Date: 2020/12/12 9:57
  */
 @Slf4j
-@Component
+@Configuration
 @RequiredArgsConstructor
 public class GlobalRouterFilter implements GlobalFilter, Ordered {
 
@@ -39,7 +39,7 @@ public class GlobalRouterFilter implements GlobalFilter, Ordered {
         HttpMethod method = request.getMethod();
         log.info("url: {}, method: {}, header: {}, 请求时间: {}ms", url, method, request.getHeaders(),
                 System.currentTimeMillis() - requestStartTime);
-        if (authService.ignoreUrls().contains(url)) {
+        if (authService.ignoreUrls(url)) {
             return chain.filter(exchange);
         }
         if (authService.authentication(authorization, url, method)) {

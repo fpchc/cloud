@@ -21,10 +21,10 @@ public class RolePo extends BasePo {
 
     private static final long serialVersionUID = -7136537864183138269L;
 
-    private String roleName;
+    private String name;
 
-    private String roleCode;
+    private String code;
 
-    private String roleDescription;
+    private String description;
 
 }

@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,7 +41,7 @@ public class MyUserService implements UserDetailsService {
         List<RoleDto> roleDtoList = roleService.findByUserId(userPo.getId());
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         for (RoleDto roleDto : roleDtoList) {
-            authorityList.add(new SimpleGrantedAuthority((roleDto.getRoleCode())));
+            authorityList.add(new SimpleGrantedAuthority((roleDto.getCode())));
         }
         return new User(username, userPo.getPassword(), authorityList);
     }

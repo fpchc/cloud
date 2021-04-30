@@ -21,13 +21,13 @@ public class RoleDto extends BaseModel {
     private Long id;
 
     @ApiModelProperty("角色名称")
-    private String roleName;
+    private String name;
 
     @ApiModelProperty("角色code")
-    private String roleCode;
+    private String code;
 
     @ApiModelProperty("角色描述")
-    private String roleDescription;
+    private String description;
 
     @ApiModelProperty(hidden = true)
     private String createBy;

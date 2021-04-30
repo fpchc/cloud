@@ -10,7 +10,9 @@ import com.pch.auth.authorization.service.RoleService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +21,7 @@ import org.springframework.util.CollectionUtils;
  * @Author: pch
  * @Date: 2021/2/24
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -38,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
         List<RolePo> rolePoList = roleRepository.findAllById(roleIdList);
         return rolePoList.stream().map(rolePo -> {
             RoleDto roleDto = new RoleDto();
-            BeanUtils.copyProperties(roleDto, rolePo);
+            BeanUtils.copyProperties(rolePo, roleDto);
             return roleDto;
         }).collect(Collectors.toList());
     }
