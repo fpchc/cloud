@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,19 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "资源管理")
+@RequestMapping("/permission")
 public class ResourceController {
 
     @Autowired
     private ResourceService resourceService;
 
-    @ApiOperation("通过id查询权限")
-    @GetMapping("/permission/{id}")
+    @ApiOperation("通过id查询资源")
+    @GetMapping("/{id}")
     public CommonResult<ResourcesDto> findById(@PathVariable Long id) {
         return CommonResult.success(resourceService.findById(id));
     }
 
-    @ApiOperation("添加权限")
-    @PostMapping("/permission")
+    @ApiOperation("添加资源")
+    @PostMapping("")
     public CommonResult<Long> add(@Valid @RequestBody ResourcesDto resourcesDto) {
         return CommonResult.success(resourceService.add(resourcesDto));
     }

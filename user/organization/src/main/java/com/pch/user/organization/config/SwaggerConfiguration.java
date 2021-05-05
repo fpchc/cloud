@@ -24,9 +24,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfiguration {
 
-    @Bean(value = "authenticationApi")
+    @Bean(value = "organizationApi")
     @Order(value = 1)
-    public Docket authenticationApi() {
+    public Docket organizationApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(groupApiInfo())
                 .select()

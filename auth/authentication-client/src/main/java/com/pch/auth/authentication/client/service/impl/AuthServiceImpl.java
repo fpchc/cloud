@@ -6,8 +6,6 @@ import com.pch.common.response.CommonResult;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    public static final String BROKEN = "Broken ";
+    public static final String BEARER = "Bearer ";
 
     @Value("${spring.security.oauth2.jwt.signingKey}")
     public String signingKey;
@@ -33,15 +31,18 @@ public class AuthServiceImpl implements AuthService {
     private AuthenticationProvide authenticationProvide;
 
     @Override
-    public boolean authentication(String authorization, String url, HttpMethod method) {
-        if (StringUtils.isNotBlank(authorization) && authorization.startsWith(BROKEN)) {
+    public Boolean authentication(String authorization, String url, HttpMethod method) {
+        log.info("开始调用调用认证服务authentication-service, 调用token：{}， 调用url：{}， 调用方法：{}", authorization, url, method);
+        if (StringUtils.isBlank(authorization) || !authorization.startsWith(BEARER)) {
             log.error("token is null or prefix error");
             return Boolean.FALSE;
         }
         if (invalidJwtAccessToken(authorization)) {
             return Boolean.FALSE;
         }
-        return authenticationProvide.authentication(authorization, url, method).getData();
+        CommonResult<Boolean> result = authenticationProvide.authentication(authorization, url, method);
+        log.info("调用调用认证服务结束,返回值为：{}", result);
+        return StringUtils.equalsIgnoreCase(result.getCode(), CommonResult.SUCCESS_CODE) && result.getData();
     }
 
     /**
@@ -49,37 +50,29 @@ public class AuthServiceImpl implements AuthService {
      *
      * @param authorization token凭证
      */
-    private boolean invalidJwtAccessToken(String authorization) {
+    public Boolean invalidJwtAccessToken(String authorization) {
         Boolean flag = Boolean.TRUE;
         try {
             getJwtToken(authorization);
             flag = Boolean.FALSE;
         } catch (Exception e) {
-            log.error("parse token error: {}", authorization);
+            log.error("parse token error", e);
         }
         return flag;
     }
 
-    /**
-     * 解析token
-     *
-     * @param jwtToken  token密匙
-     */
-    private Jws<Claims> getJwtToken(String jwtToken) {
-        if (jwtToken.startsWith(BROKEN)) {
-            jwtToken = StringUtils.substring(jwtToken, BROKEN.length());
+
+    public Jws<Claims> getJwtToken(String jwtToken) {
+        if (jwtToken.startsWith(BEARER)) {
+            jwtToken = StringUtils.substring(jwtToken, BEARER.length());
         }
-        return Jwts.parser().setSigningKey(signingKey).parseClaimsJws(jwtToken);
+        return Jwts.parser().setSigningKey(signingKey.getBytes()).parseClaimsJws(jwtToken);
 
-    }
-
-    @Override
-    public String test(String authorization) {
-        return authenticationProvide.getString(authorization).getData();
     }
 
     @Override
     public Boolean ignoreUrls(String matchUrl) {
-        return Stream.of("/authorization/oauth").anyMatch(url -> url.startsWith(StringUtils.trim(url)));
+        return Stream.of("/oauth/token", "/v2/api-docs").anyMatch(url -> matchUrl.endsWith(StringUtils.trim(url)));
     }
+
 }

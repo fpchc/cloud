@@ -14,12 +14,6 @@ import org.springframework.stereotype.Component;
 public class AuthenticationProvideBack implements AuthenticationProvide {
 
     @Override
-    public CommonResult<String> getString(String authentication) {
-        log.error("认证服务没有启动");
-        return CommonResult.failed();
-    }
-
-    @Override
     public CommonResult<Boolean> authentication(String authorization, String url, HttpMethod method) {
         log.error("认证服务没有启动");
         return CommonResult.failed();

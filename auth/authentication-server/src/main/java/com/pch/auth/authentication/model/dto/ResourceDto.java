@@ -18,6 +18,8 @@ public class ResourceDto extends BaseModel {
 
     private static final long serialVersionUID = -9026406455401591586L;
 
+    private Long id;
+
     @ApiModelProperty("代码")
     private String code;
 

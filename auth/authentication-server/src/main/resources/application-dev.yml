@@ -67,7 +67,7 @@ jetcache:
   areaInCacheName: false
   penetrationProtect: false
   enableMethodCache: true
-  hiddenPackages: com.xxx.xxx,com.xxx.xxx
+  hiddenPackages: com.pch.auth.authentication
   local:
     default:
       type: caffeine # 支持的类型：linkedhashmap、caffeine
@@ -117,8 +117,6 @@ jetcache:
 logging:
   level:
     root: info
-    com.pch.gateway.mapper: debug
-    org.springframework.security: debug
 
   file:
     path: D:/pch/log/authenticzation # 开发日志路径

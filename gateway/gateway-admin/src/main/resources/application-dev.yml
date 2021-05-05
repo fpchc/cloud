@@ -66,7 +66,7 @@ jetcache:
   areaInCacheName: false
   penetrationProtect: false
   enableMethodCache: true
-  hiddenPackages: com.pch
+  hiddenPackages: com.pch.gateway
   local:
     default:
       type: caffeine # 支持的类型：linkedhashmap、caffeine

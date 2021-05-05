@@ -1,6 +1,7 @@
 package com.pch.gateway.service.impl;
 
 import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.anno.CacheConsts;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,7 +43,7 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     @Autowired
     private RouteRepository routeRepository;
 
-    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
+    @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = CacheConsts.DEFAULT_EXPIRE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
@@ -71,7 +72,11 @@ public class GatewayRouteServiceImpl implements GatewayRouteService, Application
     public Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto) {
         List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDto.stream().map(GatewayRouteDto::toPo)
                 .collect(Collectors.toList());
-        routeRepository.saveAll(gatewayRoutePos);
+        for (GatewayRoutePo gatewayRoutePo : gatewayRoutePos) {
+            Optional<GatewayRoutePo> dataSourcePo = routeRepository.findById(gatewayRoutePo.getId());
+            dataSourcePo.ifPresentOrElse(po -> BeanUtils.copyProperties(po, gatewayRoutePo),
+                    () -> routeRepository.save(gatewayRoutePo));
+        }
         gatewayRoutePos.forEach(gatewayRoutePo -> {
             RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
             gatewayRouteCache.put(routeDefinition.getId(), routeDefinition);

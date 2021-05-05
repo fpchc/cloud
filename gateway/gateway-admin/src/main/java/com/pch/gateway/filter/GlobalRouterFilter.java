@@ -37,7 +37,7 @@ public class GlobalRouterFilter implements GlobalFilter, Ordered {
         String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         String url = request.getURI().getRawPath();
         HttpMethod method = request.getMethod();
-        log.info("url: {}, method: {}, header: {}, 请求时间: {}ms", url, method, request.getHeaders(),
+        log.info("请求url: {}, method: {}, 请求header: {}, 请求时间: {}ms", url, method, request.getHeaders(),
                 System.currentTimeMillis() - requestStartTime);
         if (authService.ignoreUrls(url)) {
             return chain.filter(exchange);

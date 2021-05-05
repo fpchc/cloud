@@ -50,6 +50,11 @@ public class UserPo extends BasePo {
     private String telephone;
 
     /**
+     * 是否已删除Y：已删除，N：未删除
+     */
+    private Character deleted;
+
+    /**
      * 邮箱
      */
     @Column(length = 32)

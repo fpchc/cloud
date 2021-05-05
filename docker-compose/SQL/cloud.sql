@@ -180,8 +180,8 @@ CREATE TABLE tb_role_menu_relation
 ) COMMENT '角色和菜单关系表';
 
 --  用户表
-DROP TABLE IF EXISTS tb_users;
-CREATE TABLE tb_users
+DROP TABLE IF EXISTS tb_user;
+CREATE TABLE tb_user
 (
     id                      VARCHAR(20) PRIMARY KEY COMMENT '用户id',
     username                VARCHAR(100) NOT NULL COMMENT '用户名',
@@ -200,13 +200,13 @@ CREATE TABLE tb_users
     updated_by              VARCHAR(100) NOT NULL COMMENT '更新人'
 ) COMMENT '用户表';
 CREATE UNIQUE INDEX ux_users_username
-    ON tb_users (username);
+    ON tb_user (username);
 CREATE UNIQUE INDEX ux_users_mobile
-    ON tb_users (mobile);
+    ON tb_user (mobile);
 
 --  角色表
-DROP TABLE IF EXISTS tb_roles;
-CREATE TABLE tb_roles
+DROP TABLE IF EXISTS tb_role;
+CREATE TABLE tb_role
 (
     id           VARCHAR(20) PRIMARY KEY COMMENT '角色id',
     code         VARCHAR(100) NOT NULL COMMENT '角色code',
@@ -266,14 +266,14 @@ CREATE TABLE tb_role_resource_relation
 -- DML准备初始化数据
 
 -- 用户
-INSERT INTO tb_users (id, username, password, deleted, enabled, account_non_expired, credentials_non_expired, account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by)
+INSERT INTO tb_user (id, username, password, deleted, enabled, account_non_expired, credentials_non_expired, account_non_locked, name, mobile, created_time, updated_time, created_by, updated_by)
 VALUES
 (101, 'admin', '$2a$10$vYA9wKn/hVGOtwQw2eHiceeIGNBdfLYpDmbzHgBSVmOfHXPH4iYdS', 'N', true, true, true, true,
  '超级管理员', '', now(), now(), 'system', 'system'),
 (102, 'zhoutaoo', '$2a$10$vYA9wKn/hVGOtwQw2eHiceeIGNBdfLYpDmbzHgBSVmOfHXPH4iYdS', 'N', true, true, true, true,
  '周涛', 15619841000, now(), now(), 'system', 'system');
 -- 角色
-INSERT INTO tb_roles (id, code, name, description, created_time, updated_time, created_by, updated_by)
+INSERT INTO tb_role (id, code, name, description, created_time, updated_time, created_by, updated_by)
 VALUES (101, 'ADMIN', '超级管理员', '公司IT总负责人', now(), now(), 'system', 'system'),
        (102, 'FIN', '财务', '财务', now(), now(), 'system', 'system'),
        (103, 'IT', 'IT', 'IT角色', now(), now(), 'system', 'system');

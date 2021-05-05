@@ -2,14 +2,18 @@ package com.pch.common.response;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class CommonResult<T> implements Serializable {
 
     private static final Long serialVersionUID = -7327749889983711127L;
@@ -17,7 +21,7 @@ public class CommonResult<T> implements Serializable {
     /**
      * 成功返回编码
      */
-    private static final String SUCCESS_CODE = "0";
+    public static final String SUCCESS_CODE = "0";
 
     private String code;
 
@@ -130,27 +134,4 @@ public class CommonResult<T> implements Serializable {
                 ResultCode.FORBIDDEN.getMessage(), data);
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
