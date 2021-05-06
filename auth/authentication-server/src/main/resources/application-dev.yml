@@ -80,7 +80,6 @@ jetcache:
   remote:
     default:
       type: redis.lettuce # 支持的类型：redis、redis.lettuce
-      keyPrefix: 'pch:gateway:'
       keyConvertor: fastjson
       valueEncoder: java # 支持的类型：kryo、java，可自定义编码器
       valueDecoder: java # 支持的类型：kryo、java，可自定义解码器

@@ -8,12 +8,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ResourcesService {
 
-    /**
-     * 认证 token 是否具备访问权限.
-     *
-     * @param request HttpServletRequest
-     */
-    Boolean authentication(HttpServletRequest request);
 
     /**
      * 加载所有资源到redis服务器
