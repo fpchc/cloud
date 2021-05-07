@@ -14,11 +14,15 @@ public interface ResourceService {
      * 获取关联用户权限
      *
      * @param userId 用户id
-     * @return
      */
     List<ResourcePo> findByUserId(Long userId);
 
     ResourcesDto findById(Long id);
 
     Long add(ResourcesDto resourcesDto);
+
+    /**
+     * 查询所有资源
+     */
+    List<ResourcesDto> findAll();
 }

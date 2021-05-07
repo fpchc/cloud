@@ -18,23 +18,13 @@ public class ServiceException extends RuntimeException {
      */
     private String code;
 
-    /**
-     * 错误信息
-     */
-    private String message;
-
-    public ServiceException(String message) {
-        this.message = message;
-        this.code = code;
-    }
-
     public ServiceException(String code, String message) {
-        this.message = message;
+        super(message);
         this.code = code;
     }
 
     public ServiceException(SysState sysState) {
-        this.message = sysState.getError();
+        super(sysState.getError());
         this.code = sysState.getCode();
     }
 }

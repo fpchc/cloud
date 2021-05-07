@@ -5,6 +5,7 @@ import com.pch.user.organization.model.dto.ResourcesDto;
 import com.pch.user.organization.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,12 @@ public class ResourceController {
     @GetMapping("/{id}")
     public CommonResult<ResourcesDto> findById(@PathVariable Long id) {
         return CommonResult.success(resourceService.findById(id));
+    }
+
+    @ApiOperation("查询所有资源")
+    @GetMapping("/findAll")
+    public CommonResult<List<ResourcesDto>> findAll() {
+        return CommonResult.success(resourceService.findAll());
     }
 
     @ApiOperation("添加资源")

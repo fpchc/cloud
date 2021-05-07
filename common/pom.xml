@@ -47,11 +47,13 @@
       <artifactId>commons-lang3</artifactId>
       <version>${commons.version}</version>
     </dependency>
+
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <version>${beanUtils.version}</version>
     </dependency>
+
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>

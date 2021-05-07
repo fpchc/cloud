@@ -8,11 +8,11 @@ import com.pch.user.organization.repository.ResourceRepository;
 import com.pch.user.organization.repository.RoleResourceRepository;
 import com.pch.user.organization.repository.UserRoleRepository;
 import com.pch.user.organization.service.ResourceService;
+import com.pch.user.organization.service.mapstruct.ResourceMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -22,18 +22,21 @@ import org.springframework.util.CollectionUtils;
  * @Date: 2021/2/24
  */
 @Service
+@RequiredArgsConstructor
 public class ResourceServiceImpl implements ResourceService {
 
-    @Autowired
-    private UserRoleRepository userRoleRepository;
+    private final UserRoleRepository userRoleRepository;
 
-    @Autowired
-    private RoleResourceRepository roleResourceRepository;
+    private final RoleResourceRepository roleResourceRepository;
 
-    @Autowired
-    private ResourceRepository resourceRepository;
+    private final ResourceRepository resourceRepository;
+
+    private final ResourceMapper resourceMapper;
+
+    public static final String RESOURCE_PREFIX = "resource:";
 
     @Override
+    @Transactional(readOnly = true)
     public List<ResourcePo> findByUserId(Long userId) {
         List<UserRolePo> userRolePos = userRoleRepository.findByUserId(userId);
         if (CollectionUtils.isEmpty(userRolePos)) {
@@ -50,19 +53,24 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
+    public List<ResourcesDto> findAll() {
+        List<ResourcePo> resourcePosFromDateBase = resourceRepository.findAll();
+        return resourcePosFromDateBase.stream().map(resourceMapper::poToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public Long add(ResourcesDto resourcesDto) {
-        ResourcePo resourcePo = new ResourcePo();
-        BeanUtils.copyProperties(resourcesDto, resourcePo);
-        resourcePo = resourceRepository.save(resourcePo);
+        ResourcePo resourcePo = resourceMapper.dtoToPo(resourcesDto);
         return resourcePo.getId();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ResourcesDto findById(Long id) {
         Optional<ResourcePo> permissionPo = resourceRepository.findById(id);
-        ResourcesDto resourcesDto = new ResourcesDto();
-        permissionPo.ifPresent(resourcePo1 -> BeanUtils.copyProperties(resourcePo1, resourcesDto));
-        return resourcesDto;
+        return permissionPo.map(resourceMapper::poToDto).orElse(null);
     }
 }
