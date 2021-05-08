@@ -20,5 +20,5 @@ public class RoleResourcePo extends BasePo {
 
     private Long roleId;
 
-    private Long permissionId;
+    private Long resourceId;
 }

@@ -19,6 +19,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "tb_resource")
 public class ResourcePo extends BasePo {
 
+    public static final String RESOURCE_PREFIX = "resource:";
+
     private static final long serialVersionUID = 4285835478693487481L;
 
     /**

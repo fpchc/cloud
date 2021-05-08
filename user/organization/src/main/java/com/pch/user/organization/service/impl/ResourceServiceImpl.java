@@ -1,55 +1,42 @@
 package com.pch.user.organization.service.impl;
 
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.pch.user.organization.model.dto.ResourcesDto;
 import com.pch.user.organization.model.po.ResourcePo;
-import com.pch.user.organization.model.po.RoleResourcePo;
-import com.pch.user.organization.model.po.UserRolePo;
+import com.pch.user.organization.model.po.UserPo;
 import com.pch.user.organization.repository.ResourceRepository;
-import com.pch.user.organization.repository.RoleResourceRepository;
-import com.pch.user.organization.repository.UserRoleRepository;
+import com.pch.user.organization.repository.UserRepository;
 import com.pch.user.organization.service.ResourceService;
 import com.pch.user.organization.service.mapstruct.ResourceMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @Author: pch
  * @Date: 2021/2/24
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ResourceServiceImpl implements ResourceService {
-
-    private final UserRoleRepository userRoleRepository;
-
-    private final RoleResourceRepository roleResourceRepository;
 
     private final ResourceRepository resourceRepository;
 
     private final ResourceMapper resourceMapper;
 
-    public static final String RESOURCE_PREFIX = "resource:";
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResourcePo> findByUserId(Long userId) {
-        List<UserRolePo> userRolePos = userRoleRepository.findByUserId(userId);
-        if (CollectionUtils.isEmpty(userRolePos)) {
-            return null;
-        }
-        List<Long> roleIds = userRolePos.stream().map(UserRolePo::getRoleId).collect(Collectors.toList());
-        List<RoleResourcePo> roleResourcePos = roleResourceRepository.findByRoleIds(roleIds);
-        if (CollectionUtils.isEmpty(roleResourcePos)) {
-            return null;
-        }
-        List<Long> permissionIds = roleResourcePos.stream().map(RoleResourcePo::getPermissionId)
-                .collect(Collectors.toList());
-        return resourceRepository.findByPermissionIds(permissionIds);
+    public List<ResourcesDto> findByUserId(Long userId) {
+        List<ResourcePo> resourcePoList = resourceRepository.findByUserId(userId);
+        return resourcePoList.stream().map(resourceMapper::poToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -61,9 +48,17 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(readOnly = true)
+    @Cached(name = "resource:user", key = "#username", cacheType = CacheType.REMOTE)
+    public List<ResourcesDto> findByUsername(String username) {
+        UserPo userPo = userRepository.findByUsername(username);
+        return findByUserId(userPo.getId());
+    }
+
+    @Override
+    @Transactional
     public Long add(ResourcesDto resourcesDto) {
-        ResourcePo resourcePo = resourceMapper.dtoToPo(resourcesDto);
+        ResourcePo resourcePo = resourceRepository.save(resourceMapper.dtoToPo(resourcesDto));
         return resourcePo.getId();
     }
 

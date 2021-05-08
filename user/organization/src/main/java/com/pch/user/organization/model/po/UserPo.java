@@ -2,6 +2,7 @@ package com.pch.user.organization.model.po;
 
 import com.pch.common.base.BasePo;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -74,30 +75,5 @@ public class UserPo extends BasePo {
      * 账户是否锁定 true 没有锁定
      */
     private Boolean accountNonLocked;
-
-    /**
-     * 创建人
-     */
-    @Column(updatable = false, length = 32)
-    private String createBy;
-
-    /**
-     * 更新人
-     */
-    @Column(length = 32)
-    private String updatedBy;
-
-    /**
-     * 创建时间
-     */
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
 
 }

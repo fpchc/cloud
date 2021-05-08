@@ -1,17 +1,17 @@
 package com.pch.auth.authentication.service.impl;
 
-import com.alicp.jetcache.Cache;
-import com.alicp.jetcache.anno.CacheConsts;
 import com.alicp.jetcache.anno.CacheType;
-import com.alicp.jetcache.anno.CreateCache;
+import com.alicp.jetcache.anno.Cached;
 import com.pch.auth.authentication.model.dto.ResourceDto;
 import com.pch.auth.authentication.provide.ResourceProvide;
 import com.pch.auth.authentication.service.NewMvcRequestMatch;
 import com.pch.auth.authentication.service.ResourcesService;
 import com.pch.common.response.CommonResult;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,23 +32,33 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @RequiredArgsConstructor
 public class ResourcesServiceImpl implements ResourcesService {
 
-    public static final String RESOURCE_CACHE_PREFIX = "resource:";
-
     private final HandlerMappingIntrospector introspector;
 
     private final ResourceProvide resourceProvide;
 
-    @Value("${spring.security.oauth2.jwt.signingKey}")
-    private String signingKey;
+    private static final Map<RequestMatcher, ConfigAttribute> resourceDtoCache = new ConcurrentHashMap<>();
 
-    @CreateCache(name = RESOURCE_CACHE_PREFIX, cacheType = CacheType.REMOTE,
-            expire = CacheConsts.DEFAULT_EXPIRE, timeUnit = TimeUnit.HOURS)
-    private Cache<RequestMatcher, ConfigAttribute> resourceDtoCache;
+    @Override
+    @Cached(name = "resource:username", key = "#username", cacheType = CacheType.REMOTE)
+    public List<ResourceDto> findByUsername(String username) {
+        CommonResult<List<ResourceDto>> result = resourceProvide.findByUsername(username);
+        if (StringUtils.equalsIgnoreCase(CommonResult.SUCCESS_CODE, result.getCode())) {
 
+        }
+        return null;
+    }
+
+    @Override
+    public ConfigAttribute findConfigAttributeByUrl(HttpServletRequest request) {
+       return resourceDtoCache.keySet().stream()
+                .filter(requestMatcher -> requestMatcher.matches(request))
+                .map(resourceDtoCache::get)
+                .peek(configAttribute -> log.info("url在资源池中配置：{}", configAttribute.getAttribute()))
+                .findFirst().orElse(new SecurityConfig("NONEXISTENT_URL"));
+    }
 
     @Override
     @PostConstruct
-    @Transactional(readOnly = true)
     public Boolean loadCacheResources() {
         CommonResult<List<ResourceDto>> result = resourceProvide.findAll();
         if (!StringUtils.equalsIgnoreCase(result.getCode(), CommonResult.SUCCESS_CODE)) {

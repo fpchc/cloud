@@ -15,7 +15,7 @@ public interface ResourceService {
      *
      * @param userId 用户id
      */
-    List<ResourcePo> findByUserId(Long userId);
+    List<ResourcesDto> findByUserId(Long userId);
 
     ResourcesDto findById(Long id);
 
@@ -25,4 +25,11 @@ public interface ResourceService {
      * 查询所有资源
      */
     List<ResourcesDto> findAll();
+
+    /**
+     * 通过username查询资源
+     *
+     * @param username  用户名
+     */
+    List<ResourcesDto> findByUsername(String username);
 }

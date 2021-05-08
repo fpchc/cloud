@@ -17,4 +17,6 @@ public interface ResourceProvide {
     @GetMapping("/resource/findALl")
     CommonResult<List<ResourceDto>> findAll();
 
+    @GetMapping("/resource/findByUsername")
+    CommonResult<List<ResourceDto>> findByUsername(String username);
 }

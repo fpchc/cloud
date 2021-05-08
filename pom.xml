@@ -29,6 +29,7 @@
     <druid.version>1.1.22</druid.version>
     <jetcache.version>2.5.14</jetcache.version>
     <mapstruct.version>1.4.2.Final</mapstruct.version>
+    <org.lombok.version>1.18.16</org.lombok.version>
   </properties>
 
   <dependencies>
@@ -37,6 +38,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
+      <version>${org.lombok.version}</version>
     </dependency>
 
     <dependency>
@@ -122,6 +124,28 @@
         <version>2.18.1</version>
         <configuration>
           <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${org.lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
     </plugins>

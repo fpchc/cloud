@@ -8,6 +8,7 @@ import com.pch.user.organization.model.vo.UserLoginVO;
 import com.pch.user.organization.repository.UserRepository;
 import com.pch.user.organization.repository.UserRoleRepository;
 import com.pch.user.organization.service.UserService;
+import com.pch.user.organization.service.mapstruct.UserMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     private final UserRoleRepository userRoleRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -37,14 +40,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Long add(UserLoginVO userVO) {
-        Optional<UserPo> byUsername = userRepository.findByUsername(userVO.getUsername());
-        if (byUsername.isPresent()) {
+        UserPo byUsername = userRepository.findByUsername(userVO.getUsername());
+        if (byUsername != null) {
             throw new ServiceException("", "");
         }
-        UserPo userPo = new UserPo();
-        BeanUtils.copyProperties(userVO, userPo);
+        UserPo userPo = userMapper.userLoginVOToPo(userVO);
         userPo.setPassword(passwordEncoder.encode(userPo.getPassword()));
         userPo.setEnable(true);
+        userPo.setDeleted('N');
+        userPo.setAccountNonExpired(true);
+        userPo.setAccountNonLocked(true);
         UserPo save = userRepository.save(userPo);
         return save.getId();
     }

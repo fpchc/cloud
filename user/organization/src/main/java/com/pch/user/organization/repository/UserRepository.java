@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface UserRepository extends JpaSpecificationExecutor<UserPo>,
         JpaRepository<UserPo, Integer> {
 
-    Optional<UserPo> findByUsername(String username);
+    UserPo findByUsername(String username);
 }

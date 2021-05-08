@@ -7,12 +7,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,5 +45,11 @@ public class ResourceController {
     @PostMapping("")
     public CommonResult<Long> add(@Valid @RequestBody ResourcesDto resourcesDto) {
         return CommonResult.success(resourceService.add(resourcesDto));
+    }
+
+    @ApiOperation("通过username查询")
+    @PostMapping("/findByUsername/{username}")
+    public CommonResult<List<ResourcesDto>> findByUsername(@NotBlank(message = "username is null") @PathVariable String username) {
+        return CommonResult.success(resourceService.findByUsername(username));
     }
 }
