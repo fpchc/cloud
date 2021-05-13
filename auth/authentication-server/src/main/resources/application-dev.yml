@@ -116,7 +116,7 @@ jetcache:
 logging:
   level:
     root: info
-    com.test.springcloud.service.PaymentFeignService: debug
+    com.pch.auth.authentication.provide: debug
 
   file:
     path: D:/pch/log/authenticzation # 开发日志路径

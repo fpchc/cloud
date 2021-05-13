@@ -31,7 +31,7 @@ public class ResourcePo extends BasePo {
     /**
      * 类型
      */
-    private Integer type;
+    private String type;
 
     /**
      * 名称

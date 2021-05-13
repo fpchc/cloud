@@ -4,7 +4,6 @@ import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.pch.user.organization.model.dto.ResourcesDto;
 import com.pch.user.organization.model.po.ResourcePo;
-import com.pch.user.organization.model.po.UserPo;
 import com.pch.user.organization.repository.ResourceRepository;
 import com.pch.user.organization.repository.UserRepository;
 import com.pch.user.organization.service.ResourceService;
@@ -51,8 +50,8 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(readOnly = true)
     @Cached(name = "resource:username:", key = "#username", cacheType = CacheType.REMOTE)
     public List<ResourcesDto> findByUsername(String username) {
-        UserPo userPo = userRepository.findByUsername(username);
-        return findByUserId(userPo.getId());
+        List<ResourcePo> resourcePoList = resourceRepository.findByUsername(username);
+        return resourceMapper.poToDtoList(resourcePoList);
     }
 
     @Override

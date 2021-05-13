@@ -24,7 +24,7 @@ public class ResourceDto extends BaseModel {
     private String code;
 
     @ApiModelProperty("类型")
-    private Integer type;
+    private String type;
 
     @ApiModelProperty("名称")
     private String name;

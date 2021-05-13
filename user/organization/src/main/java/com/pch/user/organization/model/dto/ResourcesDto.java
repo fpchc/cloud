@@ -29,7 +29,7 @@ public class ResourcesDto extends BaseModel {
     @ApiModelProperty("类型")
     @Size(max = 30)
     @NotBlank(message = "type is blank, please checked")
-    private Integer type;
+    private String type;
 
     @ApiModelProperty("名称")
     @Size(max = 30)
