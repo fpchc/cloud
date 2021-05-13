@@ -5,18 +5,21 @@ import com.pch.auth.authentication.provide.back.ResourceProvideFallBack;
 import com.pch.common.response.CommonResult;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @Author: pch
  * @Date: 2021/5/6 17:01
  */
+@Component
 @FeignClient(name = "organization-service", fallback = ResourceProvideFallBack.class)
 public interface ResourceProvide {
 
-    @GetMapping("/resource/findALl")
+    @GetMapping("/organization/resource/findAll")
     CommonResult<List<ResourceDto>> findAll();
 
-    @GetMapping("/resource/findByUsername")
-    CommonResult<List<ResourceDto>> findByUsername(String username);
+    @GetMapping("/organization/resource/findByUsername/{username}")
+    CommonResult<List<ResourceDto>> findByUsername(@PathVariable("username") String username);
 }

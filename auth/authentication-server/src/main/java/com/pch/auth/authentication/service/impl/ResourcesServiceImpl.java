@@ -6,7 +6,9 @@ import com.pch.auth.authentication.model.dto.ResourceDto;
 import com.pch.auth.authentication.provide.ResourceProvide;
 import com.pch.auth.authentication.service.NewMvcRequestMatch;
 import com.pch.auth.authentication.service.ResourcesService;
+import com.pch.common.exception.ServiceException;
 import com.pch.common.response.CommonResult;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,13 +41,13 @@ public class ResourcesServiceImpl implements ResourcesService {
     private static final Map<RequestMatcher, ConfigAttribute> resourceDtoCache = new ConcurrentHashMap<>();
 
     @Override
-    @Cached(name = "resource:username", key = "#username", cacheType = CacheType.REMOTE)
+    @Cached(name = "resource:username:", key = "#username", cacheType = CacheType.REMOTE)
     public List<ResourceDto> findByUsername(String username) {
         CommonResult<List<ResourceDto>> result = resourceProvide.findByUsername(username);
         if (StringUtils.equalsIgnoreCase(CommonResult.SUCCESS_CODE, result.getCode())) {
-
+            return result.getData();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ResourcesServiceImpl implements ResourcesService {
     public Boolean loadCacheResources() {
         CommonResult<List<ResourceDto>> result = resourceProvide.findAll();
         if (!StringUtils.equalsIgnoreCase(result.getCode(), CommonResult.SUCCESS_CODE)) {
-            System.exit(1);
+            throw new ServiceException("5000001", "加载资源信息错误！");
         }
         for (ResourceDto resourceDto : result.getData()) {
             resourceDtoCache.put(
@@ -75,7 +77,6 @@ public class ResourcesServiceImpl implements ResourcesService {
 
     private NewMvcRequestMatch newMvcRequestMatch(String url, String method) {
         return new NewMvcRequestMatch(introspector, url, method);
-
     }
 
 }

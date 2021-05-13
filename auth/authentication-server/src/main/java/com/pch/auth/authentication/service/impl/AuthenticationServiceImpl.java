@@ -38,8 +38,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             log.warn("请求url在资源中没有找到");
         }
         List<ResourceDto> resourceDtoList = resourcesService.findByUsername(authentication.getName());
+        return isMatch(configAttribute, resourceDtoList);
+    }
 
-        return Boolean.TRUE;
+    /**
+     * 资源code匹配
+     *
+     * @param configAttribute   请求code
+     * @param resourceDtoList   用户资源code
+     * @return 匹配成功返回true
+     */
+    private Boolean isMatch(ConfigAttribute configAttribute, List<ResourceDto> resourceDtoList) {
+        return resourceDtoList.stream().anyMatch(resourceDto -> configAttribute.getAttribute().matches(resourceDto.getCode()));
     }
 
 }

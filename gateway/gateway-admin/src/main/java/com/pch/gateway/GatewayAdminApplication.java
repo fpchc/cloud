@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableJpaAuditing
 @EnableScheduling
-@EnableFeignClients(basePackages = "com.pch")
 @EnableDiscoveryClient
 @EnableCreateCacheAnnotation
 @SpringBootApplication(scanBasePackages = { "com.pch" })

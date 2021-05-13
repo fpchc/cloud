@@ -1,6 +1,7 @@
 package com.pch.auth.authentication.client.config;
 
 import feign.Feign;
+import feign.Logger;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import okhttp3.ConnectionPool;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,7 @@ import org.springframework.http.converter.HttpMessageConverter;
  */
 @Configuration
 @ConditionalOnClass(Feign.class)
+@EnableFeignClients(basePackages = "com.pch")
 @AutoConfigureBefore(FeignAutoConfiguration.class)
 public class FeignOKHttpConfig {
 
@@ -44,6 +47,11 @@ public class FeignOKHttpConfig {
     @ConditionalOnMissingBean
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }
+
+    @Bean
+    Logger.Level feignLevel() {
+        return Logger.Level.FULL;
     }
 
 }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "资源管理")
-@RequestMapping("/permission")
+@RequestMapping("/resource")
 public class ResourceController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class ResourceController {
     }
 
     @ApiOperation("通过username查询")
-    @PostMapping("/findByUsername/{username}")
+    @GetMapping("/findByUsername/{username}")
     public CommonResult<List<ResourcesDto>> findByUsername(@NotBlank(message = "username is null") @PathVariable String username) {
         return CommonResult.success(resourceService.findByUsername(username));
     }

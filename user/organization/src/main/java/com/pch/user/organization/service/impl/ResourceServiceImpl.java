@@ -49,7 +49,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cached(name = "resource:user", key = "#username", cacheType = CacheType.REMOTE)
+    @Cached(name = "resource:username:", key = "#username", cacheType = CacheType.REMOTE)
     public List<ResourcesDto> findByUsername(String username) {
         UserPo userPo = userRepository.findByUsername(username);
         return findByUserId(userPo.getId());
