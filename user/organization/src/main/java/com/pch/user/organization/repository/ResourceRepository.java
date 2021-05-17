@@ -21,5 +21,5 @@ public interface ResourceRepository extends JpaRepository<ResourcePo, Long> {
             + "inner join UserRolePo ur on ur.roleId = re.roleId "
             + "inner join UserPo u on u.id = ur.userId "
             + "where u.username = :username order by p.id")
-    List<ResourcePo> findByUsername(String username);
+    List<ResourcePo> findByUsername(@Param("username") String username);
 }
