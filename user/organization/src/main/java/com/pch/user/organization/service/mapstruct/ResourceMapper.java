@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * @Author: pch
  * @Date: 2021/5/7 11:42
  */
-@Mapper(componentModel = "spring")
+@Mapper
 public interface ResourceMapper {
 
     ResourcesDto poToDto(ResourcePo resourcePo);
