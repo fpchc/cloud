@@ -1,55 +1,51 @@
 package com.pch.auth.authorization.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Getter
-@Setter
-@Entity
-@Table(name = "tb_user")
-@EntityListeners({ AuditingEntityListener.class })
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@TableName("tb_user")
 public class UserPo extends BasePo {
 
     private static final long serialVersionUID = -8692760072307721060L;
 
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
+
     /**
      * 用户名
      */
-    @Column(length = 32)
     private String username;
 
     /**
      * 登录名称
      */
-    @Column(length = 32)
     private String loginName;
 
     /**
      * 密码
      */
-    @Column(length = 150)
     private String password;
 
     /**
      * tell
      */
-    @Column(length = 32)
     private String telephone;
 
     /**
      * 邮箱
      */
-    @Column(length = 32)
     private String email;
 
     /**
@@ -66,5 +62,6 @@ public class UserPo extends BasePo {
      * 账户是否锁定 true 没有锁定
      */
     private Boolean accountNonLocked;
+
 
 }

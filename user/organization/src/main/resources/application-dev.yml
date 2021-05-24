@@ -38,19 +38,12 @@ spring:
     testOnReturn: false
     #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
     filters: stat, wall, log4j
-  jpa:
-#    hibernate:
-#      ddl-auto: update
-    show-sql: true
-    open-in-view: false
-    properties: #使用redisson做二级缓存，项目地址：https://github.com/redisson/redisson
-      hibernate.format_sql: true
-      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-  security:
-    oauth2:
-      jwt:
-        signingKey: my_user_demo #JWT加解密使用的密钥
+  security.oauth2.jwt.signingKey: my_user_demo #JWT加解密使用的密钥
+
+mybatis-plus:
+  global-config:
+    banner: false
 
 jetcache:
   statIntervalMinutes: 60

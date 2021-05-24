@@ -1,11 +1,13 @@
 package com.pch.auth.authorization.model.dto;
 
-import com.pch.common.base.BaseModel;
+import com.pch.common.base.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @Author: pch
@@ -13,8 +15,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @ApiModel("用户实体")
-public class UserDto extends BaseModel {
+public class UserDto extends BaseDto {
 
     private static final long serialVersionUID = -1987138807436518343L;
 

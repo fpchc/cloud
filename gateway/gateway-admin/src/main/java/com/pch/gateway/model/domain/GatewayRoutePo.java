@@ -1,6 +1,6 @@
 package com.pch.gateway.model.domain;
 
-import com.pch.common.base.BaseModel;
+import com.pch.common.base.BasePo;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Table(name = "tb_gateway_route")
 @EntityListeners({ AuditingEntityListener.class })
-public class GatewayRoutePo extends BaseModel {
+public class GatewayRoutePo extends BasePo {
 
     private static final long serialVersionUID = -4043749724295641961L;
 
@@ -48,12 +48,4 @@ public class GatewayRoutePo extends BaseModel {
 
     private String status = "Y";
 
-    @Version
-    private Integer version;
-
-    @CreatedDate
-    private LocalDateTime createTime;
-
-    @LastModifiedDate
-    private LocalDateTime modifyTime;
 }

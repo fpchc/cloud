@@ -1,25 +1,21 @@
-package com.pch.user.organization.model.dto;
+package com.pch.user.organization.model.query;
 
-import com.pch.common.base.BaseModel;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @Author: pch
- * @Date: 2021/2/25
+ * @Date: 2021/5/21 11:01
  */
-@Getter
-@Setter
-@ApiModel("资源模型")
-public class ResourcesDto extends BaseModel {
+@Data
+@ToString(callSuper = true)
+public class ResourcePage {
 
-    private static final long serialVersionUID = -9026406455401591586L;
-
-    private Long id;
+    private static final long serialVersionUID = -763948377514408493L;
 
     @ApiModelProperty("代码")
     @NotBlank(message = "code is blank, please checked")
@@ -45,8 +41,4 @@ public class ResourcesDto extends BaseModel {
     @Size(max = 30)
     @NotBlank(message = "method is blank, please checked")
     private String method;
-
-    @ApiModelProperty("简介")
-    private String description;
-
 }

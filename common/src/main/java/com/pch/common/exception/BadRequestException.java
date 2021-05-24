@@ -1,14 +1,12 @@
 package com.pch.common.exception;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
 public class BadRequestException extends RuntimeException {
 
     private static final long serialVersionUID = -2550055596501377450L;

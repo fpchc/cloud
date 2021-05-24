@@ -1,7 +1,8 @@
 package com.pch.user.organization.rest;
 
 import com.pch.common.response.CommonResult;
-import com.pch.user.organization.model.dto.ResourcesDto;
+import com.pch.user.organization.model.dto.ResourceDto;
+import com.pch.user.organization.model.query.ResourcePage;
 import com.pch.user.organization.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,25 +31,26 @@ public class ResourceController {
 
     @ApiOperation("通过id查询资源")
     @GetMapping("/{id}")
-    public CommonResult<ResourcesDto> findById(@PathVariable Long id) {
+    public CommonResult<ResourceDto> findById(@PathVariable Long id) {
         return CommonResult.success(resourceService.findById(id));
     }
 
-    @ApiOperation("查询所有资源")
-    @GetMapping("/findAll")
-    public CommonResult<List<ResourcesDto>> findAll() {
-        return CommonResult.success(resourceService.findAll());
+    @ApiOperation("条件查询")
+    @GetMapping("/conditionQuery")
+    public CommonResult<List<ResourceDto>> conditionQuery(ResourcePage resourcePage) {
+        return CommonResult.success(resourceService.conditionQuery(resourcePage));
     }
 
     @ApiOperation("添加资源")
     @PostMapping("")
-    public CommonResult<Long> add(@Valid @RequestBody ResourcesDto resourcesDto) {
-        return CommonResult.success(resourceService.add(resourcesDto));
+    public CommonResult<Boolean> add(@Valid @RequestBody ResourceDto resourceDto) {
+        return CommonResult.success(resourceService.add(resourceDto));
     }
 
     @ApiOperation("通过username查询")
     @GetMapping("/findByUsername/{username}")
-    public CommonResult<List<ResourcesDto>> findByUsername(@NotBlank(message = "username is null") @PathVariable String username) {
+    public CommonResult<List<ResourceDto>> findByUsername(
+            @NotBlank(message = "username is null") @PathVariable String username) {
         return CommonResult.success(resourceService.findByUsername(username));
     }
 }

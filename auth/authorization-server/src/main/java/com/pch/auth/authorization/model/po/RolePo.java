@@ -1,30 +1,33 @@
 package com.pch.auth.authorization.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Getter
-@Setter
-@Entity
-@Table(name = "tb_role")
-@EntityListeners({ AuditingEntityListener.class })
+@Data
+@ToString(callSuper = true)
+@TableName("tb_role")
+@EqualsAndHashCode(callSuper = true)
 public class RolePo extends BasePo {
 
     private static final long serialVersionUID = -7136537864183138269L;
+
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
 
     private String name;
 
     private String code;
 
     private String description;
+
 
 }

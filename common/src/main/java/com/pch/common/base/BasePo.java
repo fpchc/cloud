@@ -1,17 +1,14 @@
 package com.pch.common.base;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.Version;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  * @Author: pch
@@ -19,14 +16,11 @@ import org.springframework.data.annotation.LastModifiedDate;
  */
 @Getter
 @Setter
-@MappedSuperclass
-public class BasePo extends BaseModel {
+public class BasePo implements Serializable {
 
     private static final long serialVersionUID = -6551747208670402225L;
 
-    @Id
-    @GeneratedValue(generator = "IdSnowflake")
-    @GenericGenerator(name = "IdSnowflake", strategy = "com.pch.common.config.SnowFlakeIdGenerator")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     @Version
@@ -35,25 +29,25 @@ public class BasePo extends BaseModel {
     /**
      * 创建时间
      */
-    @CreatedDate
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
-    @LastModifiedDate
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedTime;
 
     /**
      * 创建人
      */
-    @CreatedBy
+    @TableField(fill = FieldFill.INSERT)
     private String createdBy;
 
     /**
      * 更新人
      */
-    @LastModifiedBy
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updatedBy;
 
 }

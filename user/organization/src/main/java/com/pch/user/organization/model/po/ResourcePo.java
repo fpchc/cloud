@@ -1,22 +1,19 @@
 package com.pch.user.organization.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @Author: pch
  * @Date: 2020/9/11
  */
-@Entity
-@Setter
-@Getter
-@EntityListeners({ AuditingEntityListener.class })
-@Table(name = "tb_resource")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@TableName("tb_resource")
 public class ResourcePo extends BasePo {
 
     public static final String RESOURCE_PREFIX = "resource:";

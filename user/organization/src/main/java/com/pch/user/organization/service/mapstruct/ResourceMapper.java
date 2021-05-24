@@ -1,6 +1,6 @@
 package com.pch.user.organization.service.mapstruct;
 
-import com.pch.user.organization.model.dto.ResourcesDto;
+import com.pch.user.organization.model.dto.ResourceDto;
 import com.pch.user.organization.model.po.ResourcePo;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -12,10 +12,10 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface ResourceMapper {
 
-    ResourcesDto poToDto(ResourcePo resourcePo);
+    ResourceDto poToDto(ResourcePo resourcePo);
 
-    List<ResourcesDto> poToDtoList(List<ResourcePo> resourcePoList);
+    List<ResourceDto> poToDtoList(List<ResourcePo> resourcePoList);
 
-    ResourcePo dtoToPo(ResourcesDto resourcesDto);
+    ResourcePo dtoToPo(ResourceDto resourceDto);
 
 }
