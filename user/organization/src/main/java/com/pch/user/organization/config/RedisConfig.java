@@ -1,5 +1,7 @@
 package com.pch.user.organization.config;
 
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -26,6 +28,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Date: 2020/9/17
  */
 @Configuration
+@EnableCreateCacheAnnotation
+@EnableMethodCache(basePackages = { "com.pch" })
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
