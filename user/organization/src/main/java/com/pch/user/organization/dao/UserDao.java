@@ -2,6 +2,7 @@ package com.pch.user.organization.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pch.user.organization.model.po.UserPo;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Author: pch
