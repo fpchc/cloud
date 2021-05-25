@@ -1,7 +1,7 @@
 package com.pch.gateway;
 
-import com.alicp.jetcache.anno.config.EnableMethodCache;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableScheduling
 @EnableDiscoveryClient
-@EnableMethodCache(basePackages = { "com.pch", "org.springframework.cloud" })
+@SpringBootApplication(scanBasePackages = { "com.pch" })
 public class GatewayAdminApplication {
 
     public static void main(String[] args) {

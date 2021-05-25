@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @Date: 2021/5/24 10:30
  */
 @Configuration
-@MapperScan("com.pch.gateway.mapper")
+@MapperScan("com.pch")
 @EnableTransactionManagement(proxyTargetClass = true)
 public class MybatisConfig {
 

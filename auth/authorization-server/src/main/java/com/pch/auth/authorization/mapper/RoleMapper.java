@@ -3,7 +3,6 @@ package com.pch.auth.authorization.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pch.auth.authorization.model.po.RolePo;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -11,7 +10,6 @@ import org.apache.ibatis.annotations.Select;
  * @Author: pch
  * @Date: 2021/2/24
  */
-@Mapper
 public interface RoleMapper extends BaseMapper<RolePo> {
 
     @Select("select tr.* from tb_role tr "

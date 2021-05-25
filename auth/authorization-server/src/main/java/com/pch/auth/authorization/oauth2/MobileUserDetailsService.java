@@ -1,5 +1,6 @@
 package com.pch.auth.authorization.oauth2;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pch.auth.authorization.mapper.UserMapper;
 import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.common.exception.ServiceException;
@@ -23,7 +24,7 @@ public class MobileUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String uniqueId) {
 
-        UserPo userPo = userMapper.findByUsername(uniqueId);
+        UserPo userPo = userMapper.selectOne(new QueryWrapper<UserPo>().eq("username", uniqueId));
 //        log.info("load user by mobile:{}", user.toString());
 
         // 如果为mobile模式，从短信服务中获取验证码（动态密码）

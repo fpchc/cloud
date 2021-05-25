@@ -1,5 +1,6 @@
 package com.pch.auth.authorization.oauth2;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pch.auth.authorization.mapper.UserMapper;
 import com.pch.auth.authorization.model.dto.RoleDto;
 import com.pch.auth.authorization.model.po.UserPo;
@@ -30,7 +31,7 @@ public class MyUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserPo userPo = userMapper.findByUsername(username);
+        UserPo userPo = userMapper.selectOne(new QueryWrapper<UserPo>().eq("username", username));
         if (null == userPo) {
             log.warn("用户{}不存在", username);
             throw new UsernameNotFoundException(username + "username is not exist");
