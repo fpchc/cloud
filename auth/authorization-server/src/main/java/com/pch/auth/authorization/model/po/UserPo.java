@@ -1,7 +1,5 @@
 package com.pch.auth.authorization.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
 import lombok.Data;
@@ -19,9 +17,6 @@ import lombok.ToString;
 public class UserPo extends BasePo {
 
     private static final long serialVersionUID = -8692760072307721060L;
-
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
 
     /**
      * 用户名

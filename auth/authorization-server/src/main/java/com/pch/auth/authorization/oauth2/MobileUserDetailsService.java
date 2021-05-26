@@ -1,7 +1,7 @@
 package com.pch.auth.authorization.oauth2;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.pch.auth.authorization.mapper.UserMapper;
+import com.pch.auth.authorization.dao.UserDao;
 import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class MobileUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(String uniqueId) {
 
-        UserPo userPo = userMapper.selectOne(new QueryWrapper<UserPo>().eq("username", uniqueId));
+        UserPo userPo = userDao.selectOne(new QueryWrapper<UserPo>().eq("username", uniqueId));
 //        log.info("load user by mobile:{}", user.toString());
 
         // 如果为mobile模式，从短信服务中获取验证码（动态密码）

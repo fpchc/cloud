@@ -1,7 +1,7 @@
 package com.pch.auth.authorization.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.pch.auth.authorization.mapper.RoleMapper;
+import com.pch.auth.authorization.dao.RoleDao;
 import com.pch.auth.authorization.model.dto.RoleDto;
 import com.pch.auth.authorization.model.po.RolePo;
 import com.pch.auth.authorization.service.RoleService;
@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, RolePo> implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleDao, RolePo> implements RoleService {
 
-    private final RoleMapper roleMapper;
+    private final RoleDao roleDao;
 
     @Override
     @Transactional(readOnly = true)
     public List<RoleDto> findByUserId(Long userId) {
-        List<RolePo> rolePoList = roleMapper.findByUserId(userId);
+        List<RolePo> rolePoList = roleDao.findByUserId(userId);
         return rolePoList.stream().map(rolePo -> {
             RoleDto roleDto = new RoleDto();
             BeanUtils.copyProperties(rolePo, roleDto);

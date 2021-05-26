@@ -1,4 +1,4 @@
-package com.pch.auth.authorization.mapper;
+package com.pch.auth.authorization.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pch.auth.authorization.model.po.RolePo;
@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
  * @Author: pch
  * @Date: 2021/2/24
  */
-public interface RoleMapper extends BaseMapper<RolePo> {
+public interface RoleDao extends BaseMapper<RolePo> {
 
     @Select("select tr.* from tb_role tr "
             + "inner join tb_user_role tur on tur.role_id = tr.id "

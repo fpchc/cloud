@@ -1,7 +1,7 @@
 package com.pch.auth.authorization.oauth2;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.pch.auth.authorization.mapper.UserMapper;
+import com.pch.auth.authorization.dao.UserDao;
 import com.pch.auth.authorization.model.dto.RoleDto;
 import com.pch.auth.authorization.model.po.UserPo;
 import com.pch.auth.authorization.service.RoleService;
@@ -25,13 +25,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MyUserService implements UserDetailsService {
 
-    private final UserMapper userMapper;
+    private final UserDao userDao;
 
     private final RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserPo userPo = userMapper.selectOne(new QueryWrapper<UserPo>().eq("username", username));
+        UserPo userPo = userDao.selectOne(new QueryWrapper<UserPo>().eq("username", username));
         if (null == userPo) {
             log.warn("用户{}不存在", username);
             throw new UsernameNotFoundException(username + "username is not exist");
