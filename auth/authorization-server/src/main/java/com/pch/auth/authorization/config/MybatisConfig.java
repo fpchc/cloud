@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.pch.common.config.AuditorMetaObjectHandler;
+import com.pch.common.config.UserInfoInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,5 +34,9 @@ public class MybatisConfig {
         return new AuditorMetaObjectHandler();
     }
 
+    @Bean
+    public UserInfoInterceptor getUserInfoInterceptor() {
+        return new UserInfoInterceptor();
+    }
 
 }
