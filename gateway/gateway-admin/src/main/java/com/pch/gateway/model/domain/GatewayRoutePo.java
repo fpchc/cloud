@@ -1,13 +1,17 @@
 package com.pch.gateway.model.domain;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * <P> 路由实体 </P>
@@ -16,20 +20,25 @@ import lombok.Data;
  * @Date: 2021/2/18
  */
 @Data
-@TableName("tb_gateway_route")
+@Entity
+@Table(name = "tb_gateway_route")
 public class GatewayRoutePo implements Serializable {
 
     private static final long serialVersionUID = -4043749724295641961L;
 
-    @TableId
+    @Id
     private String id;
 
+    @Column(length = 150)
     private String uri;
 
+    @Column(length = 250)
     private String predicates;
 
+    @Column(length = 250)
     private String filters;
 
+    @Column(length = 50)
     private String description;
 
     private Integer orders = 0;
@@ -39,29 +48,9 @@ public class GatewayRoutePo implements Serializable {
     @Version
     private Integer version;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
+    @CreatedDate
+    private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updatedTime;
-
-    /**
-     * 创建人
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private String createdBy;
-
-    /**
-     * 更新人
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updatedBy;
-
-
+    @LastModifiedDate
+    private LocalDateTime modifyTime;
 }

@@ -1,10 +1,12 @@
 package com.pch.user.organization.model.vo;
 
+import com.pch.common.base.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @Author: pch
@@ -12,7 +14,9 @@ import lombok.Data;
  */
 @Data
 @ApiModel("用户登录模型")
-public class UserLoginVO implements Serializable {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class UserLoginVO extends BaseVo {
 
     private static final long serialVersionUID = 2085570980822071154L;
 

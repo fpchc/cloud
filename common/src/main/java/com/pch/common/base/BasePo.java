@@ -1,14 +1,20 @@
 package com.pch.common.base;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @Author: pch
@@ -16,11 +22,15 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@MappedSuperclass
+@EntityListeners({ AuditingEntityListener.class })
 public class BasePo implements Serializable {
 
     private static final long serialVersionUID = -6551747208670402225L;
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @Id
+    @GeneratedValue(generator = "IdSnowflake")
+    @GenericGenerator(name = "IdSnowflake", strategy = "com.pch.common.config.SnowFlakeIdGenerator")
     private Long id;
 
     @Version
@@ -29,25 +39,25 @@ public class BasePo implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @CreatedDate
     private LocalDateTime createdTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @LastModifiedDate
     private LocalDateTime updatedTime;
 
     /**
      * 创建人
      */
-    @TableField(fill = FieldFill.INSERT)
+    @CreatedBy
     private String createdBy;
 
     /**
      * 更新人
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @LastModifiedBy
     private String updatedBy;
 
 }

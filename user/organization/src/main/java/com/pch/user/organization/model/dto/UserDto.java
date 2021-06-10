@@ -14,8 +14,8 @@ import lombok.ToString;
  */
 @Data
 @ApiModel("用户实体")
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class UserDto extends BaseDto {
 
     private static final long serialVersionUID = -1987138807436518343L;

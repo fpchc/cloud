@@ -1,5 +1,6 @@
 package com.pch.auth.authorization.config;
 
+import com.pch.auth.authorization.config.HttpLoggingInterceptor.Level;
 import feign.Feign;
 import feign.Logger;
 import java.util.concurrent.TimeUnit;
@@ -28,17 +29,19 @@ public class FeignOKHttpConfig {
 
     @Bean
     public okhttp3.OkHttpClient okHttpClient(){
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(Level.BODY);
         return new okhttp3.OkHttpClient.Builder()
                 //设置连接超时
                 .connectTimeout(60, TimeUnit.SECONDS)
                 //设置读超时
                 .readTimeout(60, TimeUnit.SECONDS)
                 //设置写超时
-                .writeTimeout(120,TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
                 //是否自动重连
                 .retryOnConnectionFailure(true)
                 .connectionPool(new ConnectionPool())
-//                .addInterceptor(new OkHttpLogInterceptor())
+                .addInterceptor(httpLoggingInterceptor)
                 //构建OkHttpClient对象
                 .build();
     }

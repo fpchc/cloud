@@ -4,20 +4,18 @@ import com.pch.common.base.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Data
 @ApiModel("角色模型")
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class RoleDto extends BaseDto {
 
     private static final long serialVersionUID = 6820960471692554967L;

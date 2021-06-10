@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,10 +21,9 @@ import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
  * @Date: 2021/2/18
  */
 @Slf4j
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
+@Data
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class GatewayRouteDto extends BaseDto {
 
     private static final long serialVersionUID = -6945274367384292505L;

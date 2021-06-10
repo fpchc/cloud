@@ -4,10 +4,8 @@ import com.pch.common.base.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @Author: pch
@@ -15,8 +13,6 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @ApiModel("用户实体")
 public class UserDto extends BaseDto {
 

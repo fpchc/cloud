@@ -1,9 +1,8 @@
 package com.pch.user.organization.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,9 +12,10 @@ import lombok.ToString;
  * @Date: 2020/9/11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "tb_user")
 @ToString(callSuper = true)
-@TableName("tb_user")
+@EqualsAndHashCode(callSuper = true)
 public class UserPo extends BasePo {
 
     private static final long serialVersionUID = -8692760072307721060L;

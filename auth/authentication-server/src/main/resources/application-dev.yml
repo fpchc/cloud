@@ -49,14 +49,9 @@ spring:
 
   security.oauth2.jwt.signingKey: my_user_demo #JWT加解密使用的密钥
 
-mybatis-plus:
-  global-config:
-    banner: false
-
 feign:
-  # Okhttp参数配置
-  httpclient:
-    enabled: false
+  sentinel:
+    enabled: true
   okhttp:
     enabled: true
     max-connections: 200 # 默认值
@@ -117,7 +112,6 @@ jetcache:
 logging:
   level:
     root: info
-    com.pch.auth.authentication.provide: debug
 
   file:
     path: D:/pch/log/authenticzation # 开发日志路径

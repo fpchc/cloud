@@ -4,22 +4,19 @@ import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheConsts;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pch.gateway.event.GatewayRouteEvent;
 import com.pch.gateway.event.GatewayRouteListener;
-import com.pch.gateway.mapper.GatewayRouteDao;
+import com.pch.gateway.mapper.RouteRepository;
 import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
-import com.pch.gateway.model.query.GatewayRouteQuery;
 import com.pch.gateway.service.GatewayRouteService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -39,21 +36,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteDao, GatewayRoutePo>
-        implements GatewayRouteService, ApplicationContextAware {
+public class GatewayRouteServiceImpl implements GatewayRouteService, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
     @Autowired
-    private GatewayRouteDao gatewayRouteDao;
+    private RouteRepository routeRepository;
 
     @CreateCache(name = GatewayRouteEvent.GATEWAY_ROUTES, cacheType = CacheType.REMOTE, expire = CacheConsts.DEFAULT_EXPIRE)
     private Cache<String, RouteDefinition> gatewayRouteCache;
 
     @Override
-    public GatewayRouteDto get(String id) {
-        GatewayRoutePo gatewayRoutePo = gatewayRouteDao.selectById(id);
-        return getGatewayRouteDto(gatewayRoutePo);
+    public Optional<GatewayRouteDto> get(String id) {
+        Optional<GatewayRoutePo> gatewayRoutePo = routeRepository.findById(id);
+        return gatewayRoutePo.map(this::getGatewayRouteDto);
     }
 
     private GatewayRouteDto getGatewayRouteDto(GatewayRoutePo gatewayRoutePo) {
@@ -72,19 +68,14 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteDao, Gatewa
     }
 
     @Override
-    public List<GatewayRouteDto> query(Page<GatewayRoutePo> page, GatewayRouteQuery gatewayRouteQuery) {
-        QueryWrapper<GatewayRoutePo> queryWrapper = new QueryWrapper<>();
-        Page<GatewayRoutePo> poPage = this.page(page, queryWrapper);
-        return null;
-    }
-
-    @Override
     @Transactional
     public Boolean saveOrUpdate(List<GatewayRouteDto> gatewayRouteDto) {
         List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDto.stream().map(GatewayRouteDto::toPo)
                 .collect(Collectors.toList());
         for (GatewayRoutePo gatewayRoutePo : gatewayRoutePos) {
-            this.saveOrUpdate(gatewayRoutePo);
+            Optional<GatewayRoutePo> dataSourcePo = routeRepository.findById(gatewayRoutePo.getId());
+            dataSourcePo.ifPresentOrElse(po -> BeanUtils.copyProperties(po, gatewayRoutePo),
+                    () -> routeRepository.save(gatewayRoutePo));
         }
         gatewayRoutePos.forEach(gatewayRoutePo -> {
             RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
@@ -97,7 +88,7 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteDao, Gatewa
     @Override
     @Transactional
     public boolean delete(String id) {
-        gatewayRouteDao.deleteById(id);
+        routeRepository.deleteById(id);
         gatewayRouteCache.remove(id);
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));
         return true;
@@ -105,15 +96,15 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteDao, Gatewa
 
     @Override
     public List<GatewayRouteDto> findAll() {
-        List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDao.selectByMap(null);
-        return gatewayRoutePos.stream().map(this::getGatewayRouteDto).collect(Collectors.toList());
+        List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
+        return gatewayRoutes.stream().map(this::getGatewayRouteDto).collect(Collectors.toList());
     }
 
     @Override
     @PostConstruct
     public boolean overload() {
-        List<GatewayRoutePo> gatewayRoutePos = gatewayRouteDao.selectByMap(null);
-        gatewayRoutePos.forEach(gatewayRoute ->
+        List<GatewayRoutePo> gatewayRoutes = routeRepository.findAll();
+        gatewayRoutes.forEach(gatewayRoute ->
                 gatewayRouteCache.put(gatewayRoute.getId(), gatewayRouteToRouteDefinition(gatewayRoute))
         );
         applicationContext.publishEvent(new GatewayRouteEvent(GatewayRouteListener.FIND_ALL_ACTION));

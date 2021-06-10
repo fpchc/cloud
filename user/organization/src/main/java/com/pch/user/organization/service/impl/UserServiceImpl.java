@@ -1,21 +1,24 @@
 package com.pch.user.organization.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pch.common.exception.ServiceException;
-import com.pch.user.organization.dao.UserDao;
-import com.pch.user.organization.dao.UserRoleDao;
 import com.pch.user.organization.model.dto.UserRoleDto;
 import com.pch.user.organization.model.po.UserPo;
 import com.pch.user.organization.model.po.UserRolePo;
 import com.pch.user.organization.model.vo.UserLoginVO;
+import com.pch.user.organization.repository.UserRepository;
+import com.pch.user.organization.repository.UserRoleRepository;
 import com.pch.user.organization.service.UserService;
 import com.pch.user.organization.service.mapstruct.UserMapper;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @Author: pch
@@ -24,20 +27,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends ServiceImpl<UserDao, UserPo> implements UserService {
+public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
     private final UserMapper userMapper;
 
-    private final UserRoleDao userRoleDao;
+    private final UserRoleRepository userRoleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
-    public Boolean add(UserLoginVO userVO) {
-        UserPo byUsername = userDao.findByUsername(userVO.getUsername());
+    public Long add(UserLoginVO userVO) {
+        UserPo byUsername = userRepository.findByUsername(userVO.getUsername());
         if (byUsername != null) {
             throw new ServiceException("", "");
         }
@@ -47,21 +50,23 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserPo> implements Use
         userPo.setDeleted('N');
         userPo.setAccountNonExpired(true);
         userPo.setAccountNonLocked(true);
-        int i = userDao.insert(userPo);
-        return i >= 0;
+        UserPo save = userRepository.save(userPo);
+        return save.getId();
     }
 
     @Override
     @Transactional
     public Boolean bindRoleIds(UserRoleDto userRoleDto) {
+        List<UserRolePo> list = new ArrayList<>();
         List<Long> roleIds = userRoleDto.getRoleIds();
         roleIds.forEach(roleId -> {
             UserRolePo userRolePo = new UserRolePo();
             userRolePo.setUserId(userRoleDto.getUserId());
             userRolePo.setRoleId(roleId);
-            userRoleDao.insert(userRolePo);
+            list.add(userRolePo);
         });
-        return true;
+        List<UserRolePo> list1 = userRoleRepository.saveAll(list);
+        return !CollectionUtils.isEmpty(list1);
     }
 
 }

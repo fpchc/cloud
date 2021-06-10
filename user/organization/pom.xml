@@ -15,6 +15,7 @@
 
   <properties>
     <java.version>11</java.version>
+    <io.github.openfeign.version>11.0</io.github.openfeign.version>
   </properties>
 
   <dependencies>
@@ -93,6 +94,7 @@
     <dependency>
       <groupId>io.github.openfeign</groupId>
       <artifactId>feign-okhttp</artifactId>
+      <version>${io.github.openfeign.version}</version>
     </dependency>
 
   </dependencies>

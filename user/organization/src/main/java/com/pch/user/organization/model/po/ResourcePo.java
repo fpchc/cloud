@@ -1,7 +1,8 @@
 package com.pch.user.organization.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,9 +12,10 @@ import lombok.ToString;
  * @Date: 2020/9/11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "tb_resource")
 @ToString(callSuper = true)
-@TableName("tb_resource")
+@EqualsAndHashCode(callSuper = true)
 public class ResourcePo extends BasePo {
 
     public static final String RESOURCE_PREFIX = "resource:";

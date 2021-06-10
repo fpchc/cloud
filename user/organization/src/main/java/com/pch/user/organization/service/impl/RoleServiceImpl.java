@@ -1,14 +1,12 @@
 package com.pch.user.organization.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.pch.user.organization.dao.RoleDao;
 import com.pch.user.organization.model.dto.RoleDto;
 import com.pch.user.organization.model.po.RolePo;
+import com.pch.user.organization.repository.RoleRepository;
 import com.pch.user.organization.service.RoleService;
-import com.pch.user.organization.service.mapstruct.RoleMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
+import java.util.Optional;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,26 +14,26 @@ import org.springframework.transaction.annotation.Transactional;
  * @Author: admin
  * @Date: 2021/2/24
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
-public class RoleServiceImpl extends ServiceImpl<RoleDao, RolePo> implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
-    private final RoleMapper roleMapper;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public RoleDto findById(Long id) {
-        return roleMapper.sourceToTarget(this.baseMapper.selectById(id));
-    }
-
-    @Override
-    public Page<RoleDto> query(RoleDto roleDto) {
-        return null;
+        Optional<RolePo> rolePoOptional = roleRepository.findById(id);
+        RoleDto roleDto = new RoleDto();
+        rolePoOptional.ifPresent(rolePo -> BeanUtils.copyProperties(rolePo, roleDto));
+        return roleDto;
     }
 
     @Override
     @Transactional
-    public Boolean save(RoleDto roleDto) {
-        return this.saveOrUpdate(roleMapper.targetToSource(roleDto));
+    public Long save(RoleDto roleDto) {
+        RolePo rolePo = new RolePo();
+        BeanUtils.copyProperties(roleDto, rolePo);
+        RolePo save = roleRepository.save(rolePo);
+        return save.getId();
     }
 }

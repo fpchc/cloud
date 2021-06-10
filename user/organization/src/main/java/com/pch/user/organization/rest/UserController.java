@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("添加用户")
-    public CommonResult<Boolean> add(@Valid @RequestBody UserLoginVO userVO) {
+    public CommonResult<Long> add(@Valid @RequestBody UserLoginVO userVO) {
         return CommonResult.success(userService.add(userVO));
     }
 

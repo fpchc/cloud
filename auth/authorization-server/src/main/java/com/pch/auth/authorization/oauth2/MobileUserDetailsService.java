@@ -1,9 +1,9 @@
 package com.pch.auth.authorization.oauth2;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.pch.auth.authorization.dao.UserDao;
 import com.pch.auth.authorization.model.po.UserPo;
+import com.pch.auth.authorization.repository.UserRepository;
 import com.pch.common.exception.ServiceException;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,19 +19,20 @@ import org.springframework.stereotype.Service;
 public class MobileUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String uniqueId) {
 
-        UserPo userPo = userDao.selectOne(new QueryWrapper<UserPo>().eq("username", uniqueId));
+        Optional<UserPo> userPo = userRepository.findByUsername(uniqueId);
 //        log.info("load user by mobile:{}", user.toString());
 
         // 如果为mobile模式，从短信服务中获取验证码（动态密码）
 //        String credentials = smsCodeProvider.getSmsCode(uniqueId, "LOGIN");
-        if (null == userPo) {
+        if (userPo.isEmpty()) {
             throw new ServiceException("", "");
         }
-        return new User(userPo.getUsername(), userPo.getPassword(), null);
+        UserPo user = userPo.get();
+        return new User(user.getUsername(), user.getPassword(), null);
     }
 }

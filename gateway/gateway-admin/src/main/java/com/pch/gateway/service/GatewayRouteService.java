@@ -1,11 +1,8 @@
 package com.pch.gateway.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.pch.gateway.model.domain.GatewayRoutePo;
 import com.pch.gateway.model.dto.GatewayRouteDto;
-import com.pch.gateway.model.query.GatewayRouteQuery;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <P> 路由接口 </P>
@@ -13,7 +10,7 @@ import java.util.List;
  * @Author: pch
  * @Date: 2021/01/19 15:24
  */
-public interface GatewayRouteService extends IService<GatewayRoutePo> {
+public interface GatewayRouteService {
 
     /**
      * 获取网关路由
@@ -21,7 +18,7 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      * @param id
      * @return
      */
-    GatewayRouteDto get(String id);
+    Optional<GatewayRouteDto> get(String id);
 
     /**
      * 新增网关路由
@@ -36,7 +33,7 @@ public interface GatewayRouteService extends IService<GatewayRoutePo> {
      *
      * @return
      */
-    List<GatewayRouteDto> query(Page<GatewayRoutePo> page, GatewayRouteQuery gatewayRouteQuery);
+//    List<RouteDefinitionPoVo> query(RouteDefinitionPoQueryParam RouteDefinitionPoQueryParam);
 
     /**
      * 根据id删除网关路由

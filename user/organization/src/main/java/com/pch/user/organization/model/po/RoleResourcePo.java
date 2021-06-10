@@ -1,9 +1,8 @@
 package com.pch.user.organization.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,9 +12,10 @@ import lombok.ToString;
  * @Date: 2020/9/11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@Entity
 @ToString(callSuper = true)
-@TableName("tb_role_resource")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "tb_role_resource_relation")
 public class RoleResourcePo extends BasePo {
 
     private static final long serialVersionUID = 7402412601579098788L;

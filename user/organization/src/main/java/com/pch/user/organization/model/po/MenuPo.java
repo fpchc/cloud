@@ -1,7 +1,8 @@
 package com.pch.user.organization.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.pch.common.base.BasePo;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,13 +12,13 @@ import lombok.ToString;
  * @Date: 2021/4/23 11:31
  */
 @Data
-@TableName("tb_menu")
+@Entity
+@Table(name = "tb_menu")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class MenuPo extends BasePo {
 
     private static final long serialVersionUID = -9071904504678294333L;
-
 
     /**
      * 父id

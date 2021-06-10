@@ -12,10 +12,10 @@ import lombok.ToString;
  * @Author: pch
  * @Date: 2021/2/25
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
 @ApiModel("角色模型")
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class RoleDto extends BaseDto {
 
     private static final long serialVersionUID = 6820960471692554967L;
