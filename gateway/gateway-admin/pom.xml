@@ -16,10 +16,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
-    <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
   </properties>
 
   <dependencies>
@@ -89,8 +85,8 @@
     </dependency>
 
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+      <groupId>com.alibaba.csp</groupId>
+      <artifactId>sentinel-spring-webflux-adapter</artifactId>
     </dependency>
 
     <dependency>

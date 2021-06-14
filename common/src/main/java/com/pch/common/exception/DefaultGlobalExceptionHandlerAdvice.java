@@ -3,8 +3,6 @@ package com.pch.common.exception;
 import com.pch.common.response.CommonResult;
 import com.pch.common.response.ResultCode;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -26,20 +24,6 @@ public class DefaultGlobalExceptionHandlerAdvice {
                 .getAllErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(",", "", ""));
-        return CommonResult.validateFailed(message);
-    }
-
-    /**
-     * 处理请求参数格式错误 @RequestParam上validate失败后抛出的异常是javax.validation.ConstraintViolationException
-     */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public CommonResult<Boolean> ConstraintViolationExceptionHandler(
-            ConstraintViolationException e) {
-        log.error("constrain violation exception:", e);
-        String message = e.getConstraintViolations()
-                .stream()
-                .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(",", "", ""));
         return CommonResult.validateFailed(message);
     }

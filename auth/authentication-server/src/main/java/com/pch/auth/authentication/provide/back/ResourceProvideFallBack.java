@@ -5,14 +5,12 @@ import com.pch.auth.authentication.provide.ResourceProvide;
 import com.pch.common.response.CommonResult;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @Author: pch
  * @Date: 2021/5/6 17:04
  */
 @Slf4j
-@Component
 public class ResourceProvideFallBack implements ResourceProvide {
 
     @Override

@@ -3,14 +3,12 @@ package com.pch.auth.authentication.client.provide;
 import com.pch.common.response.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
 
 /**
  * @Author: pch
  * @Date: 2021/4/29 16:34
  */
 @Slf4j
-@Component
 public class AuthenticationProvideBack implements AuthenticationProvide {
 
     @Override

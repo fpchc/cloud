@@ -2,6 +2,7 @@ package com.pch.user.organization.service.impl;
 
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
+import com.pch.user.organization.event.ResourceApplicationEvent;
 import com.pch.user.organization.model.dto.ResourcesDto;
 import com.pch.user.organization.model.po.ResourcePo;
 import com.pch.user.organization.repository.ResourceRepository;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,8 @@ public class ResourceServiceImpl implements ResourceService {
     private final ResourceMapper resourceMapper;
 
     private final UserRepository userRepository;
+
+    private final ApplicationContext applicationContext;
 
     @Override
     @Transactional(readOnly = true)
@@ -58,6 +62,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional
     public Long add(ResourcesDto resourcesDto) {
         ResourcePo resourcePo = resourceRepository.save(resourceMapper.dtoToPo(resourcesDto));
+        applicationContext.publishEvent(new ResourceApplicationEvent(resourcePo, "add"));
         return resourcePo.getId();
     }
 
